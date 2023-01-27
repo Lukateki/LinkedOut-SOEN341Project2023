@@ -18,7 +18,8 @@ job offers, and students when they are called for an interview.
 
 - Liam Daigle(liam.daigle@gmail.com) : 
 - Simon Foo(simon.m.foo@gmail.com) :
-- Clara Gagnon(clarag2002@gmail.com) : 
+- Clara Gagnon(clarag2002@gmail.com) :
+- Roger Daniel Matute(daniel-carcamo1@hotmail.com) :
 
 ## The following are the categories of main users:
 1. Employer – create an account/register, login, browse candidates, add job offers, select
