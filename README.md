@@ -32,3 +32,5 @@ other users and functionalities for eventual implementation when properly justif
 
 ## List of Technologies used for the entirety of this Application
 TBD
+
+#### TA github: bluestberries
