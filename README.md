@@ -18,6 +18,9 @@ job offers, and students when they are called for an interview.
 
 - Liam Daigle(liam.daigle@gmail.com) : 
 - Simon Foo(simon.m.foo@gmail.com) :
+- Clara Gagnon(clarag2002@gmail.com) :
+- Roger Daniel Matute(daniel-carcamo1@hotmail.com) :
+- Arthur Mosnier (mosnier.arthur.lfgeb@gmail.com) :
 
 ## The following are the categories of main users:
 1. Employer – create an account/register, login, browse candidates, add job offers, select
@@ -30,4 +33,7 @@ resume; browse for job offers; apply for those postings
 other users and functionalities for eventual implementation when properly justified.*
 
 ## List of Technologies used for the entirety of this Application
-TBD
+![ProjectDiagram](https://user-images.githubusercontent.com/30945652/215239820-46137d60-dc21-46c6-88ec-3b20c9f4fd63.png)
+
+#### TA github: bluestberries
+
