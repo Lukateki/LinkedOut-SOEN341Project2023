@@ -13,7 +13,7 @@ This app makes searching for jobs super easy! All you need is a stable connectio
 ## Software Process Team Project (30%) Winter 2023
 
 - Liam Daigle(LiamDaigle, Strengths: Django, Fullstack Development, MySQL, Javascript) : Backend Dev
-- Simon Foo(simon.m.foo@gmail.com) :
+- Simon Foo(sfhelmet, Strengths: Database, Python) : Software Architect
 - Clara Gagnon(clarag02, Strengths: Web Development, OOP) : UX Designer
 - Roger Daniel Matute(DanielC2001, Strengths: Web Development, Fullstack Development, ReactJS, Javascript) : Frontend Developer
 - Arthur Mosnier (heyitsarthur,  Strengths: Web Development, Java) : Frontend Developer
