@@ -19,8 +19,8 @@ job offers, and students when they are called for an interview.
 - Liam Daigle(LiamDaigle) : 
 - Simon Foo(simon.m.foo@gmail.com) :
 - Clara Gagnon(clarag02) :
-- Roger Daniel Matute(DanielC2001, Strengths: Web Development, Fullstack Development, ReactJS, Javascript) :
-- Arthur Mosnier (mosnier.arthur.lfgeb@gmail.com) :
+- Roger Daniel Matute(daniel-carcamo1@hotmail.com) :
+- Arthur Mosnier (heyitsarthur) :
 - Fadi Nimer (Lukateki) :
 
 ## The following are the categories of main users:
