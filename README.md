@@ -16,11 +16,11 @@ job offers, and students when they are called for an interview.
 
 ## Software Process Team Project (30%) Winter 2023
 
-- Liam Daigle(LiamDaigle, Strengths: Django, Fullstack Development, MySQL, Javascript) : Backend
+- Liam Daigle(LiamDaigle, Strengths: Django, Fullstack Development, MySQL, Javascript) : Backend Dev
 - Simon Foo(simon.m.foo@gmail.com) :
 - Clara Gagnon(clarag02) :
 - Roger Daniel Matute(DanielC2001, Strengths: Web Development, Fullstack Development, ReactJS, Javascript) :
-- Arthur Mosnier (mosnier.arthur.lfgeb@gmail.com) :
+- Arthur Mosnier (heyitsarthur) :
 - Fadi Nimer (Lukateki) :
 
 ## The following are the categories of main users:
