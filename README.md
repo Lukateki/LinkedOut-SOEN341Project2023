@@ -16,7 +16,7 @@ job offers, and students when they are called for an interview.
 
 ## Software Process Team Project (30%) Winter 2023
 
-- Liam Daigle(liam.daigle@gmail.com) : 
+- Liam Daigle(LiamDaigle) : 
 - Simon Foo(simon.m.foo@gmail.com) :
 - Clara Gagnon(clarag2002@gmail.com) :
 - Roger Daniel Matute(daniel-carcamo1@hotmail.com) :
