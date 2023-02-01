@@ -18,7 +18,7 @@ job offers, and students when they are called for an interview.
 
 - Liam Daigle(LiamDaigle, Strengths: Django, Fullstack Development, MySQL, Javascript) : Backend Dev
 - Simon Foo(simon.m.foo@gmail.com) :
-- Clara Gagnon(clarag02) :
+- Clara Gagnon(clarag02, Strengths: Web Development, OOP) : UX Designer
 - Roger Daniel Matute(DanielC2001, Strengths: Web Development, Fullstack Development, ReactJS, Javascript) : Frontend Developer
 - Arthur Mosnier (heyitsarthur,  Strengths: Web Development, Java) : Frontend Developer
 - Fadi Nimer (Lukateki) | Strengths : Front-end (Javascript, React.js), OOP (Java, Python), Agile, GitHub
