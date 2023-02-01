@@ -29,9 +29,6 @@ candidates that have already applied to an offer for interview
 resume; browse for job offers; apply for those postings
 3. Admin – Managing all user profiles and postings
 
-*Additional marks will be given to teams who are thinking out of the box and include
-other users and functionalities for eventual implementation when properly justified.*
-
 ## List of Technologies used for the entirety of this Application
 ![ProjectDiagram](https://user-images.githubusercontent.com/30945652/215239820-46137d60-dc21-46c6-88ec-3b20c9f4fd63.png)
 
