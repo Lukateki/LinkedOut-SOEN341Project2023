@@ -21,7 +21,7 @@ job offers, and students when they are called for an interview.
 - Clara Gagnon(clarag02) :
 - Roger Daniel Matute(DanielC2001, Strengths: Web Development, Fullstack Development, ReactJS, Javascript) :
 - Arthur Mosnier (heyitsarthur) :
-- Fadi Nimer (Lukateki) :
+- Fadi Nimer (Lukateki) | Strengths : Front-end (Javascript, React.js), OOP (Java, Python), Agile, GitHub
 
 ## The following are the categories of main users:
 1. Employer – create an account/register, login, browse candidates, add job offers, select
