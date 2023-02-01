@@ -1,18 +1,14 @@
 # SOEN341 Career Services Application
 
-The objective of this project is to provide a career services platform where the students
-(people looking for jobs) will be able to post and update their portfolio and the employers
-should be able to post jobs. With the help of this, you can carry out a job head hunting in your
-own comfort. This benefits job-seeking candidates and employers to shortlist their potential job
-and employee respectively. This can also help employers find specific candidates as per their
-requirements along with job seekers being able to tailor their profile as per the market. All you
-require is a PC or a mobile device with Internet to access the website online. To get to this online
-career services system all the Students and Employers will create an account, and use their
-email and password to log in. Students will create/modify their profiles and will view and apply
-to job postings. Employers will create and manage their job posts, and review applications from
-candidates. The login credentials for this system are under high security and nobody will have
-the capacity to crack it easily. Employers will receive notifications when students apply to their
-job offers, and students when they are called for an interview.
+The objective of our project is to create a basic career services web application in which the students may apply to jobs created by employers on the site. This objective will be realized by allowing both students and employers to securely create an account using their email address and password on the site so they may find a job/employee.
+
+Students will have the unique ability to create and modify their own candidate profile, while also being able to search through job postings.
+Employers will be able to create job postings for the students to see, as well as review any submitted applications.
+
+Employers will also receive a notification anytime a student applies to one of their postings.
+Similarly, students will receive a notification if their application has been reviewed and they have received an interview from the employer.
+
+This app makes searching for jobs super easy! All you need is a stable connection and a device, and you might find the job of your dreams!
 
 ## Software Process Team Project (30%) Winter 2023
 
