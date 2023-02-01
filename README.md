@@ -23,6 +23,12 @@ job offers, and students when they are called for an interview.
 - Arthur Mosnier (heyitsarthur,  Strengths: Web Development, Java) : Frontend Developer
 - Fadi Nimer (Lukateki) | Strengths : Front-end (Javascript, React.js), OOP (Java, Python), Agile, GitHub
 
+## Core Features:
+- Search for jobs filter results to find a fitting job for a candidates qualifications.
+- Post job applications and have them accessible to qualified candidates.
+- Post and update a portfolio to send to an employer.
+- Send notification to an employer when a candidate applies to a posting.
+
 ## The following are the categories of main users:
 1. Employer – create an account/register, login, browse candidates, add job offers, select
 candidates that have already applied to an offer for interview
