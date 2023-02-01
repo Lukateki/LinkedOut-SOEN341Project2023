@@ -21,6 +21,7 @@ job offers, and students when they are called for an interview.
 - Clara Gagnon(clarag02) :
 - Roger Daniel Matute(daniel-carcamo1@hotmail.com) :
 - Arthur Mosnier (mosnier.arthur.lfgeb@gmail.com) :
+- Fadi Nimer (fadi_nimer@hotmail.com) :
 
 ## The following are the categories of main users:
 1. Employer – create an account/register, login, browse candidates, add job offers, select
