@@ -17,7 +17,7 @@ This app makes searching for jobs super easy! All you need is a stable connectio
 - Clara Gagnon(clarag02, Strengths: Web Development, OOP) : UX Designer
 - Roger Daniel Matute(DanielC2001, Strengths: Web Development, Fullstack Development, ReactJS, Javascript) : Frontend Developer
 - Arthur Mosnier (heyitsarthur,  Strengths: Web Development, Java) : Frontend Developer
-- Fadi Nimer (Lukateki) | Strengths : Front-end (Javascript, React.js), OOP (Java, Python), Agile, GitHub
+- Fadi Nimer (Lukateki) | Strengths : Front-end (Javascript, React.js), OOP (Java, Python), Agile, GitHub | Roles : Scrum Master, Frontend Developer
 
 ## Core Features:
 - Search for jobs filter results to find a fitting job for a candidates qualifications.
