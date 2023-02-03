@@ -35,5 +35,9 @@ resume; browse for job offers; apply for those postings
 ## List of Technologies used for the entirety of this Application
 ![ProjectDiagram](https://user-images.githubusercontent.com/30945652/215239820-46137d60-dc21-46c6-88ec-3b20c9f4fd63.png)
 
+## Database design (draft)
+![image](https://user-images.githubusercontent.com/87549228/216638360-7f8fb2bc-8ae8-458a-9c85-b17f189707c3.png)
+
+
 #### TA github: bluestberries
 
