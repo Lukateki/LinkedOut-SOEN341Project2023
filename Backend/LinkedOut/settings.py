@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # everytime an app is created, add below
     'playground',
+    'credentials',
     'debug_toolbar',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

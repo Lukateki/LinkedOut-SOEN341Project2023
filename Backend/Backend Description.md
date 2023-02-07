@@ -18,3 +18,8 @@
 
 To run server: `python manage.py runserver`
 After creating/modifying a model: `python manage.py makemigrations <Name of App>`
+
+## Superuser for django
+username: Linkedout
+email: admin@linkedout.com
+password: 1234
