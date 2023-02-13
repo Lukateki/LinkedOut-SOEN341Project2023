@@ -1,4 +1,6 @@
 #### Backend Doc
+Access Job postings with "http://127.0.0.1:8000/jobs/"
+
 ### To create new API:
 
 1. Create new folder with API name (also called app) using: 
@@ -20,6 +22,6 @@ To run server: `python manage.py runserver`
 After creating/modifying a model: `python manage.py makemigrations <Name of App>`
 
 ## Superuser for django
-username: Linkedout
+username: admin
 email: admin@linkedout.com
-password: 1234
+password: Password

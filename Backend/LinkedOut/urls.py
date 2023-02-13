@@ -16,13 +16,14 @@ Including another URLconf
 
 from django.urls import include, path
 from rest_framework import routers
-from credentials import views
+from credentials.views import UserViewSet, GroupViewSet
+from JobListings.views import JobViewSet
 from django.contrib import admin
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
-router.register(r'jobs', views.JobViewSet)
+router.register(r'users', UserViewSet)
+router.register(r'groups', GroupViewSet)
+router.register(r'jobs', JobViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -31,9 +32,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
-    path('__debug__/', include('debug_toolbar.urls')),
-    path('playground/', include('playground.urls')),    
-    # path('credentials/', include('credentials.urls')),
     path('credentials/', include('credentials.urls')),
-    path('listings/', include('joblistings.urls')),
 ]
