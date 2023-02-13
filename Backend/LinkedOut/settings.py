@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'credentials',
     'debug_toolbar',
     'rest_framework',
+    'JobListings',
 ]
 
 MIDDLEWARE = [

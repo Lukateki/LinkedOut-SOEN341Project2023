@@ -33,5 +33,6 @@ urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
     path('playground/', include('playground.urls')),
     # path('credentials/', include('credentials.urls')),
-    path('credentials/', include('credentials.urls'))
+    path('credentials/', include('credentials.urls')),
+    path('listings/', include('joblistings.urls')),
 ]
