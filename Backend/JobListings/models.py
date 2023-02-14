@@ -8,7 +8,7 @@ class Job(models.Model):
     posting_date = models.DateField()
     city = models.CharField(max_length=100) # table for cities with province and country
     job_type = models.CharField(max_length=100)
-    description = models.CharField(max_length=256)
+    description = models.CharField(max_length=2560)
 
     def __str__(self):
         return self.title
