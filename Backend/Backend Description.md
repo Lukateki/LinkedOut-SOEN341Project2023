@@ -1,5 +1,5 @@
 #### Backend Doc
-Access Job postings with "http://127.0.0.1:8000/jobs/"
+Access Job postings with "http://127.0.0.1:8000/api/v1/jobs/"
 
 ### To create new API:
 
