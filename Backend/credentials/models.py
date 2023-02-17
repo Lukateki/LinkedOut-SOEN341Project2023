@@ -7,3 +7,8 @@ class Candidate(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
     
+class Employer(models.Model):
+    company = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.company
