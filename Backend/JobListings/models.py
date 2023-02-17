@@ -6,7 +6,7 @@ from credentials.models import Employer
 class Job(models.Model):
     title = models.CharField(max_length=100)
     employer = models.ForeignKey(Employer, default=1, on_delete=models.CASCADE)
-    posting_url = models.CharField(max_length=100)
+    posting_url = models.TextField()
     posting_date = models.DateField()
     expiry_date = models.DateField(null=True)
     city = models.CharField(max_length=100) # table for cities with province and country
