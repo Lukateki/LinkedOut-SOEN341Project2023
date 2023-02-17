@@ -6,8 +6,9 @@ name = "pypi"
 [packages]
 django = "*"
 django-debug-toolbar = "*"
+djangorestframework = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "^3.7"

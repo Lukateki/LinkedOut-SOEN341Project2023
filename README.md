@@ -17,7 +17,7 @@ This app makes searching for jobs super easy! All you need is a stable connectio
 - Clara Gagnon(clarag02, Strengths: Web Development, OOP) : UX Designer
 - Roger Daniel Matute(DanielC2001, Strengths: Web Development, Fullstack Development, ReactJS, Javascript) : Frontend Developer
 - Arthur Mosnier (heyitsarthur,  Strengths: Web Development, Java) : Frontend Developer
-- Fadi Nimer (Lukateki) | Strengths : Front-end (Javascript, React.js), OOP (Java, Python), Agile, GitHub
+- Fadi Nimer (Lukateki) | Strengths : Front-end (Javascript, React.js), OOP (Java, Python), Agile, GitHub | Roles : Scrum Master, Frontend Developer
 
 ## Core Features:
 - Search for jobs filter results to find a fitting job for a candidates qualifications.
@@ -34,6 +34,10 @@ resume; browse for job offers; apply for those postings
 
 ## List of Technologies used for the entirety of this Application
 ![ProjectDiagram](https://user-images.githubusercontent.com/30945652/215239820-46137d60-dc21-46c6-88ec-3b20c9f4fd63.png)
+
+## Database design (draft)
+![image](https://user-images.githubusercontent.com/87549228/216638360-7f8fb2bc-8ae8-458a-9c85-b17f189707c3.png)
+
 
 #### TA github: bluestberries
 
