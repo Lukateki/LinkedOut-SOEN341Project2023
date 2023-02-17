@@ -25,6 +25,12 @@ class CandidateConfig(models.Model):
     current_employer = models.ForeignKey(Employer, default=-1, on_delete=models.CASCADE, null=True)
 
 
+class EmployerConfig(models.Model):
+    employer = models.ForeignKey(Employer, default=1, on_delete=models.CASCADE)
+    about = models.CharField(max_length=1500)
+    headquarters = models.CharField(max_length=100)
+
+
 class Education(models.Model):
     candidate = models.ForeignKey(Candidate, default=1, on_delete=models.CASCADE)
     school = models.CharField(max_length=100)
