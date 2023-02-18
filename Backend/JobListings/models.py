@@ -11,7 +11,7 @@ class Job(models.Model):
     expiry_date = models.DateField(null=True)
     city = models.CharField(max_length=100) # table for cities with province and country
     job_type = models.CharField(max_length=100)
-    description = models.CharField(max_length=2560)
+    description = models.TextField()
 
     def __str__(self):
         return self.title
