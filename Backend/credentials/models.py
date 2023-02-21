@@ -22,7 +22,7 @@ class CandidateConfig(models.Model):
     skills = models.TextField()
     interests = models.TextField()
     resume = models.BinaryField(max_length=None, null=True)#If there are errors uploading documents to this column, might need to set editable=True as a parameter
-    current_employer = models.ForeignKey(Employer, default=-1, on_delete=models.CASCADE, null=True)
+    current_employer = models.ForeignKey(Employer, default=1, on_delete=models.CASCADE, null=True)
 
 
 class EmployerConfig(models.Model):
