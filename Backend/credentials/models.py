@@ -48,7 +48,7 @@ class Experience(models.Model):
     company = models.CharField(max_length=100)
     position = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
-    description = models.CharField
+    description = models.TextField()
     skills = models.TextField()
     start_date = models.DateField()
     end_date = models.DateField(null=True)
