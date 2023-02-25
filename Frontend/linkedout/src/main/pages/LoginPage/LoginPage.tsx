@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, TextField } from '@mui/material';
-
+import { useLogin } from './hooks';
 import './LoginPage.css';
 
 const LoginPage = () => {
+    const { handleLoginBtnClick } = useLogin();
     return (
         <div className='login-page-wrapper'>
             <h2 className='linkedout-banner'>LinkedOut</h2>
@@ -12,14 +13,16 @@ const LoginPage = () => {
                     className='username-field'
                     label="Username"
                 />
-            <TextField
+                <TextField
                     className='password-field'
                     label="Password"
                     type="password"
                 />
-            <Button 
-                className='login-btn'
-                variant='contained'>
+                <Button 
+                    className='login-btn'
+                    variant='contained'
+                    onClick={handleLoginBtnClick}
+                >
                     Login
                 </Button> 
             </div>
