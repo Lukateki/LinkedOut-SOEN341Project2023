@@ -1,6 +1,7 @@
-const axios = require(`axios`);
+import axios from "axios";
+
+const auth = { username: "admin", password: "Password" };
 const api = "http://127.0.0.1:8000/api/v1";
-//Example of how to do request
 
 /*
 const dummyGETRequest = async () => {
@@ -29,13 +30,9 @@ const dummyPOSTRequest = async () => {
     });
 }
 */
-export const testRequest = async () => {
-    const params = {
-        username: "admin",
-        password: "Password"
-    };
 
-    axios.get(api + "/jobs", params)
-        .then(result => console.log(result))
-        .catch(error => console.log(error))
+export const testRequest = async () => {
+    axios.get(api + "/jobs", { auth })
+         .then(result => console.log(result))
+         .catch(error => console.log(error));
 }

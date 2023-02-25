@@ -4,7 +4,9 @@ import { useLogin } from './hooks';
 import './LoginPage.css';
 
 const LoginPage = () => {
+    
     const { handleLoginBtnClick } = useLogin();
+    
     return (
         <div className='login-page-wrapper'>
             <h2 className='linkedout-banner'>LinkedOut</h2>
