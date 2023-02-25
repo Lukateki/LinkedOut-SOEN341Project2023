@@ -72,3 +72,155 @@ class TestJob(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Job.objects.count(), jobs_num)
         self.assertEqual(Job.objects.get(pk=jobs_num).title, 'Product Manager')
+
+    # def test_update_job(self):
+    #     """
+    #     Ensure we can update a job object.
+    #     """
+    #     url = self.base_url
+    #     data = {
+    #         "title": "Software Developer",
+    #         "company": "Google",
+    #         "url": "https://www.google.com",
+    #         "posting_date": "2020-05-01",
+    #         "city": "Toronto",
+    #         "job_type": "Full Time",
+    #         "description": "This is a description"
+    #     }
+    #     response = self.client.post(url, data, format='json')
+    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    #     self.assertEqual(Job.objects.count(), 1)
+    #     self.assertEqual(Job.objects.get().title, 'Software Developer')
+    #     url = self.base_url + '1/'
+    #     data = {
+    #         "title": "Software Developer",
+    #         "company": "Google",
+    #         "url": "https://www.google.com",
+    #         "posting_date": "2020-05-01",
+    #         "city": "Toronto",
+    #         "job_type": "Full Time",
+    #         "description": "This is a description"
+    #     }
+    #     response = self.client.put(url, data, format='json')
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     self.assertEqual(response.data['title'], 'Software Developer')
+
+    # def test_delete_job(self):
+    #     """
+    #     Ensure we can delete a job object.
+    #     """
+    #     url = self.base_url
+    #     data = {
+    #         "title": "Software Developer",
+    #         "company": "Google",
+    #         "url": "https://www.google.com",
+    #         "posting_date": "2020-05-01",
+    #         "city": "Toronto",
+    #         "job_type": "Full Time",
+    #         "description": "This is a description"
+    #     }
+    #     response = self.client.post(url, data, format='json')
+    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    #     self.assertEqual(Job.objects.count(), 1)
+    #     self.assertEqual(Job.objects.get().title, 'Software Developer')
+    #     url = self.base_url + '1/'
+    #     response = self.client.delete(url, format='json')
+    #     self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+    #     self.assertEqual(Job.objects.count(), 0)
+
+    # def test_get_all_jobs(self):
+    #     """
+    #     Ensure we can get all job objects.
+    #     """
+    #     url = self.base_url
+    #     data = {
+    #         "title": "Software Developer",
+    #         "company": "Google",
+    #         "url": "https://www.google.com",
+    #         "posting_date": "2020-05-01",
+    #         "city": "Toronto",
+    #         "job_type": "Full Time",
+    #         "description": "This is a description"
+    #     }
+    #     response = self.client.post(url, data, format='json')
+    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    #     self.assertEqual(Job.objects.count(), 1)
+    #     self.assertEqual(Job.objects.get().title, 'Software Developer')
+    #     url = self.base_url
+    #     response = self.client.get(url, format='json')
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     self.assertEqual(len(response.data), 1)
+    #     self.assertEqual(response.data[0]['title'], 'Software Developer')
+
+    # def test_get_all_jobs_by_city(self):
+    #     """
+    #     Ensure we can get all job objects by city.
+    #     """
+    #     url = self.base_url
+    #     data = {
+    #         "title": "Software Developer",
+    #         "company": "Google",
+    #         "url": "https://www.google.com",
+    #         "posting_date": "2020-05-01",
+    #         "city": "Toronto",
+    #         "job_type": "Full Time",
+    #         "description": "This is a description"
+    #     }
+    #     response = self.client.post(url, data, format='json')
+    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    #     self.assertEqual(Job.objects.count(), 1)
+    #     self.assertEqual(Job.objects.get().title, 'Software Developer')
+    #     url = self.base_url + '?city=Toronto'
+    #     response = self.client.get(url, format='json')
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     self.assertEqual(len(response.data), 1)
+    #     self.assertEqual(response.data[0]['title'], 'Software Developer')
+
+    # def test_get_all_jobs_by_job_type(self):
+    #     """
+    #     Ensure we can get all job objects by job type.
+    #     """
+    #     url = self.base_url
+    #     data = {
+    #         "title": "Software Developer",
+    #         "company": "Google",
+    #         "url": "https://www.google.com",
+    #         "posting_date": "2020-05-01",
+    #         "city": "Toronto",
+    #         "job_type": "Full Time",
+    #         "description": "This is a description"
+    #     }
+    #     response = self.client.post(url, data, format='json')
+    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    #     self.assertEqual(Job.objects.count(), 1)
+    #     self.assertEqual(Job.objects.get().title, 'Software Developer')
+    #     url = self.base_url + '?job_type=Full Time'
+    #     response = self.client.get(url, format='json')
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     self.assertEqual(len(response.data), 1)
+    #     self.assertEqual(response.data[0]['title'], 'Software Developer')
+
+    # def test_get_all_jobs_by_city_and_job_type(self):
+    #     """
+    #     Ensure we can get all job objects by city and job type.
+    #     """
+    #     url = self.base_url
+    #     data = {
+    #         "title": "Software Developer",
+    #         "company": "Google",
+    #         "url": "https://www.google.com",
+    #         "posting_date": "2020-05-01",
+    #         "city": "Toronto",
+    #         "job_type": "Full Time",
+    #         "description": "This is a description"
+    #     }
+    #     response = self.client.post(url, data, format='json')
+    #     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    #     self.assertEqual(Job.objects.count(), 1)
+    #     self.assertEqual(Job.objects.get().title, 'Software Developer')
+    #     url = self.base_url + '?city=Toronto&job_type=Full Time'
+    #     response = self.client.get(url, format='json')
+    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
+    #     self.assertEqual(len(response.data), 1)
+    #     self.assertEqual(response.data[0]['title'], 'Software Developer')
+
