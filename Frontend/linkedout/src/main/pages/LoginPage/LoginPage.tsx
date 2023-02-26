@@ -30,8 +30,9 @@ const LoginPage = () => {
                 <Button 
                     className='register-btn' 
                     onClick={handleLoginBtnClick}
+                    href="/RegistrationPage"
                 >
-                    create account
+                    Create account
                 </Button> 
     
             </div>
