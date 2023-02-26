@@ -24,12 +24,17 @@ class CandidateConfig(models.Model):
     resume = models.BinaryField(max_length=None, null=True)#If there are errors uploading documents to this column, might need to set editable=True as a parameter
     current_employer = models.ForeignKey(Employer, default=1, on_delete=models.CASCADE, null=True)
 
+    def __str__(self):
+        return self.candidate.__str__()
+
 
 class EmployerConfig(models.Model):
     employer = models.ForeignKey(Employer, default=1, on_delete=models.CASCADE)
     about = models.TextField()
     headquarters = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.employer.__str__()
 
 class Education(models.Model):
     candidate = models.ForeignKey(Candidate, default=1, on_delete=models.CASCADE)
@@ -42,6 +47,8 @@ class Education(models.Model):
     start_date = models.DateField()
     end_date = models.DateField(null=True)
 
+    def __str__(self):
+        return self.school
 
 class Experience(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
@@ -52,3 +59,6 @@ class Experience(models.Model):
     skills = models.TextField()
     start_date = models.DateField()
     end_date = models.DateField(null=True)
+
+    def __str__(self):
+        return self.company
