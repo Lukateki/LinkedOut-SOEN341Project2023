@@ -5,7 +5,18 @@ import './LoginPage.css';
 
 const LoginPage = () => {
     const { handleLoginBtnClick } = useLogin();
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [userType, setUserType] = useState('student'); // set initial value to student
+
+    const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUsername(event.target.value);
+      };
+    
+      const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(event.target.value);
+      };
     const handleUserTypeChange = (event, newUserType) => {
       setUserType(newUserType);
     };
@@ -15,12 +26,16 @@ const LoginPage = () => {
             <div className='login-container'>
                 <TextField
                     className='username-field'
-                    label="Username"
+                    label="Username/Email"
+                    value={username}
+                    onChange={handleUsernameChange}
                 />
                 <TextField
                     className='password-field'
                     label="Password"
                     type="password"
+                    value={password}
+                    onChange={handlePasswordChange}
                 />
                 <ToggleButtonGroup
                   value={userType}
