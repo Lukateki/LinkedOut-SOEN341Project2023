@@ -27,6 +27,7 @@ const LoginPage = () => {
                 <TextField
                     className='username-field'
                     label="Email"
+                    type="email"
                     value={username}
                     onChange={handleUsernameChange}
                 />
