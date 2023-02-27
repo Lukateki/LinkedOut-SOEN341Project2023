@@ -16,11 +16,15 @@
     margin-right: auto;
 }
 
-.registration-container .email-field , .registration-container .fullName-field, .registration-container .password-field, .registration-container .company-field {
+.registration-container .email-student-field , .registration-container .fullName-student-field, .registration-container .password-student-field {
     margin-top: 1em;
 }
 
-.registration-container .registration-btn {
+.registration-container .email-employer-field , .registration-container .fullName-employer-field, .registration-container .password-employer-field, .registration-container .company-employer-field {
+    margin-top: 1em;
+}
+
+.registration-container .registration-student-btn, .registration-container .registration-employer-btn {
     width: 40%;
     margin-top: 2em;
     margin-left: auto;

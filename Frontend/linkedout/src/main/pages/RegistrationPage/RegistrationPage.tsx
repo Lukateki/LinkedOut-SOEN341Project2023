@@ -49,22 +49,22 @@ export const RegistrationPage = () => {
         {toggleStudent && (
         <div className='registration-container'>
             <TextField
-                className='fullName-field'
+                className='fullName-student-field'
                 label="Full name"     
             />
             <TextField
-                className='email-field'
+                className='email-student-field'
                 label="Email"
                 type="email"
             />
             <TextField
-                className='password-field'
+                className='password-student-field'
                 label="Password"
                 type="password"
             />    
             
             <Button 
-                className='registration-btn'
+                className='registration-student-btn'
                 variant='contained'
                 onClick={handleRegisterBtnClick}
             >
@@ -77,26 +77,26 @@ export const RegistrationPage = () => {
         {toggleEmployer && (
         <div className='registration-container'>
             <TextField
-                className='fullName-field'
+                className='fullName-employer-field'
                 label="Full Name"     
             />
             <TextField
-                className='company-field'
+                className='company-employer-field'
                 label= 'Company'
             />
             <TextField
-                className='email-field'
+                className='email-employer-field'
                 label="Email"
                 type="email"
             />
             <TextField
-                className='password-field'
+                className='password-employer-field'
                 label="Password"
                 type="password"
             />  
               
             <Button 
-                className='registration-btn'
+                className='registration-employer-btn'
                 variant='contained'
                 onClick={handleRegisterBtnClick}
             >
