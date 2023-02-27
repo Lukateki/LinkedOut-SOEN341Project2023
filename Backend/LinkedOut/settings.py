@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # everytime an app is created, add below
     'credentials',
     'rest_framework',
+    'rest_framework.authtoken',
     'JobListings',
     'corsheaders',
 ]
@@ -135,7 +136,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
