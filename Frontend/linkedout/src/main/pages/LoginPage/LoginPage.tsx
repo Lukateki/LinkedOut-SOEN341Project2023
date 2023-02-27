@@ -4,7 +4,9 @@ import { useLogin } from './hooks';
 import './LoginPage.css';
 
 const LoginPage = () => {
-    const { handleLoginBtnClick } = useLogin();
+    
+    const { handleLoginBtnClick, loginUsername, loginPassword, handleUsernameChange, handlePasswordChange, error } = useLogin();
+    
     return (
         <div className='login-page-wrapper'>
             <h2 className='linkedout-banner'>LinkedOut</h2>
@@ -12,11 +14,19 @@ const LoginPage = () => {
                 <TextField
                     className='username-field'
                     label="Username"
+                    value={loginUsername}
+                    onChange={handleUsernameChange}
+                    error={error}
+                    helperText={ error ? "Invalid Username" : "" }
                 />
                 <TextField
                     className='password-field'
                     label="Password"
                     type="password"
+                    value={loginPassword}
+                    onChange={handlePasswordChange}
+                    error={error}
+                    helperText={error ? "Invalid Password" : "" }
                 />
                 <Button 
                     className='login-btn'

@@ -16,6 +16,7 @@ Including another URLconf
 
 from django.urls import include, path
 from rest_framework import routers
+from rest_framework.authtoken import views
 from credentials.views import CandidateConfigViewSet, CandidateViewSet, EducationViewSet, EmployerConfigViewSet, EmployerViewSet, ExperienceViewSet, UserViewSet, GroupViewSet
 from JobListings.views import JobViewSet
 from django.contrib import admin
@@ -31,12 +32,12 @@ router.register(r'employerconfigs', EmployerConfigViewSet)
 router.register(r'educations', EducationViewSet)
 router.register(r'experiences', ExperienceViewSet)
 
-
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api-token-auth/', views.obtain_auth_token),
     path('admin/', admin.site.urls),
 ]
