@@ -35,6 +35,13 @@ const LoginPage = () => {
                 >
                     Login
                 </Button> 
+                <Button 
+                    className='register-btn' 
+                    onClick={handleLoginBtnClick}
+                    href="/RegistrationPage"
+                >
+                    Create account
+                </Button> 
             </div>
         </div>
     )
