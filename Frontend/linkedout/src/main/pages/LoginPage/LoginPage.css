@@ -30,3 +30,10 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.login-container .register-btn {
+    font-size: 11px;
+    margin-top: 1em;
+    margin-left: auto;
+    margin-right: auto;
+}
