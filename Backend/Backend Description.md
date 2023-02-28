@@ -25,3 +25,13 @@ After creating/modifying a model: `python manage.py makemigrations <Name of App>
 username: admin
 email: admin@linkedout.com
 password: Password
+
+## Applicant user
+username: applicant
+email: applicant@gmail.com
+password: apply123
+
+## Employer user
+username: employer
+email: employer@company.com
+password: hired123
