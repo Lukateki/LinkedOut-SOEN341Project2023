@@ -31,3 +31,17 @@
     justify-content: center;
     flex-grow: 1;
   }
+
+  .job-postings {
+    list-style: none;
+    padding: 0;
+    margin: 16px;
+  }
+  
+  .job-postings li {
+    margin-bottom: 16px;
+  }
+  
+  .job-postings h3 {
+    margin-bottom: 8px;
+  }
