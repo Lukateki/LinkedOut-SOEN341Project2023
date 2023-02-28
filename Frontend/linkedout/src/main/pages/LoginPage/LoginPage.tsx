@@ -5,7 +5,7 @@ import './LoginPage.css';
 
 const LoginPage = () => {
     
-    const { handleLoginBtnClick, loginUsername, loginPassword, handleUsernameChange, handlePasswordChange, error } = useLogin();
+    const { handleLoginBtnClick, handleRegistration, loginUsername, loginPassword, handleUsernameChange, handlePasswordChange, error } = useLogin();
     
     return (
         <div className='login-page-wrapper'>
@@ -37,7 +37,7 @@ const LoginPage = () => {
                 </Button> 
                 <Button 
                     className='register-btn'
-                    href="/RegistrationPage"
+                    onClick={handleRegistration}
                 >
                     Create account
                 </Button> 
