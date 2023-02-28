@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 
 from credentials.models import Applicant, Candidate, CandidateConfig, Education, Employer, EmployerConfig, Experience, Recruiter
@@ -25,9 +25,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
         if serializer.is_valid():
             user = User.objects.create_user(username=username, password=password, first_name=first_name, last_name=last_name, email=email)        
-            return Response(data={'user_id': user.id}, status=201)
+            return Response(data={'user_id': user.id}, status=status.HTTP_201_CREATED)
         else:
-            return Response(data=serializer.errors, status=400)
+            return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GroupViewSet(viewsets.ModelViewSet):
