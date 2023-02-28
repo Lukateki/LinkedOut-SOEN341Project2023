@@ -36,8 +36,7 @@ const LoginPage = () => {
                     Login
                 </Button> 
                 <Button 
-                    className='register-btn' 
-                    onClick={handleLoginBtnClick}
+                    className='register-btn'
                     href="/RegistrationPage"
                 >
                     Create account

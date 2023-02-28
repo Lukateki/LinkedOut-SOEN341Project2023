@@ -19,6 +19,11 @@ export const useLogin = () => {
         setLoginPassword(inputPassword.target.value);
     }
 
+    const handleRegistration = () => {
+     navigate("/RegistrationPage");
+    }
+        
+
     const handleLoginBtnClick = useCallback(() => {
         candidate_login(loginUsername, loginPassword).then(result => {
             setError(false);
@@ -30,5 +35,5 @@ export const useLogin = () => {
         });
     }, [loginUsername, loginPassword, navigate])
 
-    return { error, loginUsername, loginPassword, handleUsernameChange, handlePasswordChange, handleLoginBtnClick };
+    return { error, loginUsername, loginPassword, handleUsernameChange, handlePasswordChange, handleRegistration, handleLoginBtnClick};
 }
