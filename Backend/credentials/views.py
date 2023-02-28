@@ -2,9 +2,9 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 
-from credentials.models import Applicant, Candidate, CandidateConfig, Education, Employer, EmployerConfig, Experience
+from credentials.models import Applicant, Candidate, CandidateConfig, Education, Employer, EmployerConfig, Experience, Recruiter
 from .serializers import ApplicantSerializer, CandidateConfigSerializer, CandidateSerializer, EducationSerializer, EmployerConfigSerializer,\
-      EmployerSerializer, ExperienceSerializer, UserSerializer, GroupSerializer
+      EmployerSerializer, ExperienceSerializer, RecruiterSerializer, UserSerializer, GroupSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -13,20 +13,6 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-
-    # def create(self, request, *args, **kwargs):
-    #     user = request.user
-    #     data = {
-    #         "title": request.POST.get('title', None),
-    #         }
-    #     serializer = self.serializer_class(data=data, # or request.data
-    #                                        context={'author': user})
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(data=serializer.data, status=status.HTTP_201_CREATED)
-    #     else:
-    #         return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
     def create(self, request, *args, **kwargs):
         username = request.data['email']
@@ -56,6 +42,11 @@ class GroupViewSet(viewsets.ModelViewSet):
 class ApplicantViewSet(viewsets.ModelViewSet):
     queryset = Applicant.objects.all()
     serializer_class = ApplicantSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+   
+class RecruiterViewSet(viewsets.ModelViewSet):
+    queryset = Recruiter.objects.all()
+    serializer_class = RecruiterSerializer
     # permission_classes = [permissions.IsAuthenticated]
     
 class CandidateViewSet(viewsets.ModelViewSet):

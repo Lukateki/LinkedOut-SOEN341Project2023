@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from credentials.models import Applicant, Candidate, CandidateConfig, Education, Employer, EmployerConfig, Experience
+from credentials.models import Applicant, Candidate, CandidateConfig, Education, Employer, EmployerConfig, Experience, Recruiter
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -16,6 +16,11 @@ class GroupSerializer(serializers.ModelSerializer):
 class ApplicantSerializer(serializers.ModelSerializer):
     class Meta:
         model = Applicant
+        fields = '__all__'
+        
+class RecruiterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Recruiter
         fields = '__all__'
         
 class CandidateSerializer(serializers.ModelSerializer):

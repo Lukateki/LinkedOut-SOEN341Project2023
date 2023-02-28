@@ -17,7 +17,7 @@ Including another URLconf
 from django.urls import include, path
 from rest_framework import routers
 from rest_framework.authtoken import views
-from credentials.views import ApplicantViewSet, CandidateConfigViewSet, CandidateViewSet, EducationViewSet, EmployerConfigViewSet, EmployerViewSet, ExperienceViewSet, UserViewSet, GroupViewSet
+from credentials.views import ApplicantViewSet, CandidateConfigViewSet, CandidateViewSet, EducationViewSet, EmployerConfigViewSet, EmployerViewSet, ExperienceViewSet, RecruiterViewSet, UserViewSet, GroupViewSet
 from JobListings.views import JobViewSet
 from django.contrib import admin
 
@@ -32,6 +32,7 @@ router.register(r'employerconfigs', EmployerConfigViewSet)
 router.register(r'educations', EducationViewSet)
 router.register(r'experiences', ExperienceViewSet)
 router.register(r'applicants', ApplicantViewSet)
+router.register(r'recruiters', RecruiterViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
