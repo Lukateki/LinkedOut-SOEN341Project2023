@@ -2,7 +2,8 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, permissions
 
 from credentials.models import Candidate, CandidateConfig, Education, Employer, EmployerConfig, Experience
-from .serializers import CandidateConfigSerializer, CandidateSerializer, EducationSerializer, EmployerConfigSerializer, EmployerSerializer, ExperienceSerializer, UserSerializer, GroupSerializer
+from .serializers import CandidateConfigSerializer, CandidateSerializer, EducationSerializer, EmployerConfigSerializer,\
+      EmployerSerializer, ExperienceSerializer, UserSerializer, GroupSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
