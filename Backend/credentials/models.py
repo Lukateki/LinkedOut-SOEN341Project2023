@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 
 class Applicant(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     reffered_pronouns = models.CharField(max_length=50, default="None")
     skills = models.TextField(null=True)
     interests = models.TextField(null=True)
@@ -17,7 +17,15 @@ class Applicant(models.Model):
     def __str__(self):
         return self.username
 
+class Recruiter(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    company = models.CharField(max_length=100)
+    about = models.TextField(null=True)
+    headquarters = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.username
+    
 class Candidate(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
