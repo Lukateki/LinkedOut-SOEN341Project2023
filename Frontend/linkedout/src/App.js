@@ -2,6 +2,7 @@ import LoginPage from './main/pages/LoginPage/LoginPage.tsx';
 import RegistrationPage from './main/pages/RegistrationPage/RegistrationPage.tsx';
 import NotFoundPage from './main/pages/404-Page/404Page.tsx';
 import HomePage from './main/pages/HomePage/HomePage.tsx';
+import ProfilePage from './main/pages/ProfilePage/ProfilePage.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 
@@ -19,6 +20,11 @@ const router = createBrowserRouter([
   {
     path:"/RegistrationPage",
     element: <RegistrationPage />
+  },
+
+  {
+    path:"/Profile",
+    element: <ProfilePage />
   },
   /*
     To add a new route/url
