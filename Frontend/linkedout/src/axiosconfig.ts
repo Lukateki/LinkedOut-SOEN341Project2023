@@ -40,10 +40,12 @@ export const candidate_login = async (username: string, password: string) => {
 }
 
 export const get_all_jobs = async () => {
-    return axios.get(api + '/jobs');
-}
+    const authToken = new Cookies().get("auth-token");
+    const headers = { 'Authorization': `Token ${authToken}` }
+    return axios.get(api + '/candidates', { headers });
 }
 
+//for the applicant/student/candidate registration
 export const register_applicant = async () => {
     return axios.post(api + "/applicants/", {skills: undefined, interests: undefined, resume: undefined})
 }
