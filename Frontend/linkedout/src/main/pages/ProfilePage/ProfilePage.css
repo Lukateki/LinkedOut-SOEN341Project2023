@@ -1,0 +1,44 @@
+.profile-name{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pronouns{
+    font-weight: 100;
+    font-size:1rem;
+}
+.profile-skills, .profile-interests{
+    width:50vw;
+    display: inline-block;
+}
+
+.profile-skills-content, .profile-interests-content{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-skills-content ul{
+    font-size: large;
+    width:50%;
+    
+}
+
+.profile-experience{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+}
+
+.profile-experience-entry{
+    width:70vw;
+    flex-direction: column;
+    display:flex;
+    align-items: flex-start;
+}
+
+.profile-experience-entry-description{
+    align-self: center;
+    width:80%;
+}

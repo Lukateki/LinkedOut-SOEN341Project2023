@@ -42,3 +42,7 @@ export const candidate_login = async (username: string, password: string) => {
 export const get_all_jobs = async () => {
     return axios.get(api + '/jobs');
   }
+
+export const get_user_info = async (id) => {
+    return axios.get(api + `/applicants/${id}`)
+}
