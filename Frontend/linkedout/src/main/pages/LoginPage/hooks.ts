@@ -20,7 +20,7 @@ export const useLogin = () => {
     }
 
     const handleRegistration = () => {
-     navigate("/RegistrationPage");
+     navigate("/register");
     }
         
 
