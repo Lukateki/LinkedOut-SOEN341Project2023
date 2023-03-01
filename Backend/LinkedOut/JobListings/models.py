@@ -1,6 +1,6 @@
 from django.db import models
 
-from credentials.models import Employer
+from LinkedOut.credentials.models import Employer
 
 # Create your models here.
 class Job(models.Model):
