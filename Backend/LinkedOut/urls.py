@@ -17,8 +17,8 @@ Including another URLconf
 from django.urls import include, path
 from rest_framework import routers
 from rest_framework.authtoken import views
-from credentials.views import ApplicantViewSet, CandidateConfigViewSet, CandidateViewSet, EducationViewSet, EmployerConfigViewSet, EmployerViewSet, ExperienceViewSet, RecruiterViewSet, UserViewSet, GroupViewSet
-from JobListings.views import JobViewSet
+from LinkedOut.credentials.views import ApplicantViewSet, CandidateConfigViewSet, CandidateViewSet, EducationViewSet, EmployerConfigViewSet, EmployerViewSet, ExperienceViewSet, RecruiterViewSet, UserViewSet, GroupViewSet
+from LinkedOut.JobListings.views import JobViewSet
 from django.contrib import admin
 
 router = routers.DefaultRouter()
