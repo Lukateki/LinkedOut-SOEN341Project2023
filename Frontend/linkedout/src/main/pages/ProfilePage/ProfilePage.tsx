@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { get_user_info } from "../../../axiosconfig";
 import "./ProfilePage.css"
 
 const ProfilePage = () => {
