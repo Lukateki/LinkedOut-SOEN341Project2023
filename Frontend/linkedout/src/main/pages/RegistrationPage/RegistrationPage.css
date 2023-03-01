@@ -1,5 +1,5 @@
 .registration-page-wrapper {
-    margin-top: 10em;
+    margin-top: 7em;
 }
 
 .linkedout-banner, .student-employer-choice {
@@ -8,7 +8,7 @@
 }
 
 .registration-container {
-    width: 20%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     margin-top: 1em;
@@ -16,11 +16,11 @@
     margin-right: auto;
 }
 
-.registration-container .email-student-field , .registration-container .fullName-student-field, .registration-container .password-student-field {
+.registration-container .email-student-field , .registration-container .names .firstName-student-field,.registration-container .lastName-student-field, .registration-container .password-student-field ,  .registration-container .username-student-field {
     margin-top: 1em;
 }
 
-.registration-container .email-employer-field , .registration-container .fullName-employer-field, .registration-container .password-employer-field, .registration-container .company-employer-field {
+.registration-container .email-employer-field , .registration-container .firstName-employer-field, .registration-container .lastName-employer-field, .registration-container .password-employer-field, .registration-container .username-employer-field , .registration-container .company-employer-field {
     margin-top: 1em;
 }
 
@@ -36,6 +36,12 @@
     margin-top: 2em;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.names {
     display: flex;
     flex-direction: row;
     justify-content: space-between;

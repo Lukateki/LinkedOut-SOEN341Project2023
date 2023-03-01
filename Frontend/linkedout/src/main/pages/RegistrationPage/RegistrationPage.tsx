@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
 import { Button, TextField } from '@mui/material';
-import { useRegister } from './hooks';
+import { useRegisterStudent , useRegisterEmployer } from './hooks';
 import './RegistrationPage.css';
 
 export const RegistrationPage = () => {
     //Toggles between the student and employer forms 
-    const { handleRegisterBtnClick } = useRegister();
+    const { handleRegisterStudentBtnClick, firstNameStudent, lastNameStudent, emailStudent, usernameStudent, passwordStudent, errorS1, errorS2, errorS3, errorS4, errorS5, handleFirstNameStudentChange, handleLastNameStudentChange, handleEmailStudentChange, handlePasswordStudentChange, handleUsernameStudentChange } = useRegisterStudent();
+    const { handleRegisterEmployerBtnClick, firstNameEmployer, lastNameEmployer, emailEmployer, usernameEmployer, passwordEmployer, company, errorE1, errorE2, errorE3, errorE4, errorE5, errorE6, handleCompanyChange, handleFirstNameEmployerChange, handleLastNameEmployerChange, handleEmailEmployerChange, handlePasswordEmployerChange, handleUsernameEmployerChange } = useRegisterEmployer();
+
+
     const [toggleStudent, setToggleStudent] = useState(false)
     const [toggleEmployer, setToggleEmployer] = useState(false)
     const [colorStudent, setColorStudent] = useState(true)
@@ -48,25 +51,60 @@ export const RegistrationPage = () => {
         {/*The student form*/}
         {toggleStudent && (
         <div className='registration-container'>
-            <TextField
-                className='fullName-student-field'
-                label="Full name"     
-            />
+            <div className='names'>
+                <TextField
+                    className='firstName-student-field'
+                    label="First Name"
+                    value={firstNameStudent}
+                    onChange={handleFirstNameStudentChange}
+                    error={errorS1}
+                    helperText={ errorS1 ? "Missing First Name" : "" }
+
+                />
+                <TextField
+                    className='lastName-student-field'
+                    label="Last Name"
+                    value={lastNameStudent}
+                    onChange={handleLastNameStudentChange}
+                    error={errorS2}
+                    helperText={ errorS2 ? "Missing Last Name" : "" }
+
+                />
+            </div>
+
             <TextField
                 className='email-student-field'
                 label="Email"
                 type="email"
+                value={emailStudent}
+                onChange={handleEmailStudentChange}
+                error={errorS3}
+                helperText={ errorS3 ? "Invalid Email" : "" }
             />
+
+            <TextField
+                className='username-student-field'
+                label="Username"
+                value={usernameStudent}
+                onChange={handleUsernameStudentChange}
+                error={errorS4}
+                helperText={ errorS4 ? "Invalid Username" : "" }
+            />
+
             <TextField
                 className='password-student-field'
                 label="Password"
                 type="password"
+                value={passwordStudent}
+                onChange={handlePasswordStudentChange}
+                error={errorS5}
+                helperText={ errorS5 ? "Invalid Password" : "" }
             />    
             
             <Button 
                 className='registration-student-btn'
                 variant='contained'
-                onClick={handleRegisterBtnClick}
+                onClick={handleRegisterStudentBtnClick}
             >
                 Register
             </Button> 
@@ -76,29 +114,65 @@ export const RegistrationPage = () => {
         {/*The employer form*/}
         {toggleEmployer && (
         <div className='registration-container'>
-            <TextField
-                className='fullName-employer-field'
-                label="Full Name"     
-            />
+            <div className='names'>
+                <TextField
+                    className='firstName-employer-field'
+                    label="First Name" 
+                    value={firstNameEmployer}
+                    onChange={handleFirstNameEmployerChange}
+                    error={errorE1}
+                    helperText={ errorE1 ? "Missing First Name" : "" }    
+                />
+                <TextField
+                    className='lastName-employer-field'
+                    label="Last Name"
+                    value={lastNameEmployer}
+                    onChange={handleLastNameEmployerChange}
+                    error={errorE2}
+                    helperText={ errorE2 ? "Missing First Name" : "" }     
+                />
+            </div>
             <TextField
                 className='company-employer-field'
                 label= 'Company'
+                value={company}
+                onChange={handleCompanyChange}
+                error={errorE6}
+                helperText={ errorE6 ? "Missing Company" : "" }
             />
             <TextField
                 className='email-employer-field'
                 label="Email"
                 type="email"
+                value={emailEmployer}
+                onChange={handleEmailEmployerChange}
+                error={errorE3}
+                helperText={ errorE3 ? "Missing or Invalid Email" : "" }
             />
+
+            <TextField
+                className='username-employer-field'
+                label="Username"
+                value={usernameEmployer}
+                onChange={handleUsernameEmployerChange}
+                error={errorE4}
+                helperText={ errorE4 ? "Missing Username" : "" }
+            />
+
             <TextField
                 className='password-employer-field'
                 label="Password"
                 type="password"
+                value={passwordEmployer}
+                onChange={handlePasswordEmployerChange}
+                error={errorE5}
+                helperText={ errorE5 ? "Missing Password" : "" }
             />  
               
             <Button 
                 className='registration-employer-btn'
                 variant='contained'
-                onClick={handleRegisterBtnClick}
+                onClick={handleRegisterEmployerBtnClick}
             >
                 Register
             </Button> 
