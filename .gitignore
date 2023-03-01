@@ -3,4 +3,3 @@ Backend/db.sqlite3
 *.sqlite3
 .DS_Store
 Backend/Pipfile.lock
-Backend/db.sqlite3
