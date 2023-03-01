@@ -12,7 +12,7 @@ const HomePage = () => {
     navigate('/login');
   };
   const handleRegisterClick = () => {
-    navigate('/register');
+    navigate('/RegistrationPage');
   };
 
   useEffect(() => {
