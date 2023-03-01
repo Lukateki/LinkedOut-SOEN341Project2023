@@ -40,7 +40,5 @@ export const candidate_login = async (username: string, password: string) => {
 }
 
 export const get_all_jobs = async () => {
-    const authToken = new Cookies().get("auth-token");
-    const headers = { 'Authorization': `Token ${authToken}` }
-    return axios.get(api + '/candidates', { headers });
-}
+    return axios.get(api + '/jobs');
+  }
