@@ -27,11 +27,6 @@ const router = createBrowserRouter([
     path:"/Profile",
     element: <ProfilePage />
   },
-
-  {
-    path:"/Profile",
-    element: <ProfilePage />
-  },
   /*
     To add a new route/url
     in here: Add another object like this
