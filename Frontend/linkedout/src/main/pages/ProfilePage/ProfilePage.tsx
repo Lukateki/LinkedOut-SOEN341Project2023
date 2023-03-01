@@ -10,7 +10,7 @@ const ProfilePage = () => {
         navigate('/login');
       };
       const handleRegisterClick = () => {
-        navigate('/RegistrationPage');
+        navigate('/register');
       };
 
     
