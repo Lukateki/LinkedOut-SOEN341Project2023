@@ -17,9 +17,8 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />
   },
   {
-    path: '/register',
-    element: <RegistrationPage />,
-    errorElement: <NotFoundPage />
+    path:"/RegistrationPage",
+    element: <RegistrationPage />
   },
   /*
     To add a new route/url
