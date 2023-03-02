@@ -2,3 +2,5 @@ Backend/.vscode/settings.json
 Backend/db.sqlite3
 *.sqlite3
 .DS_Store
+Backend/Pipfile.lock
+*.pyc 

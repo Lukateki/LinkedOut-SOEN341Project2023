@@ -2,7 +2,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 
-from credentials.models import Applicant, Candidate, CandidateConfig, Education, Employer, EmployerConfig, Experience, Recruiter
+from LinkedOut.credentials.models import Applicant, Candidate, CandidateConfig, Education, Employer, EmployerConfig, Experience, Recruiter
 from .serializers import ApplicantSerializer, CandidateConfigSerializer, CandidateSerializer, EducationSerializer, EmployerConfigSerializer,\
       EmployerSerializer, ExperienceSerializer, RecruiterSerializer, UserSerializer, GroupSerializer
 

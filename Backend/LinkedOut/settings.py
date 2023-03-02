@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # everytime an app is created, add below
-    'credentials',
+    'LinkedOut.credentials',
     'rest_framework',
     'rest_framework.authtoken',
-    'JobListings',
+    'LinkedOut.JobListings',
     'corsheaders',
 ]
 

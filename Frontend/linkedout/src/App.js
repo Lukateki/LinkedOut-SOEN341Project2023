@@ -18,8 +18,9 @@ const router = createBrowserRouter([
     errorElement: <NotFoundPage />
   },
   {
-    path:"/RegistrationPage",
-    element: <RegistrationPage />
+    path: '/register',
+    element: <RegistrationPage />,
+    errorElement: <NotFoundPage />
   },
 
   {
