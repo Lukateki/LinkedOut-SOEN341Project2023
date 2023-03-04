@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from LinkedOut.credentials.models import Applicant, Candidate, CandidateConfig, Education, Employer, EmployerConfig, Experience, Recruiter
+from LinkedOut.credentials.models import Applicant, Education, Experience, Recruiter
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -21,26 +21,6 @@ class ApplicantSerializer(serializers.ModelSerializer):
 class RecruiterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recruiter
-        fields = '__all__'
-        
-class CandidateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Candidate
-        fields = '__all__'
-
-class EmployerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Employer
-        fields = '__all__'
-
-class CandidateConfigSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CandidateConfig
-        fields = '__all__'
-
-class EmployerConfigSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = EmployerConfig
         fields = '__all__'
 
 class EducationSerializer(serializers.ModelSerializer):

@@ -1,6 +1,7 @@
-import { ChangeEvent, useCallback, useState } from "react";
-import { auth_token_cookie_name, register_applicant, register_recruiter, register_user, update_applicant } from "../../../axiosconfig";
+import { ChangeEvent, useEffect, useState } from "react";
+import { register_applicant, register_recruiter, register_user, update_applicant, update_recruiter } from "../../../axiosconfig";
 import { useNavigate } from "react-router-dom";
+import { isUserLoggedIn } from "../LoginPage/types";
  
 
 export const useRegisterStudent = () => {
@@ -9,6 +10,7 @@ export const useRegisterStudent = () => {
     const [emailStudent, setEmailS] = useState("");
     const [usernameStudent, setUsernameS] = useState("");
     const [passwordStudent, setPasswordS] = useState("");
+    const isUserAuthenticated = isUserLoggedIn();
     
     //errors for empty/invalid fields
     const [errorS1, setErrorS1] = useState(false);
@@ -45,26 +47,26 @@ export const useRegisterStudent = () => {
     
 
     const handleRegisterStudentBtnClick =() => {
-        if(firstNameStudent==''){
+        if(firstNameStudent === ''){
             setErrorS1(true)
         }
-        if(lastNameStudent==''){
+        if(lastNameStudent === ''){
             setErrorS2(true)
         }
-        if(emailStudent==''|| !emailStudent.includes("@")){
+        if(emailStudent === ''|| !emailStudent.includes("@")){
             setErrorS3(true)
         }
-        if(usernameStudent==''){
+        if(usernameStudent === ''){
             setErrorS4(true)
         }
-        if(passwordStudent==''){
+        if(passwordStudent === ''){
             setErrorS5(true)
         }
 
         //they must all be false
         if (!errorS1 && !errorS2 && !errorS3 && !errorS4 && !errorS5 ){
             var applicantID = -1;
-            register_applicant().then(result => {
+            register_applicant(emailStudent).then(result => {
                 const registeredApplicant = result.data;
                 var tempApplicantID = registeredApplicant.id;
                 setErrorS1(false);
@@ -74,16 +76,19 @@ export const useRegisterStudent = () => {
                 setErrorS5(false);
                 applicantID=tempApplicantID;
                 register_user(firstNameStudent, lastNameStudent, emailStudent, usernameStudent, passwordStudent).then(success => {
-                    const userID = success.data.id;
+                    const userID = success.data.user_id;
                     update_applicant(applicantID, userID)
-                    navigate("/LoginPage")
+                    navigate("/login")
                 })
-            }).catch(error => {
-                
             })
-    
         }
     }
+    
+    useEffect(() => {
+        if (isUserAuthenticated) {
+            navigate("/");
+        }
+    });
 
     return { handleRegisterStudentBtnClick, firstNameStudent , lastNameStudent, emailStudent, usernameStudent, passwordStudent, handleFirstNameStudentChange, handleLastNameStudentChange, handleEmailStudentChange, handleUsernameStudentChange, handlePasswordStudentChange, errorS1, errorS2, errorS3, errorS4, errorS5};
 }
@@ -98,7 +103,7 @@ export const useRegisterEmployer = () => {
     const [usernameEmployer, setUsernameE] = useState("");
     const [passwordEmployer, setPasswordE] = useState("");
     const [company, setCompany] = useState("");
-
+    const isUserAuthenticated = isUserLoggedIn();
     
     //errors for empty/invalid fields
     const [errorE1, setErrorE1] = useState(false);
@@ -142,31 +147,31 @@ export const useRegisterEmployer = () => {
     
 
     const handleRegisterEmployerBtnClick =() => {
-        if(firstNameEmployer==''){
+        if(firstNameEmployer === ''){
             setErrorE1(true)
         }
-        if(lastNameEmployer==''){
+        if(lastNameEmployer ===''){
             setErrorE2(true)
         }
-        if(emailEmployer==''|| !emailEmployer.includes("@")){
+        if(emailEmployer === ''|| !emailEmployer.includes("@")){
             setErrorE3(true)
         }
-        if(usernameEmployer==''){
+        if(usernameEmployer === ''){
             setErrorE4(true)
         }
-        if(passwordEmployer==''){
+        if(passwordEmployer === ''){
             setErrorE5(true)
         }
-        if (company ==''){
+        if (company === ''){
             setErrorE6(true)
         }
 
         //they must all be false
         if (!errorE1 && !errorE2 && !errorE3 && !errorE4 && !errorE5 && !errorE6){
-            var applicantID = -1;
-            register_recruiter(company, "montreal").then(result => {
-                const registeredApplicant = result.data;
-                var tempApplicantID = registeredApplicant.id;
+            var recruiterID = -1;
+            register_recruiter(company, "montreal", emailEmployer).then(result => {
+                const registeredRecruiter = result.data;
+                var tempRecruiterID = registeredRecruiter.id;
                 setErrorE1(false);
                 setErrorE2(false);
                 setErrorE3(false);
@@ -174,18 +179,22 @@ export const useRegisterEmployer = () => {
                 setErrorE5(false);
                 setErrorE6(false);
 
-                applicantID=tempApplicantID;
+                recruiterID=tempRecruiterID;
                 register_user(firstNameEmployer, lastNameEmployer, emailEmployer, usernameEmployer, passwordEmployer).then(success => {
-                    const userID = success.data.id;
-                    update_applicant(applicantID, userID)
-                    navigate("/LoginPage")
+                    const userID = success.data.user_id;
+                    console.log(userID)
+                    update_recruiter(recruiterID, userID)
+                    navigate("/login")
                 })
-            }).catch(error => {
-                
             })
-    
         }
     }
+
+    useEffect(() => {
+        if (isUserAuthenticated) {
+            navigate("/");
+        }
+    });
 
     return { handleRegisterEmployerBtnClick, firstNameEmployer , lastNameEmployer, emailEmployer, usernameEmployer, passwordEmployer, company, handleFirstNameEmployerChange, handleLastNameEmployerChange, handleEmailEmployerChange, handleUsernameEmployerChange, handlePasswordEmployerChange, handleCompanyChange, errorE1, errorE2, errorE3, errorE4, errorE5, errorE6};
 }

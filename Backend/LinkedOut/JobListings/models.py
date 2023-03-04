@@ -1,11 +1,11 @@
 from django.db import models
 
-from LinkedOut.credentials.models import Employer
+from LinkedOut.credentials.models import Recruiter
 
 # Create your models here.
 class Job(models.Model):
     title = models.CharField(max_length=100)
-    employer = models.ForeignKey(Employer, default=1, on_delete=models.CASCADE)
+    recruiter = models.ForeignKey(Recruiter, default=1, on_delete=models.CASCADE)
     posting_url = models.TextField()
     posting_date = models.DateField()
     expiry_date = models.DateField(null=True)

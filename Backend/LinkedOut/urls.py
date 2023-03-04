@@ -17,18 +17,14 @@ Including another URLconf
 from django.urls import include, path
 from rest_framework import routers
 from rest_framework.authtoken import views
-from LinkedOut.credentials.views import ApplicantViewSet, CandidateConfigViewSet, CandidateViewSet, EducationViewSet, EmployerConfigViewSet, EmployerViewSet, ExperienceViewSet, RecruiterViewSet, UserViewSet, GroupViewSet
+from LinkedOut.credentials.views import ApplicantViewSet, EducationViewSet, ExperienceViewSet, RecruiterViewSet, UserViewSet, GroupViewSet
 from LinkedOut.JobListings.views import JobViewSet
 from django.contrib import admin
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
-router.register(r'groups', GroupViewSet)
+#router.register(r'groups', GroupViewSet)
 router.register(r'jobs', JobViewSet)
-router.register(r'candidates', CandidateViewSet)
-router.register(r'employers', EmployerViewSet)
-router.register(r'candidateconfigs', CandidateConfigViewSet)
-router.register(r'employerconfigs', EmployerConfigViewSet)
 router.register(r'educations', EducationViewSet)
 router.register(r'experiences', ExperienceViewSet)
 router.register(r'applicants', ApplicantViewSet)

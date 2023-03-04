@@ -1,5 +1,4 @@
 import axios from "axios";
-import Cookies from "universal-cookie/cjs/Cookies";
 
 //const auth = { username: "admin", password: "Password" };
 const rootAPI = "http://127.0.0.1:8000"; 
@@ -44,23 +43,39 @@ export const get_all_jobs = async () => {
 }
 
 //for the applicant/student/candidate registration
-export const register_applicant = async () => {
-    return axios.post(api + "/applicants/", {skills: undefined, interests: undefined, resume: undefined})
+export const register_applicant = async (username:string) => {
+    return axios.post(api + "/applicants/", {
+        username: username,
+        skills: undefined, 
+        interests: undefined, 
+        resume: undefined
+    })
 }
 
 export const register_user = async (first_name: string, last_name: string, email: string, username: string, password: string) => {
-    return axios.post(api + "/users/", {first_name: first_name, last_name: last_name, email: email, username: username, password: password})
+    return axios.post(api + "/users/", {
+        first_name: first_name, 
+        last_name: last_name, 
+        email: email, 
+        username: username, 
+        password: password
+    })
 }
 
 export const update_applicant = async (id: number, user_id: number) => {
-    return axios.patch(api + `/applicants/${id}/`, {user_id: user_id})
+    return axios.patch(api + `/applicants/${id}/`, {user: user_id})
 }
 
 //for the recruiters/employer registration
-export const register_recruiter = async (company: string, headquarters: string) => {
-    return axios.post(api + "/recruiters/", {company: company, about: undefined, headquarters: headquarters })
+export const register_recruiter = async (company: string, headquarters: string, username: string) => {
+    return axios.post(api + "/recruiters/", {
+        company: company, 
+        about: undefined, 
+        headquarters: headquarters,
+        username
+    })
 }
 
-export const update_recruiters = async (id: number, user_id: number) => {
-    return axios.patch(api + `/recruiters/${id}/`, {user_id: user_id})
+export const update_recruiter = async (id: number, user_id: number) => {
+    return axios.patch(api + `/recruiters/${id}/`, {user: user_id})
 }
