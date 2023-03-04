@@ -2,9 +2,8 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 
-from LinkedOut.credentials.models import Applicant, Candidate, CandidateConfig, Education, Employer, EmployerConfig, Experience, Recruiter
-from .serializers import ApplicantSerializer, CandidateConfigSerializer, CandidateSerializer, EducationSerializer, EmployerConfigSerializer,\
-      EmployerSerializer, ExperienceSerializer, RecruiterSerializer, UserSerializer, GroupSerializer
+from LinkedOut.credentials.models import Applicant, Education, Experience, Recruiter
+from .serializers import ApplicantSerializer, EducationSerializer, ExperienceSerializer, RecruiterSerializer, UserSerializer, GroupSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -47,26 +46,6 @@ class ApplicantViewSet(viewsets.ModelViewSet):
 class RecruiterViewSet(viewsets.ModelViewSet):
     queryset = Recruiter.objects.all()
     serializer_class = RecruiterSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-    
-class CandidateViewSet(viewsets.ModelViewSet):
-    queryset = Candidate.objects.all()
-    serializer_class = CandidateSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-
-class EmployerViewSet(viewsets.ModelViewSet):
-    queryset = Employer.objects.all()
-    serializer_class = EmployerSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-
-class CandidateConfigViewSet(viewsets.ModelViewSet):
-    queryset = CandidateConfig.objects.all()
-    serializer_class = CandidateConfigSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-
-class EmployerConfigViewSet(viewsets.ModelViewSet):
-    queryset = EmployerConfig.objects.all()
-    serializer_class = EmployerConfigSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
 class EducationViewSet(viewsets.ModelViewSet):
