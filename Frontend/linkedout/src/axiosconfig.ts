@@ -52,12 +52,11 @@ export const register_applicant = async (username:string) => {
     })
 }
 
-export const register_user = async (first_name: string, last_name: string, email: string, username: string, password: string) => {
+export const register_user = async (first_name: string, last_name: string, email: string,password: string) => {
     return axios.post(api + "/users/", {
         first_name: first_name, 
         last_name: last_name, 
-        email: email, 
-        username: username, 
+        email: email,  
         password: password
     })
 }
@@ -72,7 +71,7 @@ export const register_recruiter = async (company: string, headquarters: string, 
         company: company, 
         about: undefined, 
         headquarters: headquarters,
-        username
+        username: username
     })
 }
 

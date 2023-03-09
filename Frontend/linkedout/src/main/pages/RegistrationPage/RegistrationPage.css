@@ -20,7 +20,7 @@
     margin-top: 1em;
 }
 
-.registration-container .email-employer-field , .registration-container .firstName-employer-field, .registration-container .lastName-employer-field, .registration-container .password-employer-field, .registration-container .username-employer-field , .registration-container .company-employer-field {
+.registration-container .email-employer-field , .registration-container .firstName-employer-field, .registration-container .lastName-employer-field, .registration-container .password-employer-field, .registration-container .username-employer-field , .registration-container .company-employer-field , .registration-container .headquarter-employer-field {
     margin-top: 1em;
 }
 
@@ -41,7 +41,7 @@
     justify-content: space-between;
 }
 
-.names {
+.names , .company-info{
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -8,7 +8,6 @@ export const useRegisterStudent = () => {
     const [firstNameStudent, setFirstNameS] = useState("");
     const [lastNameStudent, setLastNameS] = useState("");
     const [emailStudent, setEmailS] = useState("");
-    const [usernameStudent, setUsernameS] = useState("");
     const [passwordStudent, setPasswordS] = useState("");
     const isUserAuthenticated = isUserLoggedIn();
     
@@ -36,10 +35,6 @@ export const useRegisterStudent = () => {
         setEmailS(inputEmail.target.value);
     }
 
-    const handleUsernameStudentChange = (inputUsername: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setErrorS4(false);
-        setUsernameS(inputUsername.target.value);
-    }
     const handlePasswordStudentChange = (inputPassword: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setErrorS5(false);
         setPasswordS(inputPassword.target.value);
@@ -56,9 +51,7 @@ export const useRegisterStudent = () => {
         if(emailStudent === ''|| !emailStudent.includes("@")){
             setErrorS3(true)
         }
-        if(usernameStudent === ''){
-            setErrorS4(true)
-        }
+
         if(passwordStudent === ''){
             setErrorS5(true)
         }
@@ -75,7 +68,7 @@ export const useRegisterStudent = () => {
                 setErrorS4(false);
                 setErrorS5(false);
                 applicantID=tempApplicantID;
-                register_user(firstNameStudent, lastNameStudent, emailStudent, usernameStudent, passwordStudent).then(success => {
+                register_user(firstNameStudent, lastNameStudent, emailStudent, passwordStudent).then(success => {
                     const userID = success.data.user_id;
                     update_applicant(applicantID, userID)
                     navigate("/login")
@@ -90,7 +83,7 @@ export const useRegisterStudent = () => {
         }
     });
 
-    return { handleRegisterStudentBtnClick, firstNameStudent , lastNameStudent, emailStudent, usernameStudent, passwordStudent, handleFirstNameStudentChange, handleLastNameStudentChange, handleEmailStudentChange, handleUsernameStudentChange, handlePasswordStudentChange, errorS1, errorS2, errorS3, errorS4, errorS5};
+    return { handleRegisterStudentBtnClick, firstNameStudent , lastNameStudent, emailStudent,passwordStudent, handleFirstNameStudentChange, handleLastNameStudentChange, handleEmailStudentChange,handlePasswordStudentChange, errorS1, errorS2, errorS3, errorS4, errorS5};
 }
 
 
@@ -100,9 +93,9 @@ export const useRegisterEmployer = () => {
     const [firstNameEmployer, setFirstNameE] = useState("");
     const [lastNameEmployer, setLastNameE] = useState("");
     const [emailEmployer, setEmailE] = useState("");
-    const [usernameEmployer, setUsernameE] = useState("");
     const [passwordEmployer, setPasswordE] = useState("");
     const [company, setCompany] = useState("");
+    const [headquarter, setHeadquarter] = useState("");
     const isUserAuthenticated = isUserLoggedIn();
     
     //errors for empty/invalid fields
@@ -112,6 +105,7 @@ export const useRegisterEmployer = () => {
     const [errorE4, setErrorE4] = useState(false);
     const [errorE5, setErrorE5] = useState(false);
     const [errorE6, setErrorE6] = useState(false);
+
 
 
 
@@ -131,20 +125,19 @@ export const useRegisterEmployer = () => {
         setEmailE(inputEmail.target.value);
     }
 
-    const handleUsernameEmployerChange = (inputUsername: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setErrorE4(false);
-        setUsernameE(inputUsername.target.value);
-    }
     const handlePasswordEmployerChange = (inputPassword: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setErrorE5(false);
+        setErrorE4(false);
         setPasswordE(inputPassword.target.value);
     }
 
     const handleCompanyChange = (inputCompany: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setErrorE6(false);
+        setErrorE5(false);
         setCompany(inputCompany.target.value);
     }
-    
+    const handleHeadquarterChange = (inputHeadquarter: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setErrorE6(false);
+        setHeadquarter(inputHeadquarter.target.value);
+    }
 
     const handleRegisterEmployerBtnClick =() => {
         if(firstNameEmployer === ''){
@@ -156,20 +149,20 @@ export const useRegisterEmployer = () => {
         if(emailEmployer === ''|| !emailEmployer.includes("@")){
             setErrorE3(true)
         }
-        if(usernameEmployer === ''){
+        if(passwordEmployer === ''){
             setErrorE4(true)
         }
-        if(passwordEmployer === ''){
+        if (company === ''){
             setErrorE5(true)
         }
-        if (company === ''){
-            setErrorE6(true)
+        if (headquarter === ''){
+            setErrorE6(true);
         }
 
         //they must all be false
         if (!errorE1 && !errorE2 && !errorE3 && !errorE4 && !errorE5 && !errorE6){
             var recruiterID = -1;
-            register_recruiter(company, "montreal", emailEmployer).then(result => {
+            register_recruiter(company, headquarter, emailEmployer).then(result => {
                 const registeredRecruiter = result.data;
                 var tempRecruiterID = registeredRecruiter.id;
                 setErrorE1(false);
@@ -180,7 +173,7 @@ export const useRegisterEmployer = () => {
                 setErrorE6(false);
 
                 recruiterID=tempRecruiterID;
-                register_user(firstNameEmployer, lastNameEmployer, emailEmployer, usernameEmployer, passwordEmployer).then(success => {
+                register_user(firstNameEmployer, lastNameEmployer, emailEmployer,passwordEmployer).then(success => {
                     const userID = success.data.user_id;
                     console.log(userID)
                     update_recruiter(recruiterID, userID)
@@ -196,5 +189,5 @@ export const useRegisterEmployer = () => {
         }
     });
 
-    return { handleRegisterEmployerBtnClick, firstNameEmployer , lastNameEmployer, emailEmployer, usernameEmployer, passwordEmployer, company, handleFirstNameEmployerChange, handleLastNameEmployerChange, handleEmailEmployerChange, handleUsernameEmployerChange, handlePasswordEmployerChange, handleCompanyChange, errorE1, errorE2, errorE3, errorE4, errorE5, errorE6};
+    return { handleRegisterEmployerBtnClick, firstNameEmployer , lastNameEmployer, emailEmployer,passwordEmployer, company, headquarter, handleFirstNameEmployerChange, handleLastNameEmployerChange, handleEmailEmployerChange,handlePasswordEmployerChange, handleCompanyChange,handleHeadquarterChange, errorE1, errorE2, errorE3, errorE4, errorE5, errorE6};
 }
