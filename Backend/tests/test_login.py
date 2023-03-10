@@ -1,12 +1,9 @@
 import pytest
-from django.conf import settings
 from django.contrib.auth.models import User
 # function Run once per test
 # class    Run once per class of tests
 # module   Run once per module
 # session  Run once per session
-
-settings.configure()
 
 @pytest.fixture()
 def user_1(db):
