@@ -8,15 +8,14 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
       matrix:
         python-version: [3.8]
-      defaults:
+    defaults:
       run:
-        working-directory: ./Backend
+        working-directory: Backend
 
     steps:
     - uses: actions/checkout@v3
@@ -30,4 +29,4 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-        pytest
+        Backend/pytest
