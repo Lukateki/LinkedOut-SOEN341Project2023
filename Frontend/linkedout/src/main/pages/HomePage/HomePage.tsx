@@ -33,6 +33,7 @@ const HomePage = () => {
       <div className="home-header">
         <div className="home-search-bar">
           <input type="text" placeholder="Search job postings" />
+          <button>Search</button>
         </div>
         <div className="home-buttons">
           <button onClick={handleLoginClick}>Login</button>
