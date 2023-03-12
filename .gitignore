@@ -4,3 +4,4 @@ Backend/db.sqlite3
 .DS_Store
 Backend/Pipfile.lock
 *.pyc 
+Backend/db.sqlite3-journal
