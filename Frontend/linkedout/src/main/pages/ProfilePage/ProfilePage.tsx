@@ -1,5 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { IconButton, Card, Button, CardContent, Typography, CardMedia, Box, List, ListSubheader, ListItem, ListItemText } from '@mui/material';
+import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import "./ProfilePage.css"
 
 const ProfilePage = () => {
@@ -11,8 +13,7 @@ const ProfilePage = () => {
       };
       const handleRegisterClick = () => {
         navigate('/register');
-      };
-
+      }
     
     
     return(
@@ -22,34 +23,91 @@ const ProfilePage = () => {
             <input type="text" placeholder="Search job postings" />
           </div>
           <div className="home-buttons">
-            <button onClick={handleLoginClick}>Login</button>
-            <button onClick={handleRegisterClick}>Register</button>
+            <Button onClick={handleLoginClick}>Login</Button>
+            <Button onClick={handleRegisterClick}>Register</Button>
           </div>
         </div>
+
         <div className="profile-body">
-          <div className="profile-name">
-            <h2 className="name">Jane Doe<span className="pronouns"><text>(She/Her)</text></span></h2>
-          </div>
-          
-          <div className="profile-skills">
-            <div className="profile-skills-content">
-              <h3>Skills:</h3>
-              <ul>
-                <li>Python</li>
-                <li>Django</li>
-                <li>Javascript</li>
-                <li>Spring</li>
-              </ul>
+          <Box sx={{ display: 'flex' }}>
+            <Card className="profile-name-card" sx={{ display: 'flex', flexDirection: 'column' }}>
+                <CardMedia 
+                  component="img"
+                  height="250vw"
+                  image='https://source.unsplash.com/random'
+                  alt='background picture'
+                >
+                </CardMedia>
+              <CardContent sx={{ display: 'flex'}}>
+                <div className="profile-btn">
+                  <IconButton aria-label="upload picture" component="label">
+                    <input hidden accept="image/*" type="file" />
+                    <FileUploadOutlinedIcon />
+                  </IconButton>
+                </div>
+                <Box> 
+                  <CardMedia 
+                    component="img"
+                    height="100vw"
+                    image='https://source.unsplash.com/random'
+                    alt='profile picture'
+                    
+                    className="profile-picture"
+                  />
+                </Box>
+                <Box>
+                  <Typography variant="h3" component="div" className="profile-name">
+                    Jane Doe
+                  </Typography>
+                  <Typography variant="subtitle1" component="div" className="profile-name">
+                    (She/Her)
+                  </Typography>
+                </Box>
+              </CardContent>
+            </Card>
+
+            <Card className="profile-skill-card" sx={{ display: 'flex' }}>
+              <List
+                sx={{
+                  width: '100%',
+                  maxWidth: 360,
+                  bgcolor: 'background.paper',
+                  position: 'relative',
+                  overflow: 'auto',
+                  maxHeight: 400,
+                  '& ul': { padding: 0 },
+                }}
+                subheader={<li />}
+              >
+                <li key={`section-${"Plang"}`}>
+                  <ul>
+                    <ListSubheader>{`Skills`}</ListSubheader>
+                    {["Python", "C++", "Java", "Go", "Javascript", "Ruby", "Rust", "Django", "SQL", "Jenkins"].map((item) => (
+                      <ListItem key={`item-"PLang"-${item}`}>
+                        <ListItemText primary={`${item}`} />
+                      </ListItem>
+                    ))}
+                  </ul>
+                </li>
+
+              </List>
+            </Card>
+          </Box>
+
+          <Card className="profile-card">
+            <div className="profile-interests">
+                <div className="profile-interests-content">
+                  <Typography variant="h5">Description</Typography>
+                  <p>Ever since I was a little girl, I wanted to code. My father and mother were both programmers working for Google when I was growing up.</p>
+                </div>
             </div>
-          </div>
-          <div className="profile-interests">
-              <div className="profile-interests-content">
-                <h3>A little bit about Jane:</h3>
-                <p>Ever since I was a little girl, I wanted to code. My father and mother were both programmers working for Google when I was growing up.</p>
-              </div>
-          </div>
+          </Card>
+
+          <Card className="profile-card">
           <div className="profile-experience">
-            <h3 className="profile-experience-title">Relevant Experience:</h3>
+          <Typography variant="h4" component="div" className="profile-experience-title">
+            Relevant Experience
+          </Typography>
             <ul>
               <li className="profile-experience-entry">
                 <h4>Youtube Data Scientist</h4>
@@ -61,6 +119,7 @@ const ProfilePage = () => {
               </li>
             </ul>
           </div>
+          </Card>
         </div>
       </body>
       

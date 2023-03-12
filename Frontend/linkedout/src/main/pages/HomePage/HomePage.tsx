@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { get_all_jobs } from '../../../axiosconfig';
+import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
 
@@ -35,8 +36,8 @@ const HomePage = () => {
           <input type="text" placeholder="Search job postings" />
         </div>
         <div className="home-buttons">
-          <button onClick={handleLoginClick}>Login</button>
-          <button onClick={handleRegisterClick}>Register</button>
+          <Button onClick={handleLoginClick}>Login</Button>
+          <Button onClick={handleRegisterClick}>Register</Button>
         </div>
       </div>
       <div className="home-content">

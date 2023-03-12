@@ -4,41 +4,79 @@
     align-items: center;
 }
 
-.pronouns{
-    font-weight: 100;
-    font-size:1rem;
-}
-.profile-skills, .profile-interests{
-    width:50vw;
-    display: inline-block;
-}
-
-.profile-skills-content, .profile-interests-content{
-    display:flex;
-    flex-direction: column;
-    align-items: center;
+.profile-interests-content{
+    padding-left: 1.5em;
+    padding-top: 1em;
 }
 
 .profile-skills-content ul{
     font-size: large;
     width:50%;
-    
+
 }
 
+.profile-experience-title{
+    padding-top: 0.5em;
+}
 .profile-experience{
-    display:flex;
+    padding-left: 1em;
+    /* display:flex;
     flex-direction: column;
-    align-items:center;
+    align-items:center; */
 }
 
 .profile-experience-entry{
-    width:70vw;
+    /* width:70vw;
     flex-direction: column;
     display:flex;
-    align-items: flex-start;
+    align-items: flex-start; */
+    padding-left: 1em;
 }
 
 .profile-experience-entry-description{
     align-self: center;
     width:80%;
+}
+
+.profile-btn{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -250px;
+}
+
+.profile-name-card{
+    margin-top: 0.5em;
+    margin-left: 4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;   
+    width: 85vw;
+}
+
+.profile-skill-card{
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+    margin-right: 4em;
+    margin-bottom: 0.5em;   
+    width: 15vw
+}
+.profile-card{
+    margin-top: 0.5em;
+    margin-left: 4em;
+    margin-right: 4em;
+    margin-bottom: 0.5em;   
+}
+
+.profile-body{
+    background-color: rgba(39, 48, 61, 0.1);
+    padding-top: 1em;
+}
+
+.profile-picture{
+    border-radius: '50%';
+    overflow: hidden;
+    margin-top: -80px;
+    margin-left: 2em;
+    border: 2px solid white;
+
 }
