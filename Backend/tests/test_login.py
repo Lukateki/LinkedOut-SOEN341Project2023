@@ -1,5 +1,4 @@
 import pytest
-
 from django.contrib.auth.models import User
 # function Run once per test
 # class    Run once per class of tests

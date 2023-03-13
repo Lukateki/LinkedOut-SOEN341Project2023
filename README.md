@@ -1,3 +1,6 @@
+![backend workflow](https://github.com/Lukateki/LinkedOut-SOEN341Project2023/actions/workflows/django.yml/badge.svg)
+
+
 # SOEN341 Career Services Application
 
 The objective of our project is to create a basic career services web application in which the students may apply to jobs created by employers on the site. This objective will be realized by allowing both students and employers to securely create an account using their email address and password on the site so they may find a job/employee.
