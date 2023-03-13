@@ -14,11 +14,11 @@ const LoginPage = () => {
             <div className='login-container'>
                 <TextField
                     className='username-field'
-                    label="Username"
+                    label="Email"
                     value={loginUsername}
                     onChange={handleUsernameChange}
                     error={error}
-                    helperText={ error ? "Invalid Username" : "" }
+                    helperText={ error ? "Invalid Email" : "" }
                 />
                 <TextField
                     className='password-field'
