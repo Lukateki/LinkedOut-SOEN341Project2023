@@ -56,7 +56,7 @@ def areResultsInDescendingOrder(total_search_points):
     
     return points_in_descending_order
 
-def testDescendingOrder():
+def test_DescendingOrder():
     user_search = "Software Developer Engineer Machine"
     response = requests.get(f"http://127.0.0.1:8000/api/v1/jobs/?search={user_search}")
     assert response.status_code == 200
