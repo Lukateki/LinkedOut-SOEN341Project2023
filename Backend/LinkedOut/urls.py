@@ -24,7 +24,7 @@ from django.contrib import admin
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 #router.register(r'groups', GroupViewSet)
-router.register(r'jobs', JobViewSet)
+router.register(r'jobs', JobViewSet, basename="JobViewSet")
 router.register(r'educations', EducationViewSet)
 router.register(r'experiences', ExperienceViewSet)
 router.register(r'applicants', ApplicantViewSet)

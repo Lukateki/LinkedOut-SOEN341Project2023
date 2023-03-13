@@ -9,6 +9,7 @@ django-debug-toolbar = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
 pytest-django = "*"
+requests = "*"
 
 [dev-packages]
 
