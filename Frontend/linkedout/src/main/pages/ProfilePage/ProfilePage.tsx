@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { IconButton, Card, Button, CardContent, Typography, CardMedia, Box, List, ListSubheader, ListItem, ListItemText } from '@mui/material';
+import { IconButton, Card, Button, CardContent, Typography, CardMedia, Box, List, ListSubheader, ListItem, ListItemText, TextField, Divider } from '@mui/material';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import "./ProfilePage.css"
 
@@ -19,21 +19,24 @@ const ProfilePage = () => {
     return(
       <body>
         <div className="home-header">
+          <a id="logo" href="http://localhost:3000/">
+            <img src="img/LinkedoutLogo2.png" alt="LinkedOut" className="home-logo" />
+          </a>
           <div className="home-search-bar">
-            <input type="text" placeholder="Search job postings" />
+            <TextField size="small" id="outlined-basic" label="Search" placeholder="Search job postings"/>
           </div>
           <div className="home-buttons">
-            <Button onClick={handleLoginClick}>Login</Button>
+            <Button text-transform="capitalize" onClick={handleLoginClick}>Login</Button>
             <Button onClick={handleRegisterClick}>Register</Button>
           </div>
         </div>
 
         <div className="profile-body">
-          <Box sx={{ display: 'flex' }}>
+          <Box sx={{ display: 'flex', fontFamily: 'Russo One'}}>
             <Card className="profile-name-card" sx={{ display: 'flex', flexDirection: 'column' }}>
                 <CardMedia 
                   component="img"
-                  height="250vw"
+                  height="200vw"
                   image='https://source.unsplash.com/random'
                   alt='background picture'
                 >
@@ -45,28 +48,36 @@ const ProfilePage = () => {
                     <FileUploadOutlinedIcon />
                   </IconButton>
                 </div>
-                <Box> 
+                <Box>
                   <CardMedia 
                     component="img"
                     height="100vw"
-                    image='https://source.unsplash.com/random'
+                    image='https://picsum.photos/200/200'
                     alt='profile picture'
-                    
                     className="profile-picture"
                   />
                 </Box>
-                <Box>
-                  <Typography variant="h3" component="div" className="profile-name">
+                <Box className="profile-information">
+                  <Typography variant="h3" component="div">
                     Jane Doe
                   </Typography>
-                  <Typography variant="subtitle1" component="div" className="profile-name">
+                  <Typography variant="subtitle1" component="div">
                     (She/Her)
+                  </Typography>
+                  <Typography variant="subtitle1" className="profile-bio">Data Scientist @ Google</Typography>
+                </Box>
+                <Box>
+                  <Typography variant="subtitle1" component="div" className="profile-resume">
+                    University of Waterloo
+                  </Typography>
+                  <Typography variant="subtitle1" component="div" className="profile-resume">
+                    Google
                   </Typography>
                 </Box>
               </CardContent>
             </Card>
 
-            <Card className="profile-skill-card" sx={{ display: 'flex' }}>
+            <Card className="profile-skill-card">
               <List
                 sx={{
                   width: '100%',
@@ -74,7 +85,7 @@ const ProfilePage = () => {
                   bgcolor: 'background.paper',
                   position: 'relative',
                   overflow: 'auto',
-                  maxHeight: 400,
+                  maxHeight: 300,
                   '& ul': { padding: 0 },
                 }}
                 subheader={<li />}
@@ -89,36 +100,63 @@ const ProfilePage = () => {
                     ))}
                   </ul>
                 </li>
-
               </List>
             </Card>
           </Box>
 
           <Card className="profile-card">
-            <div className="profile-interests">
-                <div className="profile-interests-content">
-                  <Typography variant="h5">Description</Typography>
-                  <p>Ever since I was a little girl, I wanted to code. My father and mother were both programmers working for Google when I was growing up.</p>
-                </div>
+            <div className="profile-description">
+              <Typography variant="h5">Description</Typography>
+              <p>Ever since I was a little girl, I wanted to code. My father and mother were both programmers working for Google when I was growing up.</p>
             </div>
           </Card>
 
           <Card className="profile-card">
-          <div className="profile-experience">
-          <Typography variant="h4" component="div" className="profile-experience-title">
-            Relevant Experience
-          </Typography>
-            <ul>
-              <li className="profile-experience-entry">
-                <h4>Youtube Data Scientist</h4>
-                <p className="profile-experience-entry-description">As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database.</p>
-              </li>
-              <li className="profile-experience-entry">
-                <h4>Google Data Scientist</h4>
-                <p className="profile-experience-entry-description">As a data scientist for Google, I parsed data from Google's large search database and created datasets to use in future AI endeavours.</p>
-              </li>
-            </ul>
-          </div>
+            <div className="profile-experiences">
+            <Typography variant="h5" component="div" className="profile-experience-title">
+              Experience
+            </Typography>
+            <Box>
+              <Box className="profile-experience">
+                <Typography variant="h6">Data Scientist</Typography>
+                <Typography variant="subtitle1">YouTube</Typography>
+                <Typography variant="body2">As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database.</Typography>
+              </Box>
+              <Divider variant="middle" />
+              <Box className="profile-experience">
+                <Typography variant="h6">Data Scientist</Typography>
+                <Typography variant="subtitle1">Google</Typography>
+                <Typography variant="body2">As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database.</Typography>
+              </Box>
+              <Divider variant="middle" />
+              <Box className="profile-experience"> 
+                <Typography variant="h6">Data Scientist</Typography>
+                <Typography variant="subtitle1">Google</Typography>
+                <Typography variant="body2">As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database.</Typography>
+                </Box>
+              </Box>
+            </div>
+          </Card>
+
+          <Card className="profile-card">
+            <div className="profile-educations">
+              <Typography variant="h5" component="div" className="profile-experience-title">
+                Education
+              </Typography>
+              <Box>
+                <Box className="profile-education">
+                  <Typography variant="h6">University of Waterloo</Typography>
+                  <Typography variant="subtitle1">Bachelors of Software Engineering</Typography>
+                  <Typography variant="body2">As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database.</Typography>
+                </Box>
+              <Divider variant="middle" />
+                <Box className="profile-experience">
+                  <Typography variant="h6">East High</Typography>
+                  <Typography variant="subtitle1"></Typography>
+                  <Typography variant="body2">As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database.</Typography>
+                </Box>
+              </Box>
+            </div>
           </Card>
         </div>
       </body>
