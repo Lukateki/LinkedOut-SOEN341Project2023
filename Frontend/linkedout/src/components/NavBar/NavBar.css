@@ -1,0 +1,40 @@
+.navbar-header {
+    margin-left: 15em;
+    margin-right: 15em;
+    width: 60em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFFFFF;
+  }
+
+.navbar-left-header{
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.navbar-right-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-company-name{
+    font-size: 2em;
+    font-weight: bold;
+    color: #0073b1; 
+}
+
+.navbar-logo{
+height: 50px;
+margin-bottom: -0.2em;
+}
+
+.navbar-buttons {
+    text-transform: none;
+}
+
+.navbar-search-bar {
+padding-left: 0.5em;
+}
