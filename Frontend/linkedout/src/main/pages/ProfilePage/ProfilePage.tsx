@@ -24,23 +24,25 @@ export const CandidateProfile = () => {
                     <FileUploadOutlinedIcon />
                   </IconButton>
                 </div>
-                <Box>
-                  <CardMedia 
-                    component="img"
-                    height="100vw"
-                    image='https://picsum.photos/200/200'
-                    alt='profile picture'
-                    className="profile-picture"
-                  />
-                </Box>
-                <Box className="profile-information">
-                  <Typography variant="h3" component="div">
-                    Jane Doe
-                  </Typography>
-                  <Typography variant="subtitle1" component="div">
-                    (She/Her)
-                  </Typography>
-                  <Typography variant="subtitle1" className="profile-bio">Data Scientist @ Google</Typography>
+                <Box sx={{ display: 'flex', paddingLeft: '2em'}}>
+                  <Box>
+                    <CardMedia 
+                      component="img"
+                      height="150vw"
+                      image='https://picsum.photos/200/200'
+                      alt='profile picture'
+                      className="profile-picture"
+                    />
+                  </Box>
+                  <Box className="profile-information">
+                    <Typography variant="h3" component="div">
+                      Jane Doe
+                    </Typography>
+                    <Typography variant="subtitle1" component="div">
+                      (She/Her)
+                    </Typography>
+                    <Typography variant="subtitle1" className="profile-bio">Data Scientist @ Google</Typography>
+                  </Box>
                 </Box>
                 <Box className="profile-summary">
                   <Typography variant="subtitle1" component="div">
@@ -81,14 +83,14 @@ export const CandidateProfile = () => {
           </Box>
 
           <Card className="profile-description">
-            <Typography variant="h5" className="profile-description-title">Description</Typography>
+            <Typography variant="h5" component="div" className="profile-description-title">Description</Typography>
             <Typography variant="body2" className="profile-description-text">
               Ever since I was a little girl, I wanted to code. My father and mother were both programmers working for Google when I was growing up.
             </Typography>
           </Card>
 
           <Card className="profile-jobs">
-            <Typography variant="h5" component="div" className="profile-jobs-title">
+            <Typography variant="h5" className="profile-jobs-title">
               Experience
             </Typography>
             <Box className="profile-jobs-text">
@@ -155,15 +157,17 @@ const EmployerProfile = () => {
                   <FileUploadOutlinedIcon />
                 </IconButton>
               </div>
-              <Box>
+              <Box sx={{ display: 'flex', paddingLeft: '2em'}}>
+                <Box>
                   <CardMedia 
                     component="img"
-                    height="100vw"
+                    height="150vw"
                     image='https://picsum.photos/200/200'
                     alt='profile picture'
                     className="profile-picture"
                   />
                 </Box>
+              </Box>
               <Box className="profile-information">
                 <Typography variant="h3" component="div">
                   Company Co
@@ -252,7 +256,7 @@ const EmployerProfile = () => {
 
 
 const ProfilePage = () => {
-    const isCandidate = true; // Switches to EmployerProfile when set to false
+    const isCandidate = false; // Switches to EmployerProfile when set to false
     return(
       <body>
         <NavBar/>

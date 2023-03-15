@@ -6,12 +6,11 @@
 }
 
 .profile-cards{
-    margin-left: 15em;
-    margin-right: 15em;
     width: 60em;
     display: block;
     justify-content: space-between;
     align-items: center;
+    margin: auto;
 }
 
 .profile-first-cards{
@@ -35,11 +34,11 @@
 }
 
 .profile-picture{
+    border-radius: 50%;
     width: 100px;
     margin-top: -80px;
-    margin-left: 1em;
     border: 2px solid white;
-
+    line-height: 50px;
 }
 .profile-information{
     margin-left: 1.5em;
@@ -62,15 +61,15 @@
 }
 
 .profile-description-title{
-    margin-left: 1em;
-    margin-top: 1em;
+    padding-left: 1em;
+    padding-top: 1em;
 }
 
 .profile-description-text{
-    margin-left: 2em;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    margin-right: 2em;
+    padding-left: 2em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-right: 2em;
 
 }
 
@@ -80,8 +79,8 @@
 }
 
 .profile-jobs-title{
-    margin-left: 1em;
-    margin-top: 1em;
+    padding-left: 1em;
+    padding-top: 1em;
 }
 
 .profile-jobs-text{

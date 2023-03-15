@@ -1,6 +1,5 @@
 .navbar-header {
-    margin-left: 15em;
-    margin-right: 15em;
+    margin: auto;
     width: 60em;
     display: flex;
     justify-content: space-between;
