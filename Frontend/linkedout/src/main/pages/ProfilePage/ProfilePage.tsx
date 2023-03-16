@@ -256,7 +256,7 @@ const EmployerProfile = () => {
 
 
 const ProfilePage = () => {
-    const isCandidate = false; // Switches to EmployerProfile when set to false
+    const isCandidate = true; // Switches to EmployerProfile when set to false
     return(
       <body>
         <NavBar/>

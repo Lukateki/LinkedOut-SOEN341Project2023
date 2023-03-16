@@ -30,10 +30,11 @@ height: 50px;
 margin-bottom: -0.2em;
 }
 
-.navbar-buttons {
-    text-transform: none;
-}
-
 .navbar-search-bar {
 padding-left: 0.5em;
+}
+
+.navbar-picture {
+    border-radius: 50%;
+    border: 2px solid rgba(39, 48, 61, 0.25);
 }

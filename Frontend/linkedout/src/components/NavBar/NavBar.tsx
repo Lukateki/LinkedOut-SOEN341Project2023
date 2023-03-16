@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, TextField } from '@mui/material';
+import { Box, Button, CardMedia, TextField } from '@mui/material';
+import { isUserLoggedIn } from "../../main/pages/LoginPage/types";
 import "./NavBar.css"
 
 export const NavBar : React.FC  = () => {
@@ -27,10 +28,24 @@ export const NavBar : React.FC  = () => {
               </div>
             </div>
             <div className="navbar-right-header">
+              {isUserLoggedIn() ? 
+              <Box>
+                <a id="profile" href="http://localhost:3000/profile">
+                <CardMedia 
+                  component="img"
+                  height="40px"
+                  image='https://picsum.photos/200/200'
+                  alt='profile picture'
+                  className="navbar-picture"
+                />
+                </a>
+              </Box>  
+               :
               <div className="navbar-buttons">
-                <Button text-transform="capitalize" onClick={handleLoginClick}>Login</Button>
+                <Button onClick={handleLoginClick}>Login</Button>
                 <Button onClick={handleRegisterClick}>Register</Button>
-            </div>
+              </div>
+              }
           </div>
         </div>
         </body>
