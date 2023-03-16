@@ -64,7 +64,7 @@ export const get_user = async (token: string) => {
             //Add an extra then if some code needs to run no matter what
         });
 }
-export const register_user = async (first_name: string, last_name: string, email: string, username: string, password: string) => {
+export const register_user = async (first_name: string, last_name: string, email: string, password: string) => {
     return axios.post(api + "/users/", {
         first_name: first_name, 
         last_name: last_name, 
