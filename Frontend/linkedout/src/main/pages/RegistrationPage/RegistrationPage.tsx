@@ -5,8 +5,8 @@ import './RegistrationPage.css';
 
 export const RegistrationPage = () => {
     //Toggles between the student and employer forms 
-    const { handleRegisterStudentBtnClick, firstNameStudent, lastNameStudent, emailStudent, usernameStudent, passwordStudent, errorS1, errorS2, errorS3, errorS4, errorS5, handleFirstNameStudentChange, handleLastNameStudentChange, handleEmailStudentChange, handlePasswordStudentChange, handleUsernameStudentChange } = useRegisterStudent();
-    const { handleRegisterEmployerBtnClick, firstNameEmployer, lastNameEmployer, emailEmployer, usernameEmployer, passwordEmployer, company, errorE1, errorE2, errorE3, errorE4, errorE5, errorE6, handleCompanyChange, handleFirstNameEmployerChange, handleLastNameEmployerChange, handleEmailEmployerChange, handlePasswordEmployerChange, handleUsernameEmployerChange } = useRegisterEmployer();
+    const { handleRegisterStudentBtnClick, firstNameStudent, lastNameStudent, emailStudent, passwordStudent, errorS1, errorS2, errorS3, errorS5, handleFirstNameStudentChange, handleLastNameStudentChange, handleEmailStudentChange, handlePasswordStudentChange} = useRegisterStudent();
+    const { handleRegisterEmployerBtnClick, firstNameEmployer, lastNameEmployer, emailEmployer, passwordEmployer, company, headquarter, errorE1, errorE2, errorE3, errorE4, errorE5, errorE6, handleHeadquarterChange, handleCompanyChange, handleFirstNameEmployerChange, handleLastNameEmployerChange, handleEmailEmployerChange, handlePasswordEmployerChange} = useRegisterEmployer();
 
 
     const [toggleStudent, setToggleStudent] = useState(false)
@@ -83,15 +83,6 @@ export const RegistrationPage = () => {
             />
 
             <TextField
-                className='username-student-field'
-                label="Username"
-                value={usernameStudent}
-                onChange={handleUsernameStudentChange}
-                error={errorS4}
-                helperText={ errorS4 ? "Invalid Username" : "" }
-            />
-
-            <TextField
                 className='password-student-field'
                 label="Password"
                 type="password"
@@ -132,14 +123,24 @@ export const RegistrationPage = () => {
                     helperText={ errorE2 ? "Missing First Name" : "" }     
                 />
             </div>
-            <TextField
-                className='company-employer-field'
-                label= 'Company'
-                value={company}
-                onChange={handleCompanyChange}
-                error={errorE6}
-                helperText={ errorE6 ? "Missing Company" : "" }
-            />
+            <div className='company-info'>
+                <TextField
+                    className='company-employer-field'
+                    label= 'Company'
+                    value={company}
+                    onChange={handleCompanyChange}
+                    error={errorE5}
+                    helperText={ errorE5 ? "Missing Company" : "" }
+                />
+                <TextField
+                    className='headquarter-employer-field'
+                    label= 'Headquarter'
+                    value={headquarter}
+                    onChange={handleHeadquarterChange}
+                    error={errorE6}
+                    helperText={ errorE6 ? "Missing Headquarters" : "" }
+                />
+            </div>
             <TextField
                 className='email-employer-field'
                 label="Email"
@@ -151,22 +152,13 @@ export const RegistrationPage = () => {
             />
 
             <TextField
-                className='username-employer-field'
-                label="Username"
-                value={usernameEmployer}
-                onChange={handleUsernameEmployerChange}
-                error={errorE4}
-                helperText={ errorE4 ? "Missing Username" : "" }
-            />
-
-            <TextField
                 className='password-employer-field'
                 label="Password"
                 type="password"
                 value={passwordEmployer}
                 onChange={handlePasswordEmployerChange}
-                error={errorE5}
-                helperText={ errorE5 ? "Missing Password" : "" }
+                error={errorE4}
+                helperText={ errorE4 ? "Missing Password" : "" }
             />  
               
             <Button 

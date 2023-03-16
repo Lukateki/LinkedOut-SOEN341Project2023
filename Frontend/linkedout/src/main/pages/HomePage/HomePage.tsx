@@ -22,6 +22,16 @@ const HomePage = () => {
 
   return (
     <div className="home-container">
+      <div className="home-header">
+        <div className="home-search-bar">
+          <input type="text" placeholder="Search job postings" />
+          <button>Search</button>
+        </div>
+        <div className="home-buttons">
+          <button onClick={handleLoginClick}>Login</button>
+          <button onClick={handleRegisterClick}>Register</button>
+        </div>
+      </div>
       <NavBar/>
       <div className="home-content">
         <h1>Welcome to LinkedOut</h1>
