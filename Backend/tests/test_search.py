@@ -7,10 +7,8 @@ def get_search_points_title(keywords, job_title):
     Takes in a list of keywords and the job title and returns the total search points for the title
     """
     search_points = 0
-    print(job_title)
     for keyword in keywords:
         if keyword.lower() in job_title.lower():
-            print(keyword)
             search_points += 2
 
     return search_points
@@ -20,10 +18,8 @@ def get_search_points_description(keywords, job_description):
     Takes in a list of keywords and the job description and returns the total search points for the description
     """
     search_points = 0
-    print(job_description)
     for keyword in keywords:
         if keyword.lower() in job_description.lower():
-            print(keyword)
             search_points += 1
 
     return search_points
@@ -56,17 +52,21 @@ def are_results_in_descending_order(total_search_points):
     
     return points_in_descending_order
 
-def test_descending_order():
+class TestSearchAlgorithm:
+
     user_search = "Software Developer Engineer Machine"
-    response = requests.get(f"http://127.0.0.1:8000/api/v1/jobs/?search={user_search}")
-    assert response.status_code == 200
+    endpoint = '/api/v1/jobs/?search={user_search}'.format(user_search=user_search)
 
-    response_json = response.json()
-    assert response_json != None
+    @pytest.mark.django_db
+    def test_descending_order(self, client, job1, job2):
+        response = client.get(self.endpoint)
+        assert response.status_code == 200
 
-    keywords = user_search.split()
-    job_id_search_points = get_total_search_points(response_json, keywords)
-    assert job_id_search_points != None
+        response_json = response.json()
+        assert response_json != None
+        keywords = self.user_search.split("%20")
+        job_id_search_points = get_total_search_points(response_json, keywords)
+        assert job_id_search_points != 1
 
-    descending_order = are_results_in_descending_order(job_id_search_points)
-    assert descending_order == True
+        descending_order = are_results_in_descending_order(job_id_search_points)
+        assert descending_order == True
