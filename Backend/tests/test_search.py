@@ -56,17 +56,23 @@ def are_results_in_descending_order(total_search_points):
     
     return points_in_descending_order
 
-def test_descending_order():
+class TestSearchAlgorithm:
+
     user_search = "Software Developer Engineer Machine"
-    response = requests.get(f"http://127.0.0.1:8000/api/v1/jobs/?search={user_search}")
-    assert response.status_code == 200
+    endpoint = '/api/v1/jobs/?search={user_search}'
 
-    response_json = response.json()
-    assert response_json != None
+    @pytest.mark.django_db
+    def test_descending_order(self, client, job, job2):
+        response = client.get(self.endpoint)
+        assert response.status_code == 200
 
-    keywords = user_search.split()
-    job_id_search_points = get_total_search_points(response_json, keywords)
-    assert job_id_search_points != None
+        response_json = response.json()
+        assert response_json != None
 
-    descending_order = are_results_in_descending_order(job_id_search_points)
-    assert descending_order == True
+        keywords = self.user_search.split()
+        job_id_search_points = get_total_search_points(response_json, keywords)
+        print(job_id_search_points)
+        assert job_id_search_points != 1
+
+        descending_order = are_results_in_descending_order(job_id_search_points)
+        assert descending_order == True
