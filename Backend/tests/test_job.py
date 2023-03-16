@@ -1,5 +1,7 @@
 import pytest
 
+from LinkedOut.JobListings.models import Job
+
 
 class TestUserViewSet:
 
@@ -13,7 +15,7 @@ class TestUserViewSet:
         response_json = response.json()
         assert response_json != None
 
-        assert len(response_json) == 2
+        assert len(response_json) == Job.objects.count()
 
         assert response_json[0]['id'] == job1.id
         assert response_json[0]['title'] == job1.title
