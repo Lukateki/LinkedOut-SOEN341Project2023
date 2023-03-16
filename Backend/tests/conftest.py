@@ -15,23 +15,23 @@ def recruiter():
                                     headquarters='test headquarters')
 
 @pytest.fixture
-def job(recruiter):
-    return Job.objects.create(title='test position',
+def job1(recruiter):
+    return Job.objects.create(title='Software Engineer',
                                 recruiter = recruiter,
                                 posting_url='test.com',
                                 posting_date='2020-01-01',
                                 expiry_date='2020-01-01',
                                 city='test city',
                                 job_type='test type',
-                                description='test description')
+                                description='Engineering machines to develop software')
 
 @pytest.fixture
 def job2(recruiter):
-    return Job.objects.create(title='test position 2',
+    return Job.objects.create(title='Machine Technician',
                                 recruiter = recruiter,
                                 posting_url='test2.com',
                                 posting_date='2020-01-01',
                                 expiry_date='2020-01-01',
                                 city='test city',
                                 job_type='test type',
-                                description='test description')
+                                description='Using Mechnanical Tools on Machines')
