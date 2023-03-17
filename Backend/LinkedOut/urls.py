@@ -34,7 +34,7 @@ router.register(r'recruiters', RecruiterViewSet)
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),
-    path('api/v1/send-email', SendEmailView.as_view()),
+    path('send-email', SendEmailView.as_view()),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api-token-auth/', views.obtain_auth_token),
     path('admin/', admin.site.urls),

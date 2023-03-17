@@ -72,11 +72,11 @@ class SendEmailView(APIView):
         query_params = request.query_params
 
         if not query_params['firstname']:
-            return Response("Missing first name!")
+            return Response({"status":"Missing first name!"})
         first_name = query_params['firstname']
         
         if not query_params['lastname']:
-            return Response("Missing last name!")
+            return Response({"status":"Missing last name!"})
         last_name = query_params['lastname']
         
         if not query_params['company']:
@@ -100,8 +100,8 @@ class SendEmailView(APIView):
             with smtplib.SMTP_SSL('smtp.gmail.com', 465, context= context) as smtp:
                 smtp.login(sender, password)
                 smtp.sendmail(sender, recipient, email.as_string())
-            return Response("Successfully sent email!")
+            return Response({"status":"Successfully sent email!"})
         
         else:
-            return Response("Recipient's email address does not have a valid email structure, or was not provided")
+            return Response({"status":"Recipient's email address does not have a valid email structure, or was not provided"})
  
