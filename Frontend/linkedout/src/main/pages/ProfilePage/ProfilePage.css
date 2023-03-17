@@ -1,44 +1,135 @@
-.profile-name{
+.profile-body{
+    background-color: rgba(39, 48, 61, 0.1);
+    padding-top: 0.5vw;
+    padding-bottom: 100vw;
+    height: 50vw;
+}
+
+.profile-cards{
+    width: 60em;
+    display: block;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+}
+
+.profile-first-cards{
+    width: 60em;
+    display: flex;
+    padding-bottom: 0.25vw;
+}
+
+.profile-name-card{
+    position: relative;
+    margin-top: 0.5em;
+    margin-right: 0.25vw;
+    width: 50em;
+    flex-direction: column;
+}
+
+.profile-upload-wallpaper-btn{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.profile-picture{
+    border-radius: 50%;
+    width: 100px;
+    margin-top: -80px;
+    border: 2px solid white;
+    line-height: 50px;
+}
+.profile-information{
+    margin-left: 1.5em;
+    margin-top: 0.5em;
+}
+.profile-summary{
+    position: absolute;
+    right: 1em;
+}
+.profile-skill-card{
+    position: relative;
+    margin-top: 0.5em;
+    margin-left: 0.25vw;
+    width: 13vw
+}
+
+.profile-description{
+    margin-top: 0.25vw;
+    margin-bottom: 0.25vw;
+}
+
+.profile-description-title{
+    padding-left: 1em;
+    padding-top: 1em;
+}
+
+.profile-description-text{
+    padding-left: 2em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-right: 2em;
+
+}
+
+.profile-jobs{
+    margin-top: 0.25vw;
+    margin-bottom: 0.25vw;
+}
+
+.profile-jobs-title{
+    padding-left: 1em;
+    padding-top: 1em;
+}
+
+.profile-jobs-text{
+    margin-left: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-right: 2em;
+}
+.profile-jobs-text-details{
+    margin-top: 0.25em;
+    margin-bottom: 0.5em;
+}
+
+/* .profile-name{
     display:flex;
     flex-direction: column;
     align-items: center;
-}
+} */
 
-.pronouns{
-    font-weight: 100;
-    font-size:1rem;
-}
-.profile-skills, .profile-interests{
-    width:50vw;
-    display: inline-block;
-}
-
-.profile-skills-content, .profile-interests-content{
-    display:flex;
-    flex-direction: column;
-    align-items: center;
+/* .profile-interests-content{
+    padding-left: 1.5em;
+    padding-top: 1em;
 }
 
 .profile-skills-content ul{
     font-size: large;
     width:50%;
-    
 }
 
-.profile-experience{
-    display:flex;
+.profile-experience-title{
+    padding-top: 0.5em;
+} */
+/* .profile-experience{
+    padding-left: 1em; */
+    /* display:flex;
     flex-direction: column;
-    align-items:center;
-}
+    align-items:center; */
+/* } */
 
-.profile-experience-entry{
-    width:70vw;
+/* .profile-experience-entry{ */
+    /* width:70vw;
     flex-direction: column;
     display:flex;
-    align-items: flex-start;
-}
+    align-items: flex-start; */
+    /* padding-left: 1em;
+} */
 
-.profile-experience-entry-description{
+/* .profile-experience-entry-description{
     align-self: center;
     width:80%;
-}
+}*/
+
