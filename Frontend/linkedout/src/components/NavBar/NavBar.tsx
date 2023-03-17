@@ -6,14 +6,25 @@ import "./NavBar.css"
 
 export const NavBar : React.FC  = () => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const handleLoginClick = () => {
         navigate('/login');
-      };
-      const handleRegisterClick = () => {
-        navigate('/register');
-      }
+    };
+
+    const handleRegisterClick = () => {
+      navigate('/register');
+    };
+
+    const handleProfileClick = () => {
+        navigate('/profile');
+    };
+
+    const handleLogoutClick = () => {
+      // Some mechanism to remove the auth-token
+        navigate('/');
+    };
+    
 
     return(
       <body>
@@ -28,7 +39,8 @@ export const NavBar : React.FC  = () => {
               </div>
             </div>
             <div className="navbar-right-header">
-              {isUserLoggedIn() ? 
+              {isUserLoggedIn() ? (
+              <>
               <Box>
                 <a id="profile" href="http://localhost:3000/profile">
                 <CardMedia 
@@ -40,12 +52,18 @@ export const NavBar : React.FC  = () => {
                 />
                 </a>
               </Box>  
-               :
-              <div className="navbar-buttons">
-                <Button onClick={handleLoginClick}>Login</Button>
-                <Button onClick={handleRegisterClick}>Register</Button>
-              </div>
-              }
+                <Button onClick={handleProfileClick}>Profile</Button>
+                <Button onClick={handleLogoutClick}>Logout</Button>
+              </>
+              ):(
+                <>
+                  <div className="navbar-buttons">
+                    <Button onClick={handleLoginClick}>Login</Button>
+                    <Button onClick={handleRegisterClick}>Register</Button>
+                  </div>
+                </>
+              )
+              } 
           </div>
         </div>
         </body>
