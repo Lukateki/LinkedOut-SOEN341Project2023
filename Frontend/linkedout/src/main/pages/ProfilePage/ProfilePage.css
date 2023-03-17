@@ -2,7 +2,6 @@
     background-color: rgba(39, 48, 61, 0.1);
     padding-top: 0.5vw;
     padding-bottom: 100vw;
-    height: 50vw;
 }
 
 .profile-cards{
@@ -63,6 +62,10 @@
 .profile-description-title{
     padding-left: 1em;
     padding-top: 1em;
+    padding-right: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .profile-description-text{
@@ -81,6 +84,10 @@
 .profile-jobs-title{
     padding-left: 1em;
     padding-top: 1em;
+    padding-right: 1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .profile-jobs-text{

@@ -1,10 +1,139 @@
-import React from "react";
-import { IconButton, Card, CardContent, Typography, CardMedia, Box, List, ListSubheader, ListItem, ListItemText, Divider } from '@mui/material';
+import React, { useEffect, useState } from "react";
+import { IconButton, Card, CardContent, Typography, CardMedia, Box, List, ListSubheader, ListItem, ListItemText, Divider, Dialog, DialogContent, DialogTitle, TextField, DialogContentText, DialogActions, Button, Select, MenuItem, SelectChangeEvent } from '@mui/material';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
+import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 import "./ProfilePage.css";
 import NavBar from '../../../components/NavBar/NavBar';
+import { useNavigate } from "react-router-dom";
+import { Description } from "@mui/icons-material";
+import { buffer } from "stream/consumers";
 
 export const CandidateProfile = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [pronoun, setPronoun] = useState("None");
+  const [biography, setBiography] = useState("");
+  const [email, setEmail] = useState("");
+  const [description, setDescription] = useState("");
+  const [experience, setExperience] = useState([]);
+  const [education, setEducation] = useState([]);
+  const [skills, setSkills] = useState([]);
+
+  const [openSummaryDialog, setOpenSummaryDialog] = useState(false);
+  const [openDescriptionDialog, setOpenDescriptionDialog] = useState(false);
+
+  const [bufferFirstName, setBufferFirstName] = useState("");
+  const [bufferLastName, setBufferLastName] = useState("");
+  const [bufferPronoun, setBufferPronoun] = useState("");
+  const [bufferBiography, setBufferBiography] = useState("");
+  const [bufferEmail, setBufferEmail] = useState("");
+
+  const [bufferDescription, setBufferDescription] = useState("");
+
+  const navigate = useNavigate();
+  
+  const handleClickSummaryDialog = () => {
+    setBufferFirstName(firstName);
+    setBufferLastName(lastName);
+    setBufferPronoun(pronoun);
+    setBufferBiography(biography);
+    setBufferEmail(email);
+    setOpenSummaryDialog(true);
+  };
+
+  const handleCloseSummaryDialog = () => {
+    setOpenSummaryDialog(false);
+  };
+
+  const handleSaveSummaryDialog = () => {
+    setFirstName(bufferFirstName);
+    setLastName(bufferLastName);
+    setPronoun(bufferPronoun);
+    setBiography(bufferBiography);
+    setEmail(bufferEmail);
+    setOpenSummaryDialog(false);
+  };
+
+  const handleClickDescriptionDialog = () => {
+    setBufferDescription(description);
+    setOpenDescriptionDialog(true);
+  }
+
+  const handleCloseDescriptionDialog = () => {
+    setOpenDescriptionDialog(false);
+  };
+  const handleSaveDescriptionDialog = () => {
+    setDescription(bufferDescription);
+    setOpenDescriptionDialog(false);
+  };
+
+  const getFirstName = () => {
+    setFirstName("Jane");
+  }
+
+  const getLastName = () => {
+    setLastName("Doe");
+  }
+
+  const getPronoun = () => {
+    setPronoun("She/Her");
+  }
+
+  const getBiography = () => {
+    setBiography("Data Scientist @ Google");
+  }
+
+  const getEmail = () => {
+    setEmail("Jane.Doe@gmail.com");
+  }
+
+  const getDescription = () => {
+    setDescription("Ever since I was a little girl, I wanted to code. My father and mother were both programmers working for Google when I was growing up.");
+  }
+  const getExperience = () => {
+    setExperience([
+      {"title" : "Data Scientist",
+       "company" : "Google",
+       "start_date" : "2020-01-01",
+       "end_date" : "2021-01-01",
+       "description" : "As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database."
+       },
+       {"title" : "Software Engineer",
+        "company" : "Facebook",
+        "start_date" : "2019-01-01",
+        "end_date" : "2020-01-01",
+        "description" : "As a software engineer for facebook, I was tasked with developing the backend for the facebook marketplace."
+      },
+      {"title" : "Software Engineer",
+        "company" : "Amazon",
+        "start_date" : "2018-01-01",
+        "end_date" : "2019-01-01",
+        "description" : "As a software engineer for amazon, I was tasked with developing the backend for the amazon marketplace."
+      }
+    ]);
+  }
+
+  const getEducation = () => {
+    setEducation([]);
+  }
+
+  const getSkills = () => {
+    setSkills(["Python", "C++", "Java", "SQL", "JavaScript", "React", "Node.js", "HTML", "CSS"]);
+  }
+
+  useEffect(() => {
+    getFirstName();
+    getLastName();
+    getPronoun();
+    getBiography();
+    getEmail();
+    getSkills();
+    getDescription();
+
+    }, []
+    )
+
   return (
     <div className="profile-body">
       <Box className="profile-cards">
@@ -36,15 +165,98 @@ export const CandidateProfile = () => {
                   </Box>
                   <Box className="profile-information">
                     <Typography variant="h3" component="div">
-                      Jane Doe
+                      {firstName} {lastName}
                     </Typography>
                     <Typography variant="subtitle1" component="div">
-                      (She/Her)
+                      {(pronoun === "None") ? null : "(" + pronoun + ")"}
                     </Typography>
-                    <Typography variant="subtitle1" className="profile-bio">Data Scientist @ Google</Typography>
+                    <Typography variant="subtitle1" className="profile-bio">{biography}</Typography>
                   </Box>
                 </Box>
                 <Box className="profile-summary">
+                  <Box sx={{float:"right"}}>
+                    <IconButton aria-label="edit summary" onClick={handleClickSummaryDialog}>
+                      <EditIcon/>
+                    </IconButton>
+                    <Dialog open={openSummaryDialog} onClose={handleCloseSummaryDialog}>
+                      <Box>
+                        <Box sx={{ display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+                          <DialogTitle>Edit Summary</DialogTitle>
+                          <IconButton aria-label="close summmary" onClick={handleCloseSummaryDialog}>
+                            <CloseIcon/>
+                          </IconButton>
+                        </Box>
+                        <Divider variant="middle"/>
+                        <DialogContent>
+                          {/* <DialogContentText>
+                            To subscribe to this website, please enter your email address here. We
+                            will send updates occasionally.
+                          </DialogContentText> */}
+                          <TextField
+                            sx={{ m: 0.5 }}
+                            autoFocus
+                            id="fname"
+                            label="First Name"
+                            value={bufferFirstName}
+                            onChange={(e) => setBufferFirstName(e.target.value)}
+                            fullWidth
+                            variant="standard"
+                          />
+                          <TextField
+                            sx={{ m: 0.5 }}
+                            autoFocus
+                            id="lname"
+                            label="Last Name"
+                            value={bufferLastName}
+                            onChange={(e) => setBufferLastName(e.target.value)}
+                            fullWidth
+                            variant="standard"
+                          />
+                          <TextField
+                            sx={{ m: 0.5 }}
+                            autoFocus
+                            id="email"
+                            label="Email Address"
+                            type="email"
+                            value={bufferEmail}
+                            onChange={(e) => setBufferEmail(e.target.value)}
+                            fullWidth
+                            variant="standard"
+                          />
+                          <TextField
+                            sx={{ m: 0.5 }}
+                            id="Biography"
+                            label="Biography"
+                            type="Biography"
+                            value={bufferBiography}
+                            onChange={(e) => setBufferBiography(e.target.value)}
+                            fullWidth
+                            multiline
+                            maxRows={2}
+                            variant="standard"
+                          />
+                          <Select 
+                            sx={{ m: 1 }}
+                            value={bufferPronoun}
+                            id="pronoun-select"
+                            onChange={(e) => setBufferPronoun(e.target.value)}
+                            label="Pronouns"
+                            size="small"
+                          >
+                            <MenuItem value="None">
+                              <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={"He/Him"}>He/Him</MenuItem>
+                            <MenuItem value={"She/Her"}>She/Her</MenuItem>
+                            <MenuItem value={"They/Them"}>They/Them</MenuItem>
+                          </Select>
+                        </DialogContent>
+                        <DialogActions>
+                          <Button variant="contained" onClick={handleSaveSummaryDialog}>Save</Button>
+                        </DialogActions>
+                      </Box>
+                    </Dialog>
+                  </Box>
                   <Typography variant="subtitle1" component="div">
                     University of Waterloo
                   </Typography>
@@ -71,7 +283,7 @@ export const CandidateProfile = () => {
                 <li key={`section-${"Plang"}`}>
                   <ul>
                     <ListSubheader>{`Skills`}</ListSubheader>
-                    {["Python", "C++", "Java", "Go", "Javascript", "Ruby", "Rust", "Django", "SQL", "Jenkins"].map((item) => (
+                    {skills.map((item) => (
                       <ListItem key={`item-"PLang"-${item}`}>
                         <ListItemText primary={`${item}`} />
                       </ListItem>
@@ -83,16 +295,53 @@ export const CandidateProfile = () => {
           </Box>
 
           <Card className="profile-description">
-            <Typography variant="h5" component="div" className="profile-description-title">Description</Typography>
+            <Box className="profile-description-title">
+              <Typography variant="h5" component="div">Description</Typography>
+              <IconButton aria-label="edit description" onClick={ handleClickDescriptionDialog }>
+                <EditIcon/>
+              </IconButton>
+              <Dialog open={openDescriptionDialog} onClose={handleCloseDescriptionDialog} maxWidth='md' fullWidth>
+                <Box>
+                  <Box sx={{ display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+                    <DialogTitle>Edit Description</DialogTitle>
+                    <IconButton aria-label="close description" onClick={handleCloseDescriptionDialog}>
+                      <CloseIcon/>
+                    </IconButton>
+                  </Box>
+                  <Divider variant="middle"/>
+                  <DialogContent>
+                    <TextField
+                      id="Description"
+                      label="Description"
+                      value={bufferDescription}
+                      onChange={(e) => setBufferDescription(e.target.value)}
+                      fullWidth
+                      multiline
+                      maxRows={20}
+                      variant="outlined"
+                    />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button variant="contained" onClick={handleSaveDescriptionDialog}>Save</Button>
+                  </DialogActions>
+                </Box>
+              </Dialog>
+            </Box>
             <Typography variant="body2" className="profile-description-text">
-              Ever since I was a little girl, I wanted to code. My father and mother were both programmers working for Google when I was growing up.
+              {description}
             </Typography>
           </Card>
 
           <Card className="profile-jobs">
-            <Typography variant="h5" className="profile-jobs-title">
-              Experience
-            </Typography>
+            <Box className="profile-jobs-title">
+              <Typography variant="h5">
+                Experience
+              </Typography>
+              <IconButton aria-label="edit experience" onClick={ () => (navigate("/profile-edit-experience"))}>
+                <EditIcon/>
+              </IconButton>
+            </Box>
+            
             <Box className="profile-jobs-text">
               <Box className="profile-jobs-text-details">
                 <Typography variant="h6">Data Scientist</Typography>
@@ -115,9 +364,14 @@ export const CandidateProfile = () => {
           </Card>
 
           <Card className="profile-jobs">
-            <Typography variant="h5" component="div" className="profile-jobs-title">
+            <Box className="profile-jobs-title">
+            <Typography variant="h5" component="div">
               Education
             </Typography>
+            <IconButton aria-label="edit experience" onClick={ () => (navigate("/profile-edit-education"))}>
+              <EditIcon/>
+            </IconButton>
+            </Box>
             <Box className="profile-jobs-text">
               <Box className="profile-jobs-text-details">
                 <Typography variant="h6">University of Waterloo</Typography>
