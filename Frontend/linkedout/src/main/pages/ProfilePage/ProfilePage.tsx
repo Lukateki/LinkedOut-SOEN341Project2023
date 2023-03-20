@@ -226,7 +226,7 @@ export const CandidateProfile = () => {
                         <Divider variant="middle"/>
                         <DialogContent>
                           <TextField
-                            sx={{ m: 0.5 }}
+                            sx={{ marginTop: 0.5 }}
                             autoFocus
                             id="fname"
                             label="First Name"
@@ -236,7 +236,7 @@ export const CandidateProfile = () => {
                             variant="standard"
                           />
                           <TextField
-                            sx={{ m: 0.5 }}
+                            sx={{ marginTop: 0.5 }}
                             autoFocus
                             id="lname"
                             label="Last Name"
@@ -246,7 +246,7 @@ export const CandidateProfile = () => {
                             variant="standard"
                           />
                           <TextField
-                            sx={{ m: 0.5 }}
+                            sx={{ marginTop: 0.5 }}
                             autoFocus
                             id="email"
                             label="Email Address"
@@ -257,7 +257,7 @@ export const CandidateProfile = () => {
                             variant="standard"
                           />
                           <TextField
-                            sx={{ m: 0.5 }}
+                            sx={{ marginTop: 0.5 }}
                             id="Biography"
                             label="Biography"
                             type="Biography"

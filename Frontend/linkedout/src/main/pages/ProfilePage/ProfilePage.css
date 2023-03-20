@@ -1,7 +1,7 @@
 .profile-body{
     background-color: rgba(39, 48, 61, 0.1);
     padding-top: 0.5vw;
-    padding-bottom: 100vw;
+    padding-bottom: 1vw;
 }
 
 .profile-cards{
@@ -10,6 +10,7 @@
     justify-content: space-between;
     align-items: center;
     margin: auto;
+    min-height: 100vh;
 }
 
 .profile-first-cards{
