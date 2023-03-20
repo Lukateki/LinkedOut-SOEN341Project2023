@@ -4,11 +4,11 @@ import NavBar from "../../../../components/NavBar/NavBar";
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { useNavigate } from "react-router-dom";
+import { useApplicantProfile } from "../hooks";
+
 
 export const ProfilePageEducation = () => {
-
-    const navigate = useNavigate();
+    const { navigateBackFromEducation } = useApplicantProfile();
 
     return (
         <body>
@@ -18,7 +18,7 @@ export const ProfilePageEducation = () => {
                 <Card className="profile-jobs">
                     <Box className="profile-jobs-title">
                         <Box sx={{display:"flex"}}>
-                            <IconButton aria-label="edit experience" onClick={ () => (navigate("/profile"))}>
+                            <IconButton aria-label="edit experience" onClick={navigateBackFromEducation}>
                                 <ArrowBackIcon/>
                             </IconButton>
                             <Typography variant="h5" component="div" sx={{marginTop:"0.25em"}}>

@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { IconButton, Card, CardContent, Typography, CardMedia, Box, List, ListSubheader, ListItem, ListItemText, Divider, Dialog, DialogContent, DialogTitle, TextField, DialogContentText, DialogActions, Button, Select, MenuItem, SelectChangeEvent } from '@mui/material';
+import { IconButton, Card, CardContent, Typography, CardMedia, Box, List, ListSubheader, ListItem, ListItemText, Divider, Dialog, DialogContent, DialogTitle, TextField, DialogActions, Button, Select, MenuItem } from '@mui/material';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import "./ProfilePage.css";
 import NavBar from '../../../components/NavBar/NavBar';
-import { useNavigate } from "react-router-dom";
+import { useApplicantProfile } from './hooks';
+
 
 export const CandidateProfile = () => {
+  const { getExperience ,experience, setExperience, navigateToExperience, navigateToEducation } = useApplicantProfile();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [pronoun, setPronoun] = useState("None");
   const [biography, setBiography] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
-  const [experience, setExperience] = useState([]);
+  // const [experience, setExperience] = useState([]);
   const [education, setEducation] = useState([]);
   const [skills, setSkills] = useState([]);
 
@@ -29,8 +32,6 @@ export const CandidateProfile = () => {
 
   const [bufferDescription, setBufferDescription] = useState("");
 
-  const navigate = useNavigate();
-  
   const handleClickSummaryDialog = () => {
     setBufferFirstName(firstName);
     setBufferLastName(lastName);
@@ -89,36 +90,73 @@ export const CandidateProfile = () => {
   const getDescription = () => {
     setDescription("Ever since I was a little girl, I wanted to code. My father and mother were both programmers working for Google when I was growing up.");
   }
-  const getExperience = () => {
-    setExperience([
-      {"title" : "Data Scientist",
-       "company" : "Google",
+
+  const getEducation = () => {
+    setEducation([
+      {"school" : "University of Waterloo",
+       "degree" : "Bachelors of Software Engineering",
        "start_date" : "2020-01-01",
        "end_date" : "2021-01-01",
        "description" : "As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database."
        },
-       {"title" : "Software Engineer",
-        "company" : "Facebook",
+       {"school" : "East High",
+        "degree" : null,
         "start_date" : "2019-01-01",
         "end_date" : "2020-01-01",
         "description" : "As a software engineer for facebook, I was tasked with developing the backend for the facebook marketplace."
       },
-      {"title" : "Software Engineer",
-        "company" : "Amazon",
-        "start_date" : "2018-01-01",
-        "end_date" : "2019-01-01",
-        "description" : "As a software engineer for amazon, I was tasked with developing the backend for the amazon marketplace."
-      }
     ]);
-  }
-
-  const getEducation = () => {
-    setEducation([]);
   }
 
   const getSkills = () => {
     setSkills(["Python", "C++", "Java", "SQL", "JavaScript", "React", "Node.js", "HTML", "CSS"]);
   }
+
+  const experienceBlock = experience.map((item, i, row) => {
+    if(i + 1 === row.length) {
+      return (
+        <><Box className="profile-jobs-text-details">
+            <Typography variant="h6">{item["title"]}</Typography>
+            <Typography variant="subtitle1">{item["company"]}</Typography>
+            <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{item["start_date"].split("-")[0]} - {item["end_date"].split("-")[0]}</Typography>
+            <Typography variant="body2">{item["description"]}</Typography>
+          </Box></>
+      )}
+    else{
+      return(
+        <><Box className="profile-jobs-text-details">
+            <Typography variant="h6">{item["title"]}</Typography>
+            <Typography variant="subtitle1">{item["company"]}</Typography>
+            <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{item["start_date"].split("-")[0]} - {item["end_date"].split("-")[0]}</Typography>
+            <Typography variant="body2">{item["description"]}</Typography>
+          </Box>
+          <Divider variant="middle" /></>
+      )
+    }
+  });
+
+  const educationBlock = education.map((item, i, row) => {
+    if(i + 1 === row.length) {
+      return (
+        <><Box className="profile-jobs-text-details">
+            <Typography variant="h6">{item["school"]}</Typography>
+            <Typography variant="subtitle1">{item["degree"]}</Typography>
+            <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{item["start_date"].split("-")[0]} - {item["end_date"].split("-")[0]}</Typography>
+            <Typography variant="body2">{item["description"]}</Typography>
+          </Box></>
+      )}
+    else{
+      return(
+        <><Box className="profile-jobs-text-details">
+            <Typography variant="h6">{item["school"]}</Typography>
+            <Typography variant="subtitle1">{item["degree"]}</Typography>
+            <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{item["start_date"].split("-")[0]} - {item["end_date"].split("-")[0]}</Typography>
+            <Typography variant="body2">{item["description"]}</Typography>
+          </Box>
+          <Divider variant="middle" /></>
+      )
+    }
+  });
 
   useEffect(() => {
     getFirstName();
@@ -128,7 +166,8 @@ export const CandidateProfile = () => {
     getEmail();
     getSkills();
     getDescription();
-
+    getExperience();
+    getEducation();
     }, []
     )
 
@@ -186,10 +225,6 @@ export const CandidateProfile = () => {
                         </Box>
                         <Divider variant="middle"/>
                         <DialogContent>
-                          {/* <DialogContentText>
-                            To subscribe to this website, please enter your email address here. We
-                            will send updates occasionally.
-                          </DialogContentText> */}
                           <TextField
                             sx={{ m: 0.5 }}
                             autoFocus
@@ -335,30 +370,14 @@ export const CandidateProfile = () => {
               <Typography variant="h5">
                 Experience
               </Typography>
-              <IconButton aria-label="edit experience" onClick={ () => (navigate("/profile-edit-experience"))}>
+              <IconButton aria-label="edit experience" onClick={navigateToExperience}>
                 <EditIcon/>
               </IconButton>
             </Box>
             
             <Box className="profile-jobs-text">
-              <Box className="profile-jobs-text-details">
-                <Typography variant="h6">Data Scientist</Typography>
-                <Typography variant="subtitle1">YouTube</Typography>
-                <Typography variant="body2">As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database.</Typography>
-              </Box>
-              <Divider variant="middle" />
-              <Box className="profile-jobs-text-details">
-                <Typography variant="h6">Data Scientist</Typography>
-                <Typography variant="subtitle1">Google</Typography>
-                <Typography variant="body2">As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database.</Typography>
-              </Box>
-              <Divider variant="middle" />
-              <Box className="profile-jobs-text-details"> 
-                <Typography variant="h6">Data Scientist</Typography>
-                <Typography variant="subtitle1">Google</Typography>
-                <Typography variant="body2">As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database.</Typography>
-                </Box>
-              </Box>
+              {experienceBlock}
+            </Box>
           </Card>
 
           <Card className="profile-jobs">
@@ -366,22 +385,12 @@ export const CandidateProfile = () => {
             <Typography variant="h5" component="div">
               Education
             </Typography>
-            <IconButton aria-label="edit experience" onClick={ () => (navigate("/profile-edit-education"))}>
+            <IconButton aria-label="edit education" onClick={navigateToEducation}>
               <EditIcon/>
             </IconButton>
             </Box>
             <Box className="profile-jobs-text">
-              <Box className="profile-jobs-text-details">
-                <Typography variant="h6">University of Waterloo</Typography>
-                <Typography variant="subtitle1">Bachelors of Software Engineering</Typography>
-                <Typography variant="body2">As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database.</Typography>
-              </Box>
-            <Divider variant="middle" />
-              <Box className="profile-jobs-text-details">
-                <Typography variant="h6">East High</Typography>
-                <Typography variant="subtitle1"></Typography>
-                <Typography variant="body2">As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database.</Typography>
-              </Box>
+              {educationBlock}
             </Box>
           </Card>
         </Box>
@@ -473,7 +482,7 @@ const EmployerProfile = () => {
               Have you heard about our Cloud CyberSecurity company? We're so good at keeping your data safe that even the hackers need a permission slip just to attempt a breach! We're like a bouncer at a club, but instead of checking IDs, we're checking for malicious intent. You can trust us with your sensitive information, unless of course you're still using 'password123' as your login, in which case we can't help you.            </Typography>
           </Card>
 
-        <Card className="profile-jobs">
+        <Card className="profile-jobs" component="div">
             <Typography variant="h5" component="div" className="profile-jobs-title">
               Our Job Postings
             </Typography>
@@ -517,6 +526,5 @@ const ProfilePage = () => {
       
     )
 }
-
 
 export default ProfilePage;
