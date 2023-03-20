@@ -6,8 +6,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import "./ProfilePage.css";
 import NavBar from '../../../components/NavBar/NavBar';
 import { useNavigate } from "react-router-dom";
-import { Description } from "@mui/icons-material";
-import { buffer } from "stream/consumers";
 
 export const CandidateProfile = () => {
   const [firstName, setFirstName] = useState("");
