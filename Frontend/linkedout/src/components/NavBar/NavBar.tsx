@@ -27,7 +27,6 @@ export const NavBar : React.FC  = () => {
     
 
     return(
-      <body>
         <div className="navbar-header">
           <div className="navbar-left-header">
             <span className="navbar-company-name">Linked</span>
@@ -66,7 +65,6 @@ export const NavBar : React.FC  = () => {
               } 
           </div>
         </div>
-        </body>
     )
 }
 

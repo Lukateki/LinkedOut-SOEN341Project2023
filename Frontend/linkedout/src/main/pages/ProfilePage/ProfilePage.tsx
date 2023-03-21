@@ -364,28 +364,29 @@ export const CandidateProfile = () => {
               {description}
             </Typography>
           </Card>
-
+          <a id="jobs">
           <Card className="profile-jobs">
-            <Box className="profile-jobs-title">
-              <Typography variant="h5">
-                Experience
-              </Typography>
-              <IconButton aria-label="edit experience" onClick={navigateToExperience}>
-                <EditIcon/>
-              </IconButton>
-            </Box>
-            
-            <Box className="profile-jobs-text">
-              {experienceBlock}
-            </Box>
+              <Box className="profile-jobs-title">
+                <Typography variant="h5">
+                  Experience
+                </Typography>
+                <IconButton aria-label="edit experience" onClick={navigateToExperience}>
+                  <EditIcon/>
+                </IconButton>
+              </Box>
+              
+              <Box className="profile-jobs-text">
+                {experienceBlock}
+              </Box>
           </Card>
-
+          </a>
+          <a id="educations">
           <Card className="profile-jobs">
             <Box className="profile-jobs-title">
             <Typography variant="h5" component="div">
               Education
             </Typography>
-            <IconButton aria-label="edit education" onClick={navigateToEducation}>
+            <IconButton aria-label="edit education" onClick={(navigateToEducation)}>
               <EditIcon/>
             </IconButton>
             </Box>
@@ -393,6 +394,7 @@ export const CandidateProfile = () => {
               {educationBlock}
             </Box>
           </Card>
+          </a>
         </Box>
       </div>
     );

@@ -4,10 +4,6 @@ import { useNavigate } from "react-router-dom";
 export const useApplicantProfile = () => {
     const [experience, setExperience] = useState([]);
 
-    //TODO: get cards position and set in state
-    const [experiencePosition] = useState(520);
-    const [educationPosition] = useState(910);
-
     const navigate = useNavigate();
 
     const getExperience = () => {
@@ -50,18 +46,12 @@ export const useApplicantProfile = () => {
       }
       
       const navigateBackFromExperience = () => {
-        scrollTo(experiencePosition);
         navigate("/profile");
       }
 
       const navigateBackFromEducation = () => {
-        scrollTo(educationPosition);
         navigate("/profile");
       }
-
-      navigateBackFromExperience.bind(this, experiencePosition)
-
-      navigateBackFromEducation.bind(this, educationPosition)
 
       return { getExperience, experience, setExperience, navigateToExperience, navigateToEducation, navigateBackFromExperience, navigateBackFromEducation };
 }

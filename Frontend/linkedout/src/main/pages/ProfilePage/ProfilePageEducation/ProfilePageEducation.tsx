@@ -18,7 +18,7 @@ export const ProfilePageEducation = () => {
                 <Card className="profile-jobs">
                     <Box className="profile-jobs-title">
                         <Box sx={{display:"flex"}}>
-                            <IconButton aria-label="edit experience" onClick={navigateBackFromEducation}>
+                            <IconButton aria-label="edit experience" onClick={navigateBackFromEducation} href="/profile#educations">
                                 <ArrowBackIcon/>
                             </IconButton>
                             <Typography variant="h5" component="div" sx={{marginTop:"0.25em"}}>
