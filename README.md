@@ -1,5 +1,5 @@
 ![backend workflow](https://github.com/Lukateki/LinkedOut-SOEN341Project2023/actions/workflows/django.yml/badge.svg)
-
+![frontend workflow](https://github.com/Lukateki/LinkedOut-SOEN341Project2023/actions/workflows/node.js.yml/badge.svg)
 
 # SOEN341 Career Services Application
 
