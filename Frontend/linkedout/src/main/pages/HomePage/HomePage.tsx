@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { get_all_jobs } from '../../../axiosconfig';
 import './HomePage.css';
 import NavBar from '../../../components/NavBar/NavBar';
+import { useNavigate } from "react-router-dom";
+import { Button } from '@mui/material';
 
 const HomePage = () => {
-
+  const navigate = useNavigate();
   const [jobPostings, setJobPostings] = useState([]);
 
   useEffect(() => {
@@ -35,6 +37,17 @@ const HomePage = () => {
             </li>
           ))}
         </ul>
+        <div className='add-job-btn'>
+          <Button 
+            variant="contained"
+            onClick={() => {
+              navigate("/addJob");
+            }}
+            
+          > 
+          + 
+          </Button>
+        </div>
       </div>
     </div>
   );

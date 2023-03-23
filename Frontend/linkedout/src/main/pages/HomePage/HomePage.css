@@ -40,3 +40,8 @@
   .home-search-bar {
     padding-left: 0.5em;
   }
+
+  .add-job-btn {
+    margin: 2%;
+    margin-left: 85%;
+  }

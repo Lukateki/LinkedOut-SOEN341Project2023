@@ -90,3 +90,16 @@ export const register_recruiter = async (company: string, headquarters: string, 
 export const update_recruiter = async (id: number, user_id: number) => {
     return axios.patch(api + `/recruiters/${id}/`, {user: user_id})
 }
+
+export const upload_job = async (title: string, recruiter: string, posting_url: string, posting_date: string, expiry_date: string, city: string, job_type: string, description: string ) => {
+    return axios.post(api + "/jobs/", {
+        title: title, 
+        recruiter: recruiter, 
+        posting_url: posting_url, 
+        posting_date: posting_date,
+        expiry_date: expiry_date,
+        city: city,
+        job_type: job_type, 
+        description: description
+    })
+}
