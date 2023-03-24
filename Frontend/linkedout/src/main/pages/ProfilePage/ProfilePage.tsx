@@ -6,6 +6,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import "./ProfilePage.css";
 import NavBar from '../../../components/NavBar/NavBar';
 import { useApplicantProfile } from './hooks';
+import { auth_token_cookie_name, get_user_type } from "../../../axiosconfig";
+import Cookies from "universal-cookie";
 
 
 export const CandidateProfile = () => {
@@ -519,14 +521,25 @@ const EmployerProfile = () => {
 
 
 const ProfilePage = () => {
-    const isCandidate = true; // Switches to EmployerProfile when set to false
-    return(
-      <body>
-        <NavBar/>
-        {isCandidate ? <CandidateProfile /> : <EmployerProfile />}
-      </body>
-      
-    )
-}
+  const authToken = new Cookies().get(auth_token_cookie_name);
+
+  const [userType, setUserType] = useState('');
+
+  useEffect(() => {
+    const getUserType = async () => {
+      const type = await get_user_type(authToken);
+      setUserType(type);
+    };
+
+    getUserType();
+  }, [authToken]);
+
+  return (
+    <body>
+      <NavBar />
+      {userType === 'candidate' ? <CandidateProfile /> : <EmployerProfile />}
+    </body>
+  );
+};
 
 export default ProfilePage;
