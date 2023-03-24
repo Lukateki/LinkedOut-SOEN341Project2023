@@ -489,15 +489,7 @@ export const CandidateProfile = () => {
 };
 
 const ProfilePage = () => {
-    return(
-      <body>
-        <NavBar/>
-        <CandidateProfile />
-      </body>
-      
-    )
-}
-
+  const { setIsCandidate } = useApplicantProfile();
   const authToken = new Cookies().get(auth_token_cookie_name);
 
   const [userType, setUserType] = useState('');
@@ -505,6 +497,7 @@ const ProfilePage = () => {
   useEffect(() => {
     const getUserType = async () => {
       const type = await get_user_type(authToken);
+      type ==='candidate' ? setIsCandidate(true) : setIsCandidate(false);
       setUserType(type);
     };
 
@@ -514,7 +507,7 @@ const ProfilePage = () => {
   return (
     <body>
       <NavBar />
-      {userType === 'candidate' ? <CandidateProfile /> : <EmployerProfile />}
+      <CandidateProfile />
     </body>
   );
 };
