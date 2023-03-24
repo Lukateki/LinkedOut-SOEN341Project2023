@@ -6,6 +6,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import "./ProfilePage.css";
 import NavBar from '../../../components/NavBar/NavBar';
 import { useApplicantProfile } from './hooks';
+import { auth_token_cookie_name, get_user_type } from "../../../axiosconfig";
+import Cookies from "universal-cookie";
 
 export const CandidateProfile = () => {
   const { getJobPostings, jobPostings, getExperience, recentExperience, experience, navigateToExperience, navigateToEducation, getEducation, education, isCandidate } = useApplicantProfile();
@@ -495,5 +497,26 @@ const ProfilePage = () => {
       
     )
 }
+
+  const authToken = new Cookies().get(auth_token_cookie_name);
+
+  const [userType, setUserType] = useState('');
+
+  useEffect(() => {
+    const getUserType = async () => {
+      const type = await get_user_type(authToken);
+      setUserType(type);
+    };
+
+    getUserType();
+  }, [authToken]);
+
+  return (
+    <body>
+      <NavBar />
+      {userType === 'candidate' ? <CandidateProfile /> : <EmployerProfile />}
+    </body>
+  );
+};
 
 export default ProfilePage;

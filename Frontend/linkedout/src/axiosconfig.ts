@@ -64,6 +64,16 @@ export const get_user = async (token: string) => {
             //Add an extra then if some code needs to run no matter what
         });
 }
+
+export const get_user_type = async (token: string) => {
+    const result = await axios.get(api + '/users', { params: {}})
+    if ("reffered_pronouns" in result.data) {
+        return "candidate";
+    } else {
+        return "employer";
+    }
+}
+
 export const register_user = async (first_name: string, last_name: string, email: string, password: string) => {
     return axios.post(api + "/users/", {
         first_name: first_name, 

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Button, CardMedia, TextField } from '@mui/material';
 import { isUserLoggedIn } from "../../main/pages/LoginPage/types";
 import "./NavBar.css"
+import Cookies from "universal-cookie";
 
 export const NavBar : React.FC  = () => {
 
@@ -21,8 +22,10 @@ export const NavBar : React.FC  = () => {
     };
 
     const handleLogoutClick = () => {
-      // Some mechanism to remove the auth-token
-        navigate('/');
+      const cookies = new Cookies();
+      cookies.remove('auth-token');
+      
+      navigate('/');
     };
     
 
