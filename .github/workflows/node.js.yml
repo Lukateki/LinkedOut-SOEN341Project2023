@@ -31,12 +31,11 @@ jobs:
     - name: Clean install dependencies
       working-directory: Frontend/linkedout
       run: npm ci
-    
-    - name: Run tests
-      working-directory: Frontend/linkedout
-      run: npm test
-    
+      
     - name: Build if build script exists
       working-directory: Frontend/linkedout
       run: npm run build --if-present
     
+    - name: Run tests
+      working-directory: Frontend/linkedout
+      run: npm test
