@@ -3,14 +3,14 @@ import { IconButton, Card, CardContent, Typography, CardMedia, Box, List, ListSu
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
-import "./ProfilePage.css";
 import NavBar from '../../../components/NavBar/NavBar';
 import { useApplicantProfile } from './hooks';
 import { auth_token_cookie_name, get_user_type } from "../../../axiosconfig";
 import Cookies from "universal-cookie";
+import "./ProfilePage.css";
 
-export const CandidateProfile = () => {
-  const { getJobPostings, jobPostings, getExperience, recentExperience, experience, navigateToExperience, navigateToEducation, getEducation, education, isCandidate } = useApplicantProfile();
+export const ProfilePage = () => {
+  const { setIsCandidate, getJobPostings, jobPostings, getExperience, recentExperience, recentEducation, experience, navigateToExperience, navigateToEducation, getEducation, education, isCandidate } = useApplicantProfile();
 
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -19,7 +19,6 @@ export const CandidateProfile = () => {
   const [email, setEmail] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [skills, setSkills] = useState<string[]>([]);
-  const [recentEducation, setRecentEducation] = useState<string>("");
 
   const [companyName, setCompanyName] = useState("");
   const [establishedDate, setEstablishedDate] = useState("");
@@ -115,7 +114,7 @@ export const CandidateProfile = () => {
       "pronoun" : "She/Her",
       "biography" : "Data Scientist @ Google",
       "email" : "Jane.Doe@gmail.com",
-      "description": "Ever since I was a little girl, I wanted to code. My father and mother were both programmers working for Google when I was growing up.",
+      "description": "Ever since I was a little girl, I wanted to code. My father and mother were both programmers working for Google when I was growing up. Ever since I was a little girl, I wanted to code. My father and mother were both programmers working for Google when I was growing up.Ever since I was a little girl, I wanted to code. My father and mother were both programmers working for Google when I was growing up.",
       "skills" : ["Python", "C++", "Java", "SQL", "JavaScript", "React", "Node.js", "HTML", "CSS"]
     }
     setFirstName(candidate["first_name"]);
@@ -185,9 +184,17 @@ export const CandidateProfile = () => {
       )
     }
   });
+  const authToken = new Cookies().get(auth_token_cookie_name);
+
+  // const [userType, setUserType] = useState('');
 
   useEffect(() => {
+    // const getUserType = async () => {
+    //   const type = await get_user_type(authToken);
+    //   setIsCandidate(type === 'candidate');
+    // };
 
+    // getUserType();
     if(isCandidate){
       getApplicant();
       getExperience();
@@ -197,9 +204,11 @@ export const CandidateProfile = () => {
       getRecruiter()
       getJobPostings()
     }
-  }, [])
+  }, [authToken])
 
   return (
+    <body>
+      <NavBar/>
     <div className="profile-body">
       <Box className="profile-cards">
         <Box className="profile-first-cards">
@@ -446,7 +455,7 @@ export const CandidateProfile = () => {
                 </Box>
               </Dialog>
             </Box>
-            <Typography variant="body2" className="profile-description-text">
+            <Typography variant="body2" className="profile-description-text" sx={{paddingLeft:"2em", paddingRight:"2em", paddingTop:"1em", paddingBottom:"1em"}}>
               {isCandidate ? description : aboutUs}
             </Typography>
           </Card>
@@ -468,7 +477,7 @@ export const CandidateProfile = () => {
           </a>
           {isCandidate ? 
           <a id="educations">
-          <Card className="profile-jobs">
+          <Card className="profile-jobs" sx={{marginTop:"0.25vw", marginBottom:"0.25vw"}}>
             <Box className="profile-jobs-title">
             <Typography variant="h5" component="div">
               Education
@@ -485,31 +494,8 @@ export const CandidateProfile = () => {
       : null}
        </Box>
       </div>
+      </body>
     );
-};
-
-const ProfilePage = () => {
-  const { setIsCandidate } = useApplicantProfile();
-  const authToken = new Cookies().get(auth_token_cookie_name);
-
-  const [userType, setUserType] = useState('');
-
-  useEffect(() => {
-    const getUserType = async () => {
-      const type = await get_user_type(authToken);
-      type ==='candidate' ? setIsCandidate(true) : setIsCandidate(false);
-      setUserType(type);
-    };
-
-    getUserType();
-  }, [authToken]);
-
-  return (
-    <body>
-      <NavBar />
-      <CandidateProfile />
-    </body>
-  );
 };
 
 export default ProfilePage;
