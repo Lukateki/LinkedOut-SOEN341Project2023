@@ -75,6 +75,19 @@ export const get_user_type = async (token: string) => {
 }
 
 export const register_user = async (first_name: string, last_name: string, email: string, password: string) => {
+export const get_user = async (token: string) => {
+    //The params property has to be an object with the params needed for the request
+    axios.get(api + '/users', { params: {}})
+        .then(result => {
+            console.log(result);
+        }).catch(error => {
+            console.log(error);
+            //handle error
+        }).then(() => {
+            //Add an extra then if some code needs to run no matter what
+        });
+}
+export const register_user = async (first_name: string, last_name: string, email: string, password: string) => {
     return axios.post(api + "/users/", {
         first_name: first_name, 
         last_name: last_name, 
