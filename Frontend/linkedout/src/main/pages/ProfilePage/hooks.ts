@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const useApplicantProfile = () => {
-    const [isCandidate, setIsCandidate] = useState<boolean>(true);
+    const [isCandidate, setIsCandidate] = useState<boolean>(false);
 
     const [experience, setExperience] = useState([]);
     const [recentExperience, setRecentExperience] = useState<string>("");

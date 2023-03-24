@@ -54,13 +54,19 @@ export const ProfilePageJob = () => {
 
     const handleSaveExperienceDialog = () => {
         setOpenDialog(false);
-        let e = experience;
+        let e = jobPostings;
+        if(isCandidate){
+            let e = experience;
+        }
         e[currentExperience]["title"] = bufferTitle;
         e[currentExperience]["company"] = bufferCompany;
         e[currentExperience]["start_date"] = bufferStartDate;
         e[currentExperience]["end_date"] = bufferEndDate;
         e[currentExperience]["description"] = bufferDescription;
-        isCandidate ? setExperience(e) : setJobPostings(e);
+        if(isCandidate)
+            setExperience(e)
+        else
+            setJobPostings(e);
     };
 
     const handleAddExperienceDialog = () => {
@@ -97,7 +103,7 @@ export const ProfilePageJob = () => {
     <Dialog open={openAddDialog} onClose={() => setOpenAddDialog(false)}>
         <Box>
         <Box sx={{ display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-            <DialogTitle>Add Experience</DialogTitle>
+            <DialogTitle>{isCandidate ? "Add Experience" : "Create Postings"}</DialogTitle>
             <IconButton aria-label="close experience" onClick={() => setOpenAddDialog(false)}>
                 <CloseIcon/>
             </IconButton>
