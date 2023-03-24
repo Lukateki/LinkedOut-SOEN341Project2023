@@ -22,12 +22,12 @@
   width: 90%;
 }
 
-.add-job-container .job-title, .add-job-container .job-recruiter, .add-job-container .job-type,.add-job-container .job-location,.add-job-container .job-posting-date, .add-job-container .job-expiry-date,.add-job-container .job-description,.add-job-container .job-url {
+.add-job-container .job-recruiter, .add-job-container .job-type,.add-job-container .job-location,.add-job-container .job-posting-date, .add-job-container .job-expiry-date,.add-job-container .job-description,.add-job-container .job-url {
   margin-top: 1em;
   width: 45%;
 }
 
-.add-job-container .job-description, .add-job-container .job-url, .add-job-container .upload-job-btn{
+.add-job-container .job-title, .add-job-container .job-description, .add-job-container .job-url, .add-job-container .upload-job-btn{
   width: 90%;
   margin-top: 1em;
   justify-content: center;

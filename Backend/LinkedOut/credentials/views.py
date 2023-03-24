@@ -1,8 +1,12 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
+from rest_framework.decorators import action, permission_classes
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response 
 
 from LinkedOut.credentials.models import Applicant, Education, Experience, Recruiter
+from LinkedOut.JobListings.models import Job
 from .serializers import ApplicantSerializer, EducationSerializer, ExperienceSerializer, RecruiterSerializer, UserSerializer, GroupSerializer
 
 
@@ -28,7 +32,28 @@ class UserViewSet(viewsets.ModelViewSet):
         else:
             return Response(data=serializer.errors, status=400)
 
-
+    @action(detail=True)
+    def retrieve_session_user(self, request, *args, **kwargs):
+        headerAuthToken = request.headers["authorization"];
+        if headerAuthToken != None:
+            responseData = None;
+            token = headerAuthToken[7:];
+            targetTokenObj = Token.objects.filter(key=token).first()
+            if targetTokenObj != None:
+                targetApplicant = Applicant.objects.filter(user_id=targetTokenObj.user.id).first();
+                targetRecruiter = Recruiter.objects.filter(user_id=targetTokenObj.user.id).first();
+                if targetApplicant != None:
+                    responseData = targetApplicant.as_dict();
+                    responseData["isApplicant"] = True;
+                    responseData["isRecruiter"] = False;
+                elif targetRecruiter != None:
+                    responseData = targetRecruiter.as_dict();
+                    responseData["isRecruiter"] = True;
+                    responseData["isApplicant"] = False;
+                    responseData["associated_jobs"] = Job.objects.filter(recruiter_id=responseData["recruiter_id"]).values("id");
+                return Response(data=responseData, status=200);
+        return Response(data={"status":"No Session User found"}, status=404)
+    
 class GroupViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
@@ -57,5 +82,3 @@ class ExperienceViewSet(viewsets.ModelViewSet):
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
     # permission_classes = [permissions.IsAuthenticated]
-
- 

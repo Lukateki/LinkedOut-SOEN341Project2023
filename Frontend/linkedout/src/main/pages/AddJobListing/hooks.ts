@@ -1,6 +1,10 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {upload_job } from "../../../axiosconfig";
+import {upload_job, get_recruiter, get_user, retrieve_session_user } from "../../../axiosconfig";
+import { isUserLoggedIn } from "../LoginPage/types";
+import { auth_token_cookie_name } from "../../../axiosconfig"
+import Cookies from "universal-cookie";
+
 
 
 
@@ -56,13 +60,19 @@ export const useUploadJob = () => {
 
     const navigate = useNavigate();
 
-    const handleUploadJobBtnClick = () => {
-        upload_job(title, recruiter, type, city, date, expiry, description, url).then(result => {
-            alert("hi");
-            navigate("/")
-        })
-        navigate("/")
- 
+    const handleUploadJobBtnClick = async () => {
+        
+            console.log("date posted:"+ date);
+            console.log("date expired:"+ expiry);
+
+            const token = new Cookies().get(auth_token_cookie_name)
+            const response = await retrieve_session_user(token);
+            const recruiterNew = response.data.id;
+            console.log("recruiter:"+ recruiterNew);
+
+            await upload_job(title, recruiterNew, url, date, expiry, city, type, description).then(result => {
+                navigate("/")
+            })         
 
     }
 

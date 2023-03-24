@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 //const auth = { username: "admin", password: "Password" };
 const rootAPI = "http://127.0.0.1:8000"; 
@@ -69,7 +70,8 @@ export const register_user = async (first_name: string, last_name: string, email
         first_name: first_name, 
         last_name: last_name, 
         email: email,  
-        password: password
+        password: password,
+        username: email
     })
 }
 
@@ -91,7 +93,8 @@ export const update_recruiter = async (id: number, user_id: number) => {
     return axios.patch(api + `/recruiters/${id}/`, {user: user_id})
 }
 
-export const upload_job = async (title: string, recruiter: string, posting_url: string, posting_date: string, expiry_date: string, city: string, job_type: string, description: string ) => {
+export const upload_job = async (title: string, recruiter: Object, posting_url: string, posting_date: string, expiry_date: string, city: string, job_type: string, description: string ) => {
+    const token = new Cookies().get(auth_token_cookie_name)
     return axios.post(api + "/jobs/", {
         title: title, 
         recruiter: recruiter, 
@@ -101,5 +104,17 @@ export const upload_job = async (title: string, recruiter: string, posting_url: 
         city: city,
         job_type: job_type, 
         description: description
-    })
+    }, { headers: { "Authorization" : `Token ${token}`}})
+}
+
+export const get_recruiter = async () =>{
+    return axios.get(api + '/recruiters');
+}
+
+export const retrieve_session_user = async (token: string) => {
+    return axios.get(api + "/users/api/retrieve_session_user/", { headers: {"Authorization" : `Bearer ${token}`}})
+}
+
+export const retrieve_recruiter = async (token:string) => {
+    return axios.get(api +"/recruiters/api/retrieve_recruiter/", {headers: {"Authorization" : `Bearer ${token}`}})
 }

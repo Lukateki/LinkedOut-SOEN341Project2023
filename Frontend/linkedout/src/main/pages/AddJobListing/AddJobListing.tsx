@@ -35,21 +35,14 @@ const AddJobListingPage = () => {
             <NavBar/>
             <div className="add-job-content">
                 <Card className='card'>
-                    <h2>Create a New Job Listing</h2>
-                    <div className='double-columns'>
+                    <h2>CREATE NEW JOB LISTING</h2>
                         <TextField
                             className='job-title'
                             label="Job Title"
                             value={title}
                             onChange={handleTitleChange}
                         />
-                        <TextField
-                            className='job-recruiter'
-                            label="Recruiting Company"
-                            value={recruiter}
-                            onChange={handleRecruiterChange}
-                        />
-                    </div>
+                        
                     <div className='double-columns'>
                         <TextField
                             className='job-type'
@@ -69,7 +62,7 @@ const AddJobListingPage = () => {
                         </TextField>
                         <TextField
                             className='job-location'
-                            label="location(city)"
+                            label="City"
                             value={city}
                             onChange={handleCityChange}
                         />
@@ -77,16 +70,18 @@ const AddJobListingPage = () => {
                     <div className='double-columns'>
                         <TextField
                             className='job-posting-date'
-                            label="Current Date"
+                            type="date"
                             value={date}
                             onChange={handleDateChange}
+                            helperText="Current Date"
 
                         />
                         <TextField
                             className='job-expiry-date'
-                            label="Expiry Date"
+                            type="date"
                             value={expiry}
                             onChange={handleExpiryChange}
+                            helperText="Expiry Date"
 
                         />
                     </div>
