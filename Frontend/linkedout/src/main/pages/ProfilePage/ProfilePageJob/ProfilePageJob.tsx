@@ -1,4 +1,4 @@
-import { Box, Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Divider, fabClasses, IconButton, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, TextField, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import NavBar from "../../../../components/NavBar/NavBar";
 import EditIcon from '@mui/icons-material/Edit';
@@ -6,10 +6,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import { useApplicantProfile } from "../hooks";
 import ArrowbackIcon from '@mui/icons-material/ArrowBack';
-import { Add } from "@mui/icons-material";
 
 export const ProfilePageJob = () => {
-    const { getExperience, experience, setExperience, navigateBackFromExperience } = useApplicantProfile();
+    const { getJobPostings, jobPostings, setJobPostings, getExperience, experience, setExperience, navigateBackFromExperience, isCandidate } = useApplicantProfile();
 
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openAddDialog, setOpenAddDialog] = React.useState(false);
@@ -22,13 +21,22 @@ export const ProfilePageJob = () => {
     const [currentExperience, setCurrentExperience] = React.useState(0);
 
     const handleOpenExperienceDialog = index => {
-        setCurrentExperience(index);
-        setBufferTitle(experience[index]["title"]);
-        setBufferCompany(experience[index]["company"]);
-        setBufferStartDate(experience[index]["start_date"]);
-        setBufferEndDate(experience[index]["end_date"]);
-        setBufferDescription(experience[index]["description"]);
         
+        setCurrentExperience(index);
+        if(isCandidate){
+            setBufferTitle(experience[index]["title"]);
+            setBufferCompany(experience[index]["company"]);
+            setBufferStartDate(experience[index]["start_date"]);
+            setBufferEndDate(experience[index]["end_date"]);
+            setBufferDescription(experience[index]["description"]);
+        }
+        else{
+            setBufferTitle(jobPostings[index]["title"]);
+            setBufferCompany(jobPostings[index]["company"]);
+            setBufferStartDate(jobPostings[index]["start_date"]);
+            setBufferEndDate(jobPostings[index]["end_date"]);
+            setBufferDescription(jobPostings[index]["description"]);
+        }
         setOpenDialog(true);
     };
 
@@ -38,7 +46,10 @@ export const ProfilePageJob = () => {
 
     const handleDeleteExperienceDialog = () => {
         setOpenDialog(false);
-        setExperience(experience.slice(0, currentExperience).concat(experience.slice(currentExperience + 1, experience.length)));
+        if(isCandidate)
+            setExperience(experience.slice(0, currentExperience).concat(experience.slice(currentExperience + 1, experience.length)));
+        else
+            setJobPostings(jobPostings.slice(0, currentExperience).concat(jobPostings.slice(currentExperience + 1, jobPostings.length)));
     };
 
     const handleSaveExperienceDialog = () => {
@@ -49,12 +60,22 @@ export const ProfilePageJob = () => {
         e[currentExperience]["start_date"] = bufferStartDate;
         e[currentExperience]["end_date"] = bufferEndDate;
         e[currentExperience]["description"] = bufferDescription;
-        setExperience(e);
+        isCandidate ? setExperience(e) : setJobPostings(e);
     };
 
     const handleAddExperienceDialog = () => {
         setOpenAddDialog(false);
-        setExperience([...experience, {
+        if(isCandidate){
+            setExperience([...experience, {
+                "title": bufferTitle,
+                "company": bufferCompany,
+                "start_date": bufferStartDate,
+                "end_date": bufferEndDate,
+                "description": bufferDescription
+            }]);
+        }
+        else{}
+        setJobPostings([...jobPostings, {
             "title": bufferTitle,
             "company": bufferCompany,
             "start_date": bufferStartDate,
@@ -140,7 +161,8 @@ export const ProfilePageJob = () => {
         </Box>
         </Box>
     </Dialog>
-    const experienceBlock = experience.map((item, i, row) => {
+
+    const experienceBlock = (isCandidate ? experience : jobPostings).map((item, i, row) => {
         const experienceBox = 
         <><Box className="profile-jobs-text-details" >
             <IconButton aria-label="edit experience" component="div" onClick={ e => handleOpenExperienceDialog(i)} sx={{float:"right"}}>
@@ -149,7 +171,7 @@ export const ProfilePageJob = () => {
             <Dialog open={openDialog} onClose={handleCloseExperienceDialog}>
                 <Box>
                 <Box sx={{ display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-                    <DialogTitle>Edit Experience</DialogTitle>
+                    <DialogTitle>{isCandidate ? "Edit Experience" : "Edit Postings"} </DialogTitle>
                     <IconButton aria-label="close experience" onClick={handleCloseExperienceDialog}>
                         <CloseIcon/>
                     </IconButton>
@@ -236,7 +258,10 @@ export const ProfilePageJob = () => {
       });
 
     useEffect(() => {
-        getExperience();
+        if (isCandidate)
+            getExperience();
+        else
+            getJobPostings();
     }, []);
 
     return (
@@ -251,7 +276,7 @@ export const ProfilePageJob = () => {
                                     <ArrowbackIcon />
                                 </IconButton>
                                 <Typography variant="h5" sx={{marginTop:"0.25em"}}>
-                                    Experience
+                                    {isCandidate ? "Experience" : "Our Job Postings"}
                                 </Typography>
                             </Box>
                             <IconButton aria-label="edit experience" onClick={handleOpenAddExperienceDialog}>
