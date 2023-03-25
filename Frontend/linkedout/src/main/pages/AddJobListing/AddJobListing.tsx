@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { get_all_jobs } from '../../../axiosconfig';
 import NavBar from '../../../components/NavBar/NavBar';
-import { Navigate } from "react-router-dom";
 import { Button } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { Card } from '@mui/material';
@@ -9,7 +7,7 @@ import './AddJobListing.css';
 import { useUploadJob } from './hooks';
 
 const AddJobListingPage = () => {
-    const { handleUploadJobBtnClick, handleTitleChange, handleRecruiterChange, handleTypeChange, handleCityChange, handleDateChange, handleExpiryChange, handleDescriptionChange,handleUrlChange, title, recruiter,type, city, date, expiry, description, url } = useUploadJob();
+    const { errorUrl, errorType,errorTitle,errorExpiry,errorDescription,errorDate,errorCity, handleUploadJobBtnClick, handleTitleChange, handleTypeChange, handleCityChange, handleDateChange, handleExpiryChange, handleDescriptionChange,handleUrlChange, title, type, city, date, expiry, description, url } = useUploadJob();
     
     const jobTypes = [
         {
@@ -41,17 +39,20 @@ const AddJobListingPage = () => {
                             label="Job Title"
                             value={title}
                             onChange={handleTitleChange}
+                            error={errorTitle}
                         />
                         
                     <div className='double-columns'>
                         <TextField
                             className='job-type'
                             select
+                            defaultValue={"Full-time"}
                             SelectProps={{    
                                 native:true
                             }}
                             value={type}
                             onChange={handleTypeChange}
+                            error={errorType}
 
                         >
                             {jobTypes.map((option) => (
@@ -65,6 +66,7 @@ const AddJobListingPage = () => {
                             label="City"
                             value={city}
                             onChange={handleCityChange}
+                            error={errorCity}
                         />
                     </div>
                     <div className='double-columns'>
@@ -74,6 +76,7 @@ const AddJobListingPage = () => {
                             value={date}
                             onChange={handleDateChange}
                             helperText="Current Date"
+                            error={errorDate}
 
                         />
                         <TextField
@@ -82,6 +85,7 @@ const AddJobListingPage = () => {
                             value={expiry}
                             onChange={handleExpiryChange}
                             helperText="Expiry Date"
+                            error={errorExpiry}
 
                         />
                     </div>
@@ -92,6 +96,7 @@ const AddJobListingPage = () => {
                         rows={4}
                         value={description}
                         onChange={handleDescriptionChange}
+                        error={errorDescription}
 
                     />
                     <TextField
@@ -99,6 +104,7 @@ const AddJobListingPage = () => {
                         label="Url"
                         value={url}
                         onChange={handleUrlChange}
+                        error={errorUrl}
 
                     />
                     <Button 
