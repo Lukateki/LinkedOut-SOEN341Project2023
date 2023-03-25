@@ -175,7 +175,6 @@ export const useRegisterEmployer = () => {
                 recruiterID=tempRecruiterID;
                 register_user(firstNameEmployer, lastNameEmployer, emailEmployer,passwordEmployer).then(success => {
                     const userID = success.data.user_id;
-                    console.log(userID)
                     update_recruiter(recruiterID, userID)
                     navigate("/login")
                 })

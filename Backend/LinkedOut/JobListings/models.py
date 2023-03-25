@@ -1,6 +1,6 @@
 from django.db import models
 
-from LinkedOut.credentials.models import Recruiter
+from LinkedOut.credentials.models import Recruiter, Applicant
 
 # Create your models here.
 class Job(models.Model):
@@ -16,3 +16,7 @@ class Job(models.Model):
     def __str__(self):
         return self.title
 
+class Application(models.Model):
+    application_id = models.AutoField(primary_key=True)
+    applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)

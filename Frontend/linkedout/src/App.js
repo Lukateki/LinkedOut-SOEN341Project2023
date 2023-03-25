@@ -3,6 +3,7 @@ import RegistrationPage from './main/pages/RegistrationPage/RegistrationPage.tsx
 import NotFoundPage from './main/pages/404-Page/404Page.tsx';
 import HomePage from './main/pages/HomePage/HomePage.tsx';
 import ProfilePage from './main/pages/ProfilePage/ProfilePage.tsx'
+import JobDetailsPage from './main/pages/JobDetailsPage/JobDetailsPage.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css';
 
@@ -24,8 +25,18 @@ const router = createBrowserRouter([
   },
 
   {
-    path:"/profile",
+    path: "/profile",
     element: <ProfilePage />
+  },
+
+  {
+    path: "/job/:id",
+    element: <JobDetailsPage />
+  },
+
+  {
+    path: "/404",
+    element: <NotFoundPage/>
   },
   /*
     To add a new route/url

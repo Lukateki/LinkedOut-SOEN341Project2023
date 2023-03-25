@@ -16,6 +16,19 @@ class Applicant(models.Model):
     
     def __str__(self):
         return self.username
+    
+    def as_dict(self):
+        return {
+            "applicant_id": self.id,
+            "user_id": self.user.id,
+            "username": self.username,
+            "reffered_pronouns": self.reffered_pronouns,
+            "skills": self.skills,
+            "interests": self.interests,
+            "first_name": self.user.first_name,
+            "last_name": self.user.last_name,
+            "email": self.user.email,
+        }
 
 class Recruiter(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
@@ -26,6 +39,19 @@ class Recruiter(models.Model):
 
     def __str__(self):
         return self.username
+    
+    def as_dict(self):
+        return {
+            "recruiter_id": self.id,
+            "user_id": self.user.id,
+            "username": self.username,
+            "first_name": self.user.first_name,
+            "last_name": self.user.last_name,
+            "email": self.user.email,
+            "company": self.company,
+            "about": self.about,
+            "headquarters": self.headquarters
+        }
 
 class Education(models.Model):
     applicant = models.ForeignKey(Applicant, default=1, on_delete=models.CASCADE)

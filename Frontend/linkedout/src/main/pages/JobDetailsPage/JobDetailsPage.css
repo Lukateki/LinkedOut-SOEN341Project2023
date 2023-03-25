@@ -1,0 +1,99 @@
+body {
+    background-color: rgba(241, 239, 239, 0.814);
+}
+
+.job-details-wrapper {
+    margin-bottom: 2em;
+}
+
+.jobDetails-container {
+    height: 100%;
+    width: 100%;
+    font-family: 'Quicksand';
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1.5em;
+}
+
+.jobDetails-company {
+    font-family: "Russo One";
+    font-size: 64px;
+    text-align: center;
+    margin: 0;
+}
+
+.jobDetails-position {
+    text-align: center;
+    font-size: 70px;
+    margin: 0;
+}
+
+.jobDetails-meta .jobDetails-specifics {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    font-size: 20px;
+}
+
+.jobDetails-meta .jobDetails-specifics div {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+
+.jobDetails-main {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+
+.jobDetails-main .job-requirements {
+    width: 50%;
+}
+
+.jobDetails-main .job-requirements.other-employer {
+    width: 72%;
+}
+
+.jobDetails-main .application-form {
+    width: 30%;
+}
+
+.jobDetails-main .application-form.employer-view {
+    width: 50%;
+}
+
+.jobDetails-main .application-form.employer-view li {
+    text-align: center;
+}
+
+.jobDetails-main .application-form.employer-view .applicant-list {
+    height: 400px;
+    overflow: auto;
+}
+
+.jobDetails-main .job-description{ 
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: justify;
+}
+
+.jobDetails-main .application-form .form {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    gap: 1em;
+}
+
+.jobDetails-main .application-form .form label{
+    color: #1B67C9;
+}
+
+.jobDetails-main .job-requirements .skill-list {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}

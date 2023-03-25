@@ -1,12 +1,27 @@
 from rest_framework import viewsets, permissions
+from rest_framework.decorators import action
 from .models import Job
+from LinkedOut.credentials.models import Recruiter
+from LinkedOut.credentials.serializers import RecruiterSerializer
 from .serializers import JobSerializer
 from django.http import JsonResponse
+from rest_framework.response import Response
 
 # Create your views here.
 class JobViewSet(viewsets.ModelViewSet):
     serializer_class = JobSerializer
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    @action(detail=True)
+    def get_job_recruiter(self, request, *args, **kwargs):
+        target_jobID = request.query_params["job_id"]
+        job = Job.objects.filter(id=target_jobID).first()
+        responseData = None
+        if job != None:
+            recruiter = Recruiter.objects.filter(id=job.recruiter_id).first()
+            serializer = RecruiterSerializer(recruiter)
+            responseData = serializer.data
+        return Response(data=responseData, status=200)
 
     def get_queryset(self):
         search_text = self.request.query_params.get("search")
