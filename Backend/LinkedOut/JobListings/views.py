@@ -6,7 +6,7 @@ from django.http import JsonResponse
 # Create your views here.
 class JobViewSet(viewsets.ModelViewSet):
     serializer_class = JobSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
         search_text = self.request.query_params.get("search")
