@@ -3,7 +3,33 @@
       flex-direction: column;
       height: 50%;
     }
-  
+
+  .home-header {
+    margin-left: 15em;
+    margin-right: 15em;
+    width: 60em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFFFFF;
+  }
+
+  .home-left-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .home-right-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .home-buttons {
+    text-transform: none;
+  }
+
   .home-content {
     display: flex;
     flex-direction: column;

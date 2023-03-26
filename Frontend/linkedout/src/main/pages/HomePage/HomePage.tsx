@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Typography} from '@mui/material';
 import { get_all_jobs } from '../../../axiosconfig';
-import './HomePage.css';
 import NavBar from '../../../components/NavBar/NavBar';
+import { useNavigate, generatePath } from 'react-router-dom';
+
+import './HomePage.css';
 
 const HomePage = () => {
-
+  const navigate = useNavigate();
   const [jobPostings, setJobPostings] = useState([]);
 
   useEffect(() => {
@@ -20,6 +22,11 @@ const HomePage = () => {
 
     fetchJobPostings();
   }, []);
+
+  const goToJobDetails = (job_id: string) => {
+    const path = generatePath("/job/:id", { id: job_id })
+    navigate(path);
+  }
 
   return (
     <div className="home-container">
@@ -38,7 +45,7 @@ const HomePage = () => {
         <ul className="homepage-job-postings">
           {jobPostings.map((jobPosting) => (
             <li key={jobPosting.id}>
-              <h3>{jobPosting.title}</h3>
+              <h3 onClick={() => goToJobDetails(String(jobPosting.id))}>{jobPosting.title}</h3>
               <p>{jobPosting.description}</p>
               {/* Include an apply button (blocked for users that are not authenticated) */}
             </li>
