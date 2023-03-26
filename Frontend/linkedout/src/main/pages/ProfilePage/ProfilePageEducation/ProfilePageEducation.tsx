@@ -236,7 +236,7 @@ export const ProfilePageEducation = () => {
       });
     useEffect(() => {
         getEducation();
-    }, []);
+    });
 
     return (
         <body>
@@ -246,7 +246,7 @@ export const ProfilePageEducation = () => {
                     <Card className="profile-jobs">
                         <Box className="profile-jobs-title">
                             <Box sx={{ display: "flex" }}>
-                                <IconButton aria-label="edit experience" onClick={navigateBackFromEducation} href="/profile#jobs">
+                                <IconButton aria-label="edit experience" onClick={navigateBackFromEducation} href="/profile">
                                     <ArrowBackIcon />
                                 </IconButton>
                                 <Typography variant="h5" sx={{marginTop:"0.25em"}}>

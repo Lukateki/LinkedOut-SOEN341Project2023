@@ -57,7 +57,7 @@ export const ProfilePageJob = () => {
         let e = jobPostings;
 
         if(isCandidate){
-            let e = experience;
+            e = experience;
         }
         e[currentExperience]["title"] = bufferTitle;
         e[currentExperience]["company"] = bufferCompany;
@@ -269,7 +269,7 @@ export const ProfilePageJob = () => {
             getExperience();
         else
             getJobPostings();
-    }, []);
+    });
 
     return (
         <body>
@@ -279,7 +279,7 @@ export const ProfilePageJob = () => {
                     <Card className="profile-jobs">
                         <Box className="profile-jobs-title">
                             <Box sx={{ display: "flex" }}>
-                                <IconButton aria-label="edit experience" onClick={navigateBackFromExperience} href="/profile#jobs">
+                                <IconButton aria-label="edit experience" onClick={navigateBackFromExperience} href="/profile">
                                     <ArrowbackIcon />
                                 </IconButton>
                                 <Typography variant="h5" sx={{marginTop:"0.25em"}}>

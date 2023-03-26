@@ -125,7 +125,7 @@ export const ProfilePage = () => {
     // setBiography(candidate["biography"]);
     setEmail(data.email);
     // setDescription(candidate["description"]);
-    // setSkills(data.skills);
+    setSkills([]);
   }
 
   const getRecruiter = () => {
@@ -219,7 +219,7 @@ export const ProfilePage = () => {
         }
       })
     }
-  }, [loaded])
+  }, [loaded, getEducation, getExperience, getJobPostings, navigatetBackToHome, setIsCandidate])
 
   return (
     <><NavBar/>
@@ -473,7 +473,6 @@ export const ProfilePage = () => {
               {isCandidate ? description : aboutUs}
             </Typography>
           </Card>
-          <a id="jobs">
           <Card className="profile-jobs">
               <Box className="profile-jobs-title">
                 <Typography variant="h5">
@@ -488,9 +487,7 @@ export const ProfilePage = () => {
                 {experienceBlock}
               </Box>
           </Card>
-          </a>
           {isCandidate ? 
-          <a id="educations">
           <Card className="profile-jobs" sx={{marginTop:"0.25vw", marginBottom:"0.25vw"}}>
             <Box className="profile-jobs-title">
             <Typography variant="h5" component="div">
@@ -504,7 +501,6 @@ export const ProfilePage = () => {
               {educationBlock}
             </Box>
           </Card>
-          </a>
       : null}
        </Box>
       </div>
