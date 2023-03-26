@@ -1,8 +1,8 @@
 .profile-body{
     background-color: rgba(39, 48, 61, 0.1);
-    padding-top: 0.5vw;
-    padding-bottom: 100vw;
-    height: 50vw;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    height: 100%;
 }
 
 .profile-cards{

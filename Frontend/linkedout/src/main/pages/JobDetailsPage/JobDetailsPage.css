@@ -1,22 +1,26 @@
+html {
+    height: 100%;
+}
+
 body {
     background-color: rgba(241, 239, 239, 0.814);
+    min-height: 100%;
 }
 
 .job-details-wrapper {
+    margin-top: 2em;
     margin-bottom: 2em;
 }
 
 .jobDetails-container {
-    height: 100%;
-    width: 100%;
-    font-family: 'Quicksand';
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 1.5em;
+    height: 50em;
+    width: 60em;
+    font-family: 'Quicksand' !important;
+    margin: auto;
 }
 
 .jobDetails-company {
-    font-family: "Russo One";
+    font-family: "Russo One" !important;
     font-size: 64px;
     text-align: center;
     margin: 0;
@@ -24,15 +28,14 @@ body {
 
 .jobDetails-position {
     text-align: center;
-    font-size: 70px;
-    margin: 0;
+    font-family: 'Quicksand' !important;
 }
 
 .jobDetails-meta .jobDetails-specifics {
     display: flex;
     justify-content: center;
     gap: 1em;
-    font-size: 20px;
+    font-size: 1em;
 }
 
 .jobDetails-meta .jobDetails-specifics div {
@@ -45,18 +48,41 @@ body {
     display: flex;
     text-align: center;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .jobDetails-main .job-requirements {
-    width: 50%;
+    padding-left: 0.90em;
+    padding-right: 0.90em;
 }
 
 .jobDetails-main .job-requirements.other-employer {
     width: 72%;
 }
 
-.jobDetails-main .application-form {
-    width: 30%;
+.jobDetails-main .application-form .horizontal{
+    display: flex;
+}
+
+.jobDetails-main .application-form .horizontal .first-input{
+    margin-right: 1em;
+    margin-left: auto;
+}
+
+.jobDetails-main .application-form .horizontal .second-input{
+    margin-right: auto;
+}
+
+.jobDetails-main .application-form .lone-input {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.jobDetails-main .application-form .apply-btn {
+    width: 24%; 
+    margin-left: auto; 
+    margin-right: auto;
 }
 
 .jobDetails-main .application-form.employer-view {
@@ -73,10 +99,16 @@ body {
 }
 
 .jobDetails-main .job-description{ 
-    width: 70%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     text-align: justify;
+    overflow: auto;
+    height: 10em;
+}
+
+.jobDetails-main .application-form {
+    width: 100%;
 }
 
 .jobDetails-main .application-form .form {

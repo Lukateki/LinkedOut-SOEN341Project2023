@@ -90,9 +90,7 @@ export const useApplicant = () => {
     }
 
     const handleApply = () => {
-        get_job_recruiter("1").then(s => {
-            console.log(s)
-        })
+        //TODO
     }
 
     useEffect(() => {
