@@ -3,7 +3,6 @@ import { Typography} from '@mui/material';
 import { get_all_jobs } from '../../../axiosconfig';
 import './HomePage.css';
 import NavBar from '../../../components/NavBar/NavBar';
-import { color } from '@mui/system';
 
 const HomePage = () => {
 
