@@ -1,7 +1,6 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {upload_job, get_user, retrieve_session_user } from "../../../axiosconfig";
-import { isUserLoggedIn } from "../LoginPage/types";
+import {upload_job, retrieve_session_user } from "../../../axiosconfig";
 import { auth_token_cookie_name } from "../../../axiosconfig"
 import Cookies from "universal-cookie";
 
