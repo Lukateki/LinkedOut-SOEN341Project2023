@@ -118,73 +118,52 @@ export const ProfilePage = () => {
     setOpenDescriptionDialog(false);
   };
 
-  const getApplicant = (data) => {
-    setFirstName(data.first_name);
-    setLastName(data.last_name);
-    setPronoun(data.reffered_pronouns);
-    // setBiography(candidate["biography"]);
-    setEmail(data.email);
-    // setDescription(candidate["description"]);
-    setSkills([]);
+  const getApplicant = (user: any) => {
+    const { first_name, last_name, referred_pronouns, email, skills } = user;
+    setFirstName(first_name);
+    setLastName(last_name);
+    setPronoun(referred_pronouns);
+    setEmail(email);
+    setSkills(skills);
   }
 
-  const getRecruiter = () => {
-    const recruiter = {
-      "company_name" : "Amazon",
-      "established_date" : "2023",
-      "awards" : ["Best Company in RAM usage",
-                  "Rated #1 in AI until this year"],
-      "offices" : ["Mountain View, CA", "New York, NY", "London, UK"],
-      "about_us" : "We are a company that is dedicated to making the world a better place.",
-    }
-    // setCompanyName(recruiter["company_name"]);
-    // setEstablishedDate(recruiter["established_date"]);
-    // setAwards(recruiter["awards"]);
-    setOffices(recruiter["offices"]);
-    // setAboutUs(recruiter["about_us"]);
-  }
+  const getRecruiter = (user: any) => {
+    setCompanyName(user.company);
+    setOffices(user.headquarters);
+    setAboutUs(user.about);
+}
 
-  const experienceBlock = (isCandidate ? experience : jobPostings).map((item, i, row) => {
+  const experienceBlock = (isCandidate ? experience : jobPostings).map(item => {
     const information = 
           <Box className="profile-jobs-text-details">
-            <Typography variant="h6">{item["title"]}</Typography>
-            <Typography variant="subtitle1">{item["company"]}</Typography>
-            <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{isCandidate ? item["start_date"].split("-")[0] + "-" + item["end_date"].split("-")[0] : item["posting_date"]}</Typography>
-            <Typography variant="body2">{item["description"]}</Typography>
+            <Typography variant="h6">{item.position}</Typography>
+            <Typography variant="subtitle1">{item.company}</Typography>
+            <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">
+              {isCandidate ? item.start_date.split("-")[0] + "-" + item.end_date.split("-")[0] : item.posting_date}
+              </Typography>
+            {/* <Typography variant="body2">{item.description}</Typography> */}
           </Box>
 
-    if(i + 1 === row.length) {
-      return (
-        <>{information}</>
-      )}
-    else{
       return(
         <>{information}
           <Divider variant="middle" /></>
       )
-    }
   });
 
-  const educationBlock = education.map((item, i, row) => {
+  const educationBlock = education.map(item => {
     const information =
           <Box className="profile-jobs-text-details">
-            <Typography variant="h6">{item["school"]}</Typography>
-            <Typography variant="subtitle1">{item["degree"]}</Typography>
-            <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{item["start_date"].split("-")[0]} - {item["end_date"].split("-")[0]}</Typography>
-            <Typography variant="body2">{item["description"]}</Typography>
+            <Typography variant="h6">{item.school}</Typography>
+            <Typography variant="subtitle1">{item.degree}</Typography>
+            <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{item.start_date.split("-")[0]} - {item.end_date.split("-")[0]}</Typography>
+            <Typography variant="body2">{item.description}</Typography>
           </Box>
-    if(i + 1 === row.length) {
-      return (
-        <>{information}</>
-      )}
-    else{
       return(
         <>
           {information}
           <Divider variant="middle" />
         </>
       )
-    }
   });
 
   useEffect(() => {
@@ -194,28 +173,15 @@ export const ProfilePage = () => {
     else if(!loaded){
       setLoaded(true)
       const token = new Cookies().get(auth_token_cookie_name);
-      retrieve_session_user(token).then((s) => {
-        console.log(s.data)
-        console.log(typeof(s.data.isApplicant));
-        setIsCandidate(s.data.isApplicant);
-        if(s.data.isApplicant){
-          setUserId(s.data.applicant_id);
-
-          getApplicant(s.data);
-          getExperience();
-          getEducation();
-          
-        }
-        else{
-          setUserId(s.data.recruiter_id);
-          setCompanyName(s.data.company);
-          setAwards([s.data.award_one, s.data.award_two]);
-          setEstablishedDate(s.data.established);
-          setAboutUs(s.data.about);
-          console.log(s.data)
-
-          getRecruiter()
-          getJobPostings()
+      retrieve_session_user(token).then((user) => {
+        setIsCandidate(user.data.isApplicant);
+        if(user.data.isApplicant){
+          getApplicant(user.data);
+          getExperience(user.data.experiences);
+          getEducation(user.data.education);
+        } else {
+          getRecruiter(user.data);
+          getJobPostings();
         }
       })
     }

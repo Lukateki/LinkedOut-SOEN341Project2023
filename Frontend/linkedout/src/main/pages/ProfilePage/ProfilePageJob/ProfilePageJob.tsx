@@ -266,8 +266,8 @@ export const ProfilePageJob = () => {
 
     useEffect(() => {
         if (isCandidate)
-            getExperience();
-        else
+            //getExperience();
+        //else
             getJobPostings();
     });
 

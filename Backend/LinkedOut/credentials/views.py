@@ -55,6 +55,12 @@ class UserViewSet(viewsets.ModelViewSet):
                 targetRecruiter = Recruiter.objects.filter(user_id=targetTokenObj.user.id).first();
                 if targetApplicant != None:
                     responseData = targetApplicant.as_dict();
+                    experienceSerializer = ExperienceSerializer(Experience.objects.filter(applicant_id=targetApplicant.id), many=True);
+                    print(targetApplicant.id);
+                    responseData["experiences"] = experienceSerializer.data;
+                    educationSerializer = EducationSerializer(Education.objects.filter(applicant_id=targetApplicant.id), many=True);
+                    responseData["education"] = educationSerializer.data;
+                    print(educationSerializer.data);
                     responseData["isApplicant"] = True;
                     responseData["isRecruiter"] = False;
                 elif targetRecruiter != None:

@@ -235,7 +235,7 @@ export const ProfilePageEducation = () => {
         }
       });
     useEffect(() => {
-        getEducation();
+        //getEducation();
     });
 
     return (

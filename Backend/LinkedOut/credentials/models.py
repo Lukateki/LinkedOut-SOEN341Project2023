@@ -13,7 +13,7 @@ class Applicant(models.Model):
     skills = models.TextField(null=True)
     interests = models.TextField(null=True)
     resume = models.BinaryField(max_length=None, null=True)#If there are errors uploading documents to this column, might need to set editable=True as a parameter
-    
+
     def __str__(self):
         return self.username
     
@@ -73,6 +73,20 @@ class Education(models.Model):
     def __str__(self):
         return self.school
 
+    def as_dict(self):
+        return {
+            "education_id": self.id,
+            "applicant_id": self.applicant.id,
+            "school": self.school,
+            "degree": self.degree,
+            "major": self.major,
+            "minor": self.minor,
+            "description": self.description,
+            "skills": self.skills,
+            "start_date": self.start_date,
+            "end_date": self.end_date
+        }
+
 class Experience(models.Model):
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
     company = models.CharField(max_length=100)
@@ -85,6 +99,18 @@ class Experience(models.Model):
 
     def __str__(self):
         return self.company
+    
+    def as_dict(self):
+        return {
+            "experience_id": self.id,
+            "applicant_id": self.applicant.id,
+            "company": self.company,
+            "position": self.position,
+            "location": self.location,
+            "skills": self.skills,
+            "start_date": self.start_date,
+            "end_date": self.end_date
+        }
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):

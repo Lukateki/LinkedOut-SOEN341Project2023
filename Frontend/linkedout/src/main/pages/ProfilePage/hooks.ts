@@ -14,48 +14,40 @@ export const useApplicantProfile = () => {
 
     const navigate = useNavigate();
 
-    const getExperience = () => {
-        setExperience([
-          {"title" : "Data Scientist",
-           "company" : "Google",
-           "start_date" : "2020-01-01",
-           "end_date" : "2021-01-01",
-           "description" : "As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database."
-           },
-           {"title" : "Software Engineer",
-            "company" : "Facebook",
-            "start_date" : "2019-01-01",
-            "end_date" : "2020-01-01",
-            "description" : "As a software engineer for facebook, I was tasked with developing the backend for the facebook marketplace."
-          },
-          {"title" : "Software Engineer",
-            "company" : "Amazon",
-            "start_date" : "2018-01-01",
-            "end_date" : "2019-01-01",
-            "description" : "As a software engineer for amazon, I was tasked with developing the backend for the amazon marketplace."
-          },
-        ]);
-        setRecentExperience("Google")
-      }
+    const getExperience = (userExperience: any) => {
+      const mostRecentEndDate = userExperience.reduce((maxEndDate, exp) => {
+        const endDate = new Date(exp.end_date);
+        if (!maxEndDate || endDate > maxEndDate) {
+          maxEndDate = endDate;
+        }
+        return maxEndDate;
+      }, null);
     
-    const getEducation = () => {
-      setEducation([
-        {"school" : "University of Waterloo",
-          "degree" : "Bachelors of Software Engineering",
-          "start_date" : "2020-01-01",
-          "end_date" : "2021-01-01",
-          "description" : "As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database."
-          },
-          {"school" : "East High",
-          "degree" : null,
-          "start_date" : "2019-01-01",
-          "end_date" : "2020-01-01",
-          "description" : "As a software engineer for facebook, I was tasked with developing the backend for the facebook marketplace."
-        },
-      ]);
-      // let recentEd: Record<string, string> = education[0];
-      // let recentName: string = recentEd["school"];
-      setRecentEducation("University of Waterloo");
+      const mostRecentExperience = userExperience.find(exp => {
+        const endDate = new Date(exp.end_date);
+        return endDate.getTime() === mostRecentEndDate.getTime();
+      });
+    
+      setExperience(userExperience);
+      setRecentExperience(mostRecentExperience.company);
+    }
+
+    const getEducation = (userEducation: any) => {
+      const mostRecentEndDate = userEducation.reduce((maxEndDate, exp) => {
+        const endDate = new Date(exp.end_date);
+        if (!maxEndDate || endDate > maxEndDate) {
+          maxEndDate = endDate;
+        }
+        return maxEndDate;
+      }, null);
+    
+      const mostRecentEducation = userEducation.find(exp => {
+        const endDate = new Date(exp.end_date);
+        return endDate.getTime() === mostRecentEndDate.getTime();
+      });
+    
+      setEducation(userEducation);
+      setRecentEducation(mostRecentEducation.company);
     }
 
     const getJobPostings = () => {
