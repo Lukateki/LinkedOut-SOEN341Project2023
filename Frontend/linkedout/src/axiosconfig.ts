@@ -95,3 +95,10 @@ export const retrieve_job_details = async (jobID: string) => {
 export const get_job_recruiter = async (recruiter_id: string) => {
     return axios.get(api + `/recruiters/${recruiter_id}`);
 }
+export const update_recruiter_about = async (id: number, about: string) => {
+    return axios.patch(api + `/recruiters/${id}/`, {about: about})
+}
+
+export const update_recruiter_summary = async (id: number, summary) => {
+    return axios.patch(api + `/recruiters/${id}/`, summary)
+}

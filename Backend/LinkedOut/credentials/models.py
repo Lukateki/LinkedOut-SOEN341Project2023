@@ -36,6 +36,9 @@ class Recruiter(models.Model):
     company = models.CharField(max_length=100)
     about = models.TextField(null=True)
     headquarters = models.CharField(max_length=100)
+    established = models.CharField(max_length=100, null=True)
+    award_one = models.CharField(max_length=100, null=True)
+    award_two = models.CharField(max_length=100, null=True)
 
     def __str__(self):
         return self.username
@@ -50,7 +53,10 @@ class Recruiter(models.Model):
             "email": self.user.email,
             "company": self.company,
             "about": self.about,
-            "headquarters": self.headquarters
+            "headquarters": self.headquarters,  
+            "established": self.established,
+            "award_one": self.award_one,
+            "award_two": self.award_two,
         }
 
 class Education(models.Model):
