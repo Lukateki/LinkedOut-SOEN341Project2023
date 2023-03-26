@@ -32,7 +32,7 @@ export const NavBar : React.FC  = () => {
           <div className="navbar-left-header">
             <span className="navbar-company-name">Linked</span>
               <a id="logo" href="http://localhost:3000/">
-                <img src="img/LinkedoutLogo2.png" alt="LinkedOut" className="home-logo" />
+                <img src="img/LinkedoutLogo2.png" alt="LinkedOut" className="navbar-logo" />
               </a>
               <div className="navbar-search-bar">
                 <TextField size="small" id="outlined-basic" label="Search" placeholder="Search job postings"/>
