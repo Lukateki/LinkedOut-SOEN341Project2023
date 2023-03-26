@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Typography} from '@mui/material';
 import { get_all_jobs } from '../../../axiosconfig';
 import NavBar from '../../../components/NavBar/NavBar';
-import { color } from '@mui/system';
 import { useNavigate, generatePath } from 'react-router-dom';
 
 import './HomePage.css';
