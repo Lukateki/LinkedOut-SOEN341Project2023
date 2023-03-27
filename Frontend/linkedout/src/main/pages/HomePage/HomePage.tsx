@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { get_all_jobs } from '../../../axiosconfig';
 import NavBar from '../../../components/NavBar/NavBar';
-import { useNavigate } from "react-router-dom";
 import { Button } from '@mui/material';
 import {retrieve_session_user} from "../../../axiosconfig";
 import { auth_token_cookie_name } from "../../../axiosconfig"
@@ -29,11 +28,15 @@ const HomePage = () => {
       }
     };
     const isUserARecruiter = async() => {
+      try {
       const token = new Cookies().get(auth_token_cookie_name)
       const response = await retrieve_session_user(token);
       console.log(response.data.isRecruiter);
       const temp = response.data.isRecruiter
       setIsRecruiter(temp);
+      } catch(error){
+        console.log(error);
+      }
     };
     isUserARecruiter();
     
