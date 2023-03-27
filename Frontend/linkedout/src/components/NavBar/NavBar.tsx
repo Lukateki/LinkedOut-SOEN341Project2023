@@ -2,7 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, CardMedia, TextField } from '@mui/material';
 import { isUserLoggedIn } from "../../main/pages/LoginPage/types";
+
 import "./NavBar.css"
+import Cookies from "universal-cookie";
 
 export const NavBar : React.FC  = () => {
 
@@ -11,7 +13,6 @@ export const NavBar : React.FC  = () => {
     const handleLoginClick = () => {
         navigate('/login');
     };
-
     const handleRegisterClick = () => {
       navigate('/register');
     };
@@ -21,18 +22,19 @@ export const NavBar : React.FC  = () => {
     };
 
     const handleLogoutClick = () => {
-      // Some mechanism to remove the auth-token
-        navigate('/');
+      const cookies = new Cookies();
+      cookies.remove('auth-token');
+      
+      navigate('/');
     };
     
-
     return(
-      <body>
+      <div style={{ backgroundColor: "white"}}>
         <div className="navbar-header">
           <div className="navbar-left-header">
             <span className="navbar-company-name">Linked</span>
               <a id="logo" href="http://localhost:3000/">
-                <img src="img/LinkedoutLogo2.png" alt="LinkedOut" className="home-logo" />
+                <img src={"/img/LinkedoutLogo2.png"} alt="LinkedOut" className="home-logo" />
               </a>
               <div className="navbar-search-bar">
                 <TextField size="small" id="outlined-basic" label="Search" placeholder="Search job postings"/>
@@ -66,7 +68,7 @@ export const NavBar : React.FC  = () => {
               } 
           </div>
         </div>
-        </body>
+      </div>
     )
 }
 

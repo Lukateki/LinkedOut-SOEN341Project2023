@@ -1,20 +1,27 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, permissions
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from rest_framework.decorators import action, permission_classes
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.decorators import action, permission_classes
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response 
 from rest_framework.request import Request
+from rest_framework.decorators import action, permission_classes
+from rest_framework.authtoken.models import Token
+from LinkedOut.JobListings.models import Job
 
 from LinkedOut.credentials.models import Applicant, Education, Experience, Recruiter
-from LinkedOut.JobListings.models import Job
+from LinkedOut.JobListings.models import Application, Job
 from .serializers import ApplicantSerializer, EducationSerializer, ExperienceSerializer, RecruiterSerializer, UserSerializer, GroupSerializer
-
+from LinkedOut.JobListings.serializers import ApplicationSerializer
 from email.message import EmailMessage
 import ssl
 import smtplib
 import re
+import json
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -38,6 +45,28 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response(data={'user_id': user.id}, status=201)
         else:
             return Response(data=serializer.errors, status=400)
+        
+    @action(detail=True)
+    def retrieve_session_user(self, request, *args, **kwargs):
+        headerAuthToken = request.headers["authorization"];
+        if headerAuthToken != None:
+            responseData = None;
+            token = headerAuthToken[7:];
+            targetTokenObj = Token.objects.filter(key=token).first()
+            if targetTokenObj != None:
+                targetApplicant = Applicant.objects.filter(user_id=targetTokenObj.user.id).first();
+                targetRecruiter = Recruiter.objects.filter(user_id=targetTokenObj.user.id).first();
+                if targetApplicant != None:
+                    responseData = targetApplicant.as_dict();
+                    responseData["isApplicant"] = True;
+                    responseData["isRecruiter"] = False;
+                elif targetRecruiter != None:
+                    responseData = targetRecruiter.as_dict();
+                    responseData["isRecruiter"] = True;
+                    responseData["isApplicant"] = False;
+                    responseData["associated_jobs"] = Job.objects.filter(recruiter_id=responseData["recruiter_id"]).values("id");
+                return Response(data=responseData, status=200);
+        return Response(data={"status":"No Session User found"}, status=404)
 
     @action(detail=True)
     def retrieve_session_user(self, request, *args, **kwargs):
@@ -60,7 +89,6 @@ class UserViewSet(viewsets.ModelViewSet):
                     responseData["associated_jobs"] = Job.objects.filter(recruiter_id=responseData["recruiter_id"]).values("id");
                 return Response(data=responseData, status=200);
         return Response(data={"status":"No Session User found"}, status=404)
-    
 class GroupViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
@@ -89,6 +117,21 @@ class ExperienceViewSet(viewsets.ModelViewSet):
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
     # permission_classes = [permissions.IsAuthenticated]
+
+class ApplicationsViewSet(viewsets.ModelViewSet):
+    queryset = Application.objects.all()
+    serializer_class = ApplicationSerializer
+    # permission_classes = [permissions.IsAuthenticated]
+
+    @action(detail=True)
+    def get_applicants(self, request, *args, **kwargs):
+        target_job_id = request.query_params['job_id']
+        applicants_id = Application.objects.filter(job_id=target_job_id).values_list('applicant_id', flat=True)
+        applicants = Applicant.objects.filter(id__in=applicants_id);
+        jsonApplicants = [];
+        for applicant in applicants:
+            jsonApplicants.append(applicant.as_dict())
+        return Response(data=jsonApplicants, status=200)
 
 class SendEmailView(APIView):
 

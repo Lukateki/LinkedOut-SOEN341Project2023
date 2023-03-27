@@ -53,18 +53,6 @@ export const register_applicant = async (username:string) => {
     })
 }
 
-export const get_user = async (token: string) => {
-    //The params property has to be an object with the params needed for the request
-    axios.get(api + '/users', { params: {}})
-        .then(result => {
-            console.log(result);
-        }).catch(error => {
-            console.log(error);
-            //handle error
-        }).then(() => {
-            //Add an extra then if some code needs to run no matter what
-        });
-}
 export const register_user = async (first_name: string, last_name: string, email: string, password: string) => {
     return axios.post(api + "/users/", {
         first_name: first_name, 
@@ -117,4 +105,22 @@ export const retrieve_session_user = async (token: string) => {
 
 export const retrieve_recruiter = async (token:string) => {
     return axios.get(api +"/recruiters/api/retrieve_recruiter/", {headers: {"Authorization" : `Bearer ${token}`}})
+}
+export const retrieve_job_applications = async (jobID: string) => {
+    return axios.get(api + `/applications/api/get_applicants/`, { params: { job_id: jobID }});
+}
+
+export const retrieve_job_details = async (jobID: string) => {
+    return axios.get(api + `/jobs/${jobID}/`);
+}
+
+export const get_job_recruiter = async (recruiter_id: string) => {
+    return axios.get(api + `/recruiters/${recruiter_id}`);
+}
+export const update_recruiter_about = async (id: number, about: string) => {
+    return axios.patch(api + `/recruiters/${id}/`, {about: about})
+}
+
+export const update_recruiter_summary = async (id: number, summary) => {
+    return axios.patch(api + `/recruiters/${id}/`, summary)
 }

@@ -17,7 +17,7 @@ Including another URLconf
 from django.urls import include, path
 from rest_framework import routers
 from rest_framework.authtoken import views
-from LinkedOut.credentials.views import ApplicantViewSet, EducationViewSet, ExperienceViewSet, RecruiterViewSet, UserViewSet, GroupViewSet, SendEmailView
+from LinkedOut.credentials.views import ApplicantViewSet, EducationViewSet, ExperienceViewSet, RecruiterViewSet, UserViewSet, GroupViewSet, SendEmailView, ApplicationsViewSet
 from LinkedOut.JobListings.views import JobViewSet
 from django.contrib import admin
 
@@ -29,6 +29,7 @@ router.register(r'educations', EducationViewSet)
 router.register(r'experiences', ExperienceViewSet)
 router.register(r'applicants', ApplicantViewSet)
 router.register(r'recruiters', RecruiterViewSet)
+router.register(r'applications', ApplicationsViewSet)
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 
