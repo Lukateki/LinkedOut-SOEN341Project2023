@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import NavBar from '../../../components/NavBar/NavBar';
 import { useApplicantProfile } from './hooks';
-import { auth_token_cookie_name, retrieve_session_user, update_recruiter_about, update_recruiter_summary } from "../../../axiosconfig";
+import { auth_token_cookie_name, retrieve_session_user, update_applicant_summary, update_recruiter_about, update_recruiter_summary, update_user_summary } from "../../../axiosconfig";
 import Cookies from "universal-cookie";
 import "./ProfilePage.css";
 import { isUserLoggedIn } from "../LoginPage/types";
@@ -14,6 +14,7 @@ export const ProfilePage = () => {
   const { navigatetBackToHome, setIsCandidate, getJobPostings, jobPostings, getExperience, recentExperience, recentEducation, experience, navigateToExperience, navigateToEducation, getEducation, education, isCandidate } = useApplicantProfile();
   const [loaded, setLoaded] = useState<boolean>(false);
   const [userId, setUserId] = useState<number>(0);
+  const [Id, setId] = useState<number>(0);
 
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -49,11 +50,11 @@ export const ProfilePage = () => {
 
   const handleClickSummaryDialog = () => {
     if(isCandidate){
-    setBufferFirstName(firstName);
-    setBufferLastName(lastName);
-    setBufferPronoun(pronoun);
-    setBufferBiography(biography);
-    setBufferEmail(email);
+      setBufferFirstName(firstName);
+      setBufferLastName(lastName);
+      setBufferPronoun(pronoun);
+      setBufferBiography(biography);
+      setBufferEmail(email);
     }
     else{
       setBufferCompanyName(companyName);
@@ -76,7 +77,15 @@ export const ProfilePage = () => {
       setPronoun(bufferPronoun);
       setBiography(bufferBiography);
       setEmail(bufferEmail);
-      
+      update_user_summary(Id, {"first_name": bufferFirstName,
+                                        "last_name": bufferLastName,
+                                      }
+      );
+      update_applicant_summary(userId, {"reffered_pronouns": bufferPronoun,
+                                        "interests": bufferBiography,
+                                        // "email": bufferEmail,
+                                      }
+      );
     }
     else{
       setCompanyName(bufferCompanyName);
@@ -122,7 +131,7 @@ export const ProfilePage = () => {
     setFirstName(data.first_name);
     setLastName(data.last_name);
     setPronoun(data.reffered_pronouns);
-    // setBiography(candidate["biography"]);
+    setBiography(data.interests);
     setEmail(data.email);
     // setDescription(candidate["description"]);
     setSkills([]);
@@ -195,11 +204,10 @@ export const ProfilePage = () => {
       setLoaded(true)
       const token = new Cookies().get(auth_token_cookie_name);
       retrieve_session_user(token).then((s) => {
-        console.log(s.data)
-        console.log(typeof(s.data.isApplicant));
         setIsCandidate(s.data.isApplicant);
         if(s.data.isApplicant){
           setUserId(s.data.applicant_id);
+          setId(s.data.user_id);
 
           getApplicant(s.data);
           getExperience();
@@ -388,7 +396,6 @@ export const ProfilePage = () => {
                   <Typography variant="subtitle1" component="div">
                     {isCandidate ? recentEducation : awards[0]}
                   </Typography>
-                  <Divider/>
                   <Typography variant="subtitle1" component="div">
                     {isCandidate ? recentExperience : awards[1]}
                   </Typography>

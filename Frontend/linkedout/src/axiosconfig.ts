@@ -124,3 +124,11 @@ export const update_recruiter_about = async (id: number, about: string) => {
 export const update_recruiter_summary = async (id: number, summary) => {
     return axios.patch(api + `/recruiters/${id}/`, summary)
 }
+
+export const update_user_summary = async (id: number, summary) => {
+    return axios.patch(api + `/users/${id}/`, summary)
+}
+
+export const update_applicant_summary = async (id: number, summary) => {
+    return axios.patch(api + `/applicants/${id}/`, summary)
+}
