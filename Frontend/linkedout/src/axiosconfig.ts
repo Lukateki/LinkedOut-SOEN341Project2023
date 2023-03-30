@@ -136,3 +136,11 @@ export const update_applicant_summary = async (id: number, summary) => {
 export const update_applicant_description = async (id: number, description) => {
     return axios.patch(api + `/applicants/${id}/`, {"description": description})
 }
+
+export const retrieve_applicant_experience = async (applicantID: string) => {
+    return axios.get(api + `/applicants/api/get_experiences/`, { params: { applicant_id: applicantID }});
+}
+
+export const update_experience = async (id: number, experience) => {
+    return axios.patch(api + `/experiences/${id}/`, experience)
+}

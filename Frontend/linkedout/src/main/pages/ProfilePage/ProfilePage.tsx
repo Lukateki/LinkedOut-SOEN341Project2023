@@ -11,10 +11,8 @@ import "./ProfilePage.css";
 import { isUserLoggedIn } from "../LoginPage/types";
 
 export const ProfilePage = () => {
-  const { navigatetBackToHome, setIsCandidate, getJobPostings, jobPostings, getExperience, recentExperience, recentEducation, experience, navigateToExperience, navigateToEducation, getEducation, education, isCandidate } = useApplicantProfile();
+  const { userId, setUserId, Id, setId, navigatetBackToHome, setIsCandidate, getJobPostings, jobPostings, getExperience, recentExperience, recentEducation, experience, navigateToExperience, navigateToEducation, getEducation, education, isCandidate } = useApplicantProfile();
   const [loaded, setLoaded] = useState<boolean>(false);
-  const [userId, setUserId] = useState<number>(0);
-  const [Id, setId] = useState<number>(0);
 
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -220,7 +218,7 @@ export const ProfilePage = () => {
           setId(s.data.user_id);
 
           getApplicant(s.data);
-          getExperience();
+          getExperience(s.data);
           getEducation();
           
         }

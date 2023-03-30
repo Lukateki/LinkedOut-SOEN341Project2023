@@ -6,9 +6,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import { useApplicantProfile } from "../hooks";
 import ArrowbackIcon from '@mui/icons-material/ArrowBack';
+import { isUserLoggedIn } from "../../LoginPage/types";
+import Cookies from "universal-cookie";
+import { auth_token_cookie_name, retrieve_session_user, update_experience } from "../../../../axiosconfig";
 
 export const ProfilePageJob = () => {
-    const { getJobPostings, jobPostings, setJobPostings, getExperience, experience, setExperience, navigateBackFromExperience, isCandidate } = useApplicantProfile();
+    const { setId, setUserId, getJobPostings, jobPostings, setJobPostings, getExperience, experience, setExperience, navigateBackFromExperience, isCandidate, setIsCandidate } = useApplicantProfile();
+    const [loaded, setLoaded] = React.useState(false);
 
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openAddDialog, setOpenAddDialog] = React.useState(false);
@@ -64,8 +68,18 @@ export const ProfilePageJob = () => {
         e[currentExperience]["start_date"] = bufferStartDate;
         e[currentExperience]["end_date"] = bufferEndDate;
         e[currentExperience]["description"] = bufferDescription;
-        if(isCandidate)
+        if(isCandidate){
             setExperience(e)
+            update_experience(currentExperience + 1,{
+                "title": bufferTitle,
+                "company": bufferCompany,
+                "start_date": bufferStartDate,
+                "end_date": bufferEndDate,
+                "description": bufferDescription,
+            }
+        );
+
+        }
         else
             setJobPostings(e);
     };
@@ -265,10 +279,29 @@ export const ProfilePageJob = () => {
       });
 
     useEffect(() => {
-        if (isCandidate)
-            getExperience();
-        else
-            getJobPostings();
+        if(!isUserLoggedIn()){
+            navigatetBackToHome();
+          }
+          else if(!loaded){
+            setLoaded(true)
+            const token = new Cookies().get(auth_token_cookie_name);
+            retrieve_session_user(token).then((s) => {
+              setIsCandidate(s.data.isApplicant);
+              console.log(s.data)
+              if(s.data.isApplicant){
+                setUserId(s.data.applicant_id);
+                setId(s.data.user_id);
+      
+                getExperience(s.data);
+                
+              }
+              else{
+                setUserId(s.data.recruiter_id);
+                getJobPostings()
+              }
+            })
+          }
+        
     });
 
     return (
@@ -304,3 +337,7 @@ export const ProfilePageJob = () => {
 };
 
 export default ProfilePageJob;
+function navigatetBackToHome() {
+    throw new Error("Function not implemented.");
+}
+
