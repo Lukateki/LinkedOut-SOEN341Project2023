@@ -107,7 +107,7 @@ class ApplicantViewSet(viewsets.ModelViewSet):
     def get_experiences(self, request, *args, **kwargs):
         target_applicant_id = request.query_params['applicant_id']
         experience_id = Experience.objects.filter(applicant_id=target_applicant_id).values_list('id', flat=True)
-        experiences = Experience.objects.filter(id__in=experience_id)
+        experiences = Experience.objects.filter(id__in=experience_id).order_by('-end_date')
         
         jsonExperiences = []
         for experience in experiences:
