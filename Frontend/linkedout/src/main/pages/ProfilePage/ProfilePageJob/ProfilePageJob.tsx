@@ -8,11 +8,11 @@ import { useApplicantProfile } from "../hooks";
 import ArrowbackIcon from '@mui/icons-material/ArrowBack';
 import { isUserLoggedIn } from "../../LoginPage/types";
 import Cookies from "universal-cookie";
-import { auth_token_cookie_name, retrieve_session_user, update_experience } from "../../../../axiosconfig";
+import { auth_token_cookie_name, create_experience, delete_experience, retrieve_session_user, update_experience } from "../../../../axiosconfig";
 import { exec } from "child_process";
 
 export const ProfilePageJob = () => {
-    const { setId, setUserId, getJobPostings, jobPostings, setJobPostings, getExperience, experience, setExperience, navigateBackFromExperience, isCandidate, setIsCandidate } = useApplicantProfile();
+    const { setId, setUserId, userId, getJobPostings, jobPostings, setJobPostings, getExperience, experience, setExperience, navigateBackFromExperience, isCandidate, setIsCandidate } = useApplicantProfile();
     const [loaded, setLoaded] = React.useState(false);
 
     const [openDialog, setOpenDialog] = React.useState(false);
@@ -53,10 +53,15 @@ export const ProfilePageJob = () => {
 
     const handleDeleteExperienceDialog = () => {
         setOpenDialog(false);
-        if(isCandidate)
-            setExperience(experience.slice(0, currentExperience).concat(experience.slice(currentExperience + 1, experience.length)));
-        else
+        if(isCandidate){
+            // setExperience(experience.slice(0, currentExperience).concat(experience.slice(currentExperience + 1, experience.length)));
+            delete_experience(bufferId);
+        }       
+        else{
             setJobPostings(jobPostings.slice(0, currentExperience).concat(jobPostings.slice(currentExperience + 1, jobPostings.length)));
+        }
+        window.location.reload();
+
     };
 
     const handleSaveExperienceDialog = () => {
@@ -94,13 +99,24 @@ export const ProfilePageJob = () => {
     const handleAddExperienceDialog = () => {
         setOpenAddDialog(false);
         if(isCandidate){
-            setExperience([...experience, {
+            // setExperience([...experience, {
+            //     "title": bufferTitle,
+            //     "company": bufferCompany,
+            //     "start_date": bufferStartDate,
+            //     "end_date": bufferEndDate,
+            //     "description": bufferDescription
+            // }]);
+            create_experience({
                 "title": bufferTitle,
                 "company": bufferCompany,
                 "start_date": bufferStartDate,
                 "end_date": bufferEndDate,
-                "description": bufferDescription
-            }]);
+                "description": bufferDescription,
+                //TODO: Add location and skills in the frontend
+                "location": "blank",
+                "skills": "blank",
+                "applicant": userId,
+            });
         }
         else{}
         setJobPostings([...jobPostings, {
@@ -108,8 +124,10 @@ export const ProfilePageJob = () => {
             "company": bufferCompany,
             "start_date": bufferStartDate,
             "end_date": bufferEndDate,
-            "description": bufferDescription
+            "description": bufferDescription,
+
         }]);
+        window.location.reload();
     };
 
     const handleOpenAddExperienceDialog = () => {

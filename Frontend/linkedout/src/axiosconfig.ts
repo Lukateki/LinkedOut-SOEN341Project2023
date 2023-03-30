@@ -144,3 +144,11 @@ export const retrieve_applicant_experience = async (applicantID: string) => {
 export const update_experience = async (id: number, experience) => {
     return axios.patch(api + `/experiences/${id}/`, experience)
 }
+
+export const create_experience = async (experience) => {
+    return axios.post(api + `/experiences/`, experience)
+}
+
+export const delete_experience = async (id: number) => {
+    return axios.delete(api + `/experiences/${id}/`);
+}
