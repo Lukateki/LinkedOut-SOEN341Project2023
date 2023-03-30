@@ -327,7 +327,7 @@ export const ProfilePageJob = () => {
             })
           }
         
-    });
+    }, [loaded, setIsCandidate, setUserId, setId, getExperience, getJobPostings]);
 
     return (
         <body>

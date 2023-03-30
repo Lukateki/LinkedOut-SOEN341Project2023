@@ -235,7 +235,7 @@ export const ProfilePage = () => {
         }
       })
     }
-  }, [loaded, getEducation, getExperience, getJobPostings, navigatetBackToHome, setIsCandidate])
+  }, [loaded, getEducation, getExperience, getJobPostings, navigatetBackToHome, setIsCandidate, setId, setUserId])
 
   return (
     <><NavBar/>
