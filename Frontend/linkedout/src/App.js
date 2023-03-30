@@ -2,7 +2,8 @@ import LoginPage from './main/pages/LoginPage/LoginPage.tsx';
 import RegistrationPage from './main/pages/RegistrationPage/RegistrationPage.tsx';
 import NotFoundPage from './main/pages/404-Page/404Page.tsx';
 import HomePage from './main/pages/HomePage/HomePage.tsx';
-import ProfilePage from './main/pages/ProfilePage/ProfilePage.tsx'
+import ProfilePage from './main/pages/ProfilePage/ProfilePage.tsx';
+import AddJobListingPage from './main/pages/AddJobListing/AddJobListing.tsx';
 import JobDetailsPage from './main/pages/JobDetailsPage/JobDetailsPage.tsx';
 import ProfilePageJob from './main/pages/ProfilePage/ProfilePageJob/ProfilePageJob.tsx';
 import ProfilePageEducation from './main/pages/ProfilePage/ProfilePageEducation/ProfilePageEducation.tsx';
@@ -29,6 +30,12 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <ProfilePage />
+  },
+
+  {
+    path:"/addJob",
+    element: <AddJobListingPage />
+    //errorElement: <NotFoundPage />
   },
 
   {

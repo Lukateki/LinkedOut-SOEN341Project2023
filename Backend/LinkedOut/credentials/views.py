@@ -5,6 +5,9 @@ from rest_framework.views import APIView
 from rest_framework.decorators import action, permission_classes
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework.decorators import action, permission_classes
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response 
 from rest_framework.request import Request
 from rest_framework.decorators import action, permission_classes
 from rest_framework.authtoken.models import Token
@@ -86,7 +89,6 @@ class UserViewSet(viewsets.ModelViewSet):
                     responseData["associated_jobs"] = Job.objects.filter(recruiter_id=responseData["recruiter_id"]).values("id");
                 return Response(data=responseData, status=200);
         return Response(data={"status":"No Session User found"}, status=404)
-
 class GroupViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
