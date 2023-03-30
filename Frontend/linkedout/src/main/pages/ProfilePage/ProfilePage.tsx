@@ -77,13 +77,15 @@ export const ProfilePage = () => {
       setPronoun(bufferPronoun);
       setBiography(bufferBiography);
       setEmail(bufferEmail);
-      update_user_summary(Id, {"first_name": bufferFirstName,
-                                        "last_name": bufferLastName,
-                                      }
-      );
-      update_applicant_summary(userId, {"reffered_pronouns": bufferPronoun,
+      update_user_summary(Id, {"username": bufferEmail,
+                                "first_name": bufferFirstName,
+                                "last_name": bufferLastName,
+                                "email": bufferEmail,
+                              }
+);
+      update_applicant_summary(userId, {"username": bufferEmail,
+                                        "reffered_pronouns": bufferPronoun,
                                         "interests": bufferBiography,
-                                        // "email": bufferEmail,
                                       }
       );
     }
