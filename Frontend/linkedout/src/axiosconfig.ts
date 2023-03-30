@@ -132,3 +132,7 @@ export const update_user_summary = async (id: number, summary) => {
 export const update_applicant_summary = async (id: number, summary) => {
     return axios.patch(api + `/applicants/${id}/`, summary)
 }
+
+export const update_applicant_description = async (id: number, description) => {
+    return axios.patch(api + `/applicants/${id}/`, {"description": description})
+}

@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import NavBar from '../../../components/NavBar/NavBar';
 import { useApplicantProfile } from './hooks';
-import { auth_token_cookie_name, retrieve_session_user, update_applicant_summary, update_recruiter_about, update_recruiter_summary, update_user_summary } from "../../../axiosconfig";
+import { auth_token_cookie_name, retrieve_session_user, update_applicant_description, update_applicant_summary, update_recruiter_about, update_recruiter_summary, update_user_summary } from "../../../axiosconfig";
 import Cookies from "universal-cookie";
 import "./ProfilePage.css";
 import { isUserLoggedIn } from "../LoginPage/types";
@@ -118,12 +118,19 @@ export const ProfilePage = () => {
     setOpenDescriptionDialog(false);
   };
   const handleSaveDescriptionDialog = () => {
+    if (!bufferDescription){
+      setBufferDescription("");
+    }
     if(isCandidate)
+    {
       setDescription(bufferDescription);
+      update_applicant_description(userId, bufferDescription);
+    }
     else
+    {
       setAboutUs(bufferAboutUs);
       update_recruiter_about(userId, bufferAboutUs);
-        
+    } 
     setOpenDescriptionDialog(false);
   };
 
@@ -133,7 +140,7 @@ export const ProfilePage = () => {
     setPronoun(data.reffered_pronouns);
     setBiography(data.interests);
     setEmail(data.email);
-    // setDescription(candidate["description"]);
+    setDescription(data.description);
     setSkills([]);
   }
 
@@ -205,6 +212,7 @@ export const ProfilePage = () => {
       const token = new Cookies().get(auth_token_cookie_name);
       retrieve_session_user(token).then((s) => {
         setIsCandidate(s.data.isApplicant);
+        console.log(s.data)
         if(s.data.isApplicant){
           setUserId(s.data.applicant_id);
           setId(s.data.user_id);
