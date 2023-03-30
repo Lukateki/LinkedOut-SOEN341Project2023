@@ -9,10 +9,9 @@ import ArrowbackIcon from '@mui/icons-material/ArrowBack';
 import { isUserLoggedIn } from "../../LoginPage/types";
 import Cookies from "universal-cookie";
 import { auth_token_cookie_name, create_experience, delete_experience, retrieve_session_user, update_experience } from "../../../../axiosconfig";
-import { exec } from "child_process";
 
 export const ProfilePageJob = () => {
-    const { setId, setUserId, userId, getJobPostings, jobPostings, setJobPostings, getExperience, experience, setExperience, navigateBackFromExperience, isCandidate, setIsCandidate } = useApplicantProfile();
+    const { setId, setUserId, userId, getJobPostings, jobPostings, setJobPostings, getExperience, experience, navigateBackFromExperience, isCandidate, setIsCandidate } = useApplicantProfile();
     const [loaded, setLoaded] = React.useState(false);
 
     const [openDialog, setOpenDialog] = React.useState(false);
