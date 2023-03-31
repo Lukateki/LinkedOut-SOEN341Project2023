@@ -71,3 +71,21 @@
     margin: 2%;
     margin-left: 85%;
   }
+
+  /* New Rules */
+.home-container .welcome-banner {
+  font-family: 'Quicksand';
+}
+
+.home-content .home-jobs-container {
+  background-color: rgb(26, 32, 39); 
+  color: white;
+}
+
+.home-content .home-jobs-container div {
+  font-family: 'Quicksand';
+}
+
+.home-content .home-jobs-container p {
+  font-family: 'Quicksand';
+}
