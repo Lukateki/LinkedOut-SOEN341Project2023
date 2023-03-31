@@ -124,3 +124,31 @@ export const update_recruiter_about = async (id: number, about: string) => {
 export const update_recruiter_summary = async (id: number, summary) => {
     return axios.patch(api + `/recruiters/${id}/`, summary)
 }
+
+export const update_user_summary = async (id: number, summary) => {
+    return axios.patch(api + `/users/${id}/`, summary)
+}
+
+export const update_applicant_summary = async (id: number, summary) => {
+    return axios.patch(api + `/applicants/${id}/`, summary)
+}
+
+export const update_applicant_description = async (id: number, description) => {
+    return axios.patch(api + `/applicants/${id}/`, {"description": description})
+}
+
+export const retrieve_applicant_experience = async (applicantID: string) => {
+    return axios.get(api + `/applicants/api/get_experiences/`, { params: { applicant_id: applicantID }});
+}
+
+export const update_experience = async (id: number, experience) => {
+    return axios.patch(api + `/experiences/${id}/`, experience)
+}
+
+export const create_experience = async (experience) => {
+    return axios.post(api + `/experiences/`, experience)
+}
+
+export const delete_experience = async (id: number) => {
+    return axios.delete(api + `/experiences/${id}/`);
+}

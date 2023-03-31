@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { retrieve_applicant_experience } from "../../../axiosconfig";
 
 export const useApplicantProfile = () => {
     const [isCandidate, setIsCandidate] = useState<boolean>(false);
+
+    const [userId, setUserId] = useState<number>(0);
+    const [Id, setId] = useState<number>(0);
 
     const [experience, setExperience] = useState([]);
     const [recentExperience, setRecentExperience] = useState<string>("");
@@ -14,27 +18,10 @@ export const useApplicantProfile = () => {
 
     const navigate = useNavigate();
 
-    const getExperience = () => {
-        setExperience([
-          {"title" : "Data Scientist",
-           "company" : "Google",
-           "start_date" : "2020-01-01",
-           "end_date" : "2021-01-01",
-           "description" : "As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database."
-           },
-           {"title" : "Software Engineer",
-            "company" : "Facebook",
-            "start_date" : "2019-01-01",
-            "end_date" : "2020-01-01",
-            "description" : "As a software engineer for facebook, I was tasked with developing the backend for the facebook marketplace."
-          },
-          {"title" : "Software Engineer",
-            "company" : "Amazon",
-            "start_date" : "2018-01-01",
-            "end_date" : "2019-01-01",
-            "description" : "As a software engineer for amazon, I was tasked with developing the backend for the amazon marketplace."
-          },
-        ]);
+    const getExperience = (data) => {
+        retrieve_applicant_experience(String(data.applicant_id)).then(s => {
+          setExperience(s.data)
+      })
         setRecentExperience("Google")
       }
     
@@ -122,5 +109,5 @@ export const useApplicantProfile = () => {
       const navigatetBackToHome = () => {
         navigate("/");
       }
-      return { navigatetBackToHome, setIsCandidate, getJobPostings, jobPostings, setJobPostings, isCandidate, getExperience, experience, setExperience, navigateToExperience, navigateToEducation, navigateBackFromExperience, navigateBackFromEducation, recentExperience, getEducation, education, setEducation, recentEducation };
+      return { Id, setId, userId, setUserId, navigatetBackToHome, setIsCandidate, getJobPostings, jobPostings, setJobPostings, isCandidate, getExperience, experience, setExperience, navigateToExperience, navigateToEducation, navigateBackFromExperience, navigateBackFromEducation, recentExperience, getEducation, education, setEducation, recentEducation };
 }

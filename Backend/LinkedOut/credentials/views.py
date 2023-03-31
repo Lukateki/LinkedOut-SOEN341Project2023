@@ -103,6 +103,17 @@ class ApplicantViewSet(viewsets.ModelViewSet):
     serializer_class = ApplicantSerializer
     # permission_classes = [permissions.IsAuthenticated]
    
+    @action(detail=True) # Applicant -> Experiences
+    def get_experiences(self, request, *args, **kwargs):
+        target_applicant_id = request.query_params['applicant_id']
+        experience_id = Experience.objects.filter(applicant_id=target_applicant_id).values_list('id', flat=True)
+        experiences = Experience.objects.filter(id__in=experience_id).order_by('-end_date')
+        
+        jsonExperiences = []
+        for experience in experiences:
+            jsonExperiences.append(ExperienceSerializer(experience).data)
+        return Response(data=jsonExperiences, status=200)
+        
 class RecruiterViewSet(viewsets.ModelViewSet):
     queryset = Recruiter.objects.all()
     serializer_class = RecruiterSerializer
@@ -123,12 +134,12 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
     serializer_class = ApplicationSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
-    @action(detail=True)
+    @action(detail=True) # Job -> Applicant
     def get_applicants(self, request, *args, **kwargs):
         target_job_id = request.query_params['job_id']
         applicants_id = Application.objects.filter(job_id=target_job_id).values_list('applicant_id', flat=True)
-        applicants = Applicant.objects.filter(id__in=applicants_id);
-        jsonApplicants = [];
+        applicants = Applicant.objects.filter(id__in=applicants_id)
+        jsonApplicants = []
         for applicant in applicants:
             jsonApplicants.append(applicant.as_dict())
         return Response(data=jsonApplicants, status=200)

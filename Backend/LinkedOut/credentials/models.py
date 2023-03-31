@@ -11,8 +11,9 @@ class Applicant(models.Model):
     username = models.CharField(max_length=100, default="None")
     reffered_pronouns = models.CharField(max_length=50, default="None")
     skills = models.TextField(null=True)
-    interests = models.TextField(null=True)
+    interests = models.TextField(default="", blank=True)
     resume = models.BinaryField(max_length=None, null=True)#If there are errors uploading documents to this column, might need to set editable=True as a parameter
+    description = models.TextField(default="", blank=True)
     
     def __str__(self):
         return self.username
@@ -28,6 +29,7 @@ class Applicant(models.Model):
             "first_name": self.user.first_name,
             "last_name": self.user.last_name,
             "email": self.user.email,
+            "description": self.description,
         }
 
 class Recruiter(models.Model):
@@ -76,9 +78,9 @@ class Education(models.Model):
 class Experience(models.Model):
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
     company = models.CharField(max_length=100)
-    position = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
-    # description = models.TextField()
+    description = models.TextField(default="", blank=True)
     skills = models.TextField()
     start_date = models.DateField()
     end_date = models.DateField(null=True)

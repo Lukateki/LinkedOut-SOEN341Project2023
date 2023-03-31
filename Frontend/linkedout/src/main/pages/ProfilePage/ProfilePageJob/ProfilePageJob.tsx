@@ -6,13 +6,18 @@ import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import { useApplicantProfile } from "../hooks";
 import ArrowbackIcon from '@mui/icons-material/ArrowBack';
+import { isUserLoggedIn } from "../../LoginPage/types";
+import Cookies from "universal-cookie";
+import { auth_token_cookie_name, create_experience, delete_experience, retrieve_session_user, update_experience } from "../../../../axiosconfig";
 
 export const ProfilePageJob = () => {
-    const { getJobPostings, jobPostings, setJobPostings, getExperience, experience, setExperience, navigateBackFromExperience, isCandidate } = useApplicantProfile();
+    const { setId, setUserId, userId, getJobPostings, jobPostings, setJobPostings, getExperience, experience, navigateBackFromExperience, isCandidate, setIsCandidate } = useApplicantProfile();
+    const [loaded, setLoaded] = React.useState(false);
 
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openAddDialog, setOpenAddDialog] = React.useState(false);
 
+    const [bufferId, setBufferId] = React.useState(0);
     const [bufferTitle, setBufferTitle] = React.useState("");
     const [bufferCompany, setBufferCompany] = React.useState("");
     const [bufferStartDate, setBufferStartDate] = React.useState("");
@@ -24,6 +29,7 @@ export const ProfilePageJob = () => {
         
         setCurrentExperience(index);
         if(isCandidate){
+            setBufferId(experience[index]["id"]);
             setBufferTitle(experience[index]["title"]);
             setBufferCompany(experience[index]["company"]);
             setBufferStartDate(experience[index]["start_date"]);
@@ -46,40 +52,70 @@ export const ProfilePageJob = () => {
 
     const handleDeleteExperienceDialog = () => {
         setOpenDialog(false);
-        if(isCandidate)
-            setExperience(experience.slice(0, currentExperience).concat(experience.slice(currentExperience + 1, experience.length)));
-        else
+        if(isCandidate){
+            // setExperience(experience.slice(0, currentExperience).concat(experience.slice(currentExperience + 1, experience.length)));
+            delete_experience(bufferId);
+        }       
+        else{
             setJobPostings(jobPostings.slice(0, currentExperience).concat(jobPostings.slice(currentExperience + 1, jobPostings.length)));
+        }
+        window.location.reload();
+
     };
 
     const handleSaveExperienceDialog = () => {
         setOpenDialog(false);
-        let e = jobPostings;
+        // let e = jobPostings;
 
+        // if(isCandidate){
+        //     e = experience;
+        // }
+        // e[currentExperience]["title"] = bufferTitle;
+        // e[currentExperience]["company"] = bufferCompany;
+        // e[currentExperience]["start_date"] = bufferStartDate;
+        // e[currentExperience]["end_date"] = bufferEndDate;
+        // e[currentExperience]["description"] = bufferDescription;
         if(isCandidate){
-            e = experience;
+            // setExperience(e)
+            console.log(experience)
+            update_experience(bufferId,{
+                "title": bufferTitle,
+                "company": bufferCompany,
+                "start_date": bufferStartDate,
+                "end_date": bufferEndDate,
+                "description": bufferDescription,
+            }
+        );
+
         }
-        e[currentExperience]["title"] = bufferTitle;
-        e[currentExperience]["company"] = bufferCompany;
-        e[currentExperience]["start_date"] = bufferStartDate;
-        e[currentExperience]["end_date"] = bufferEndDate;
-        e[currentExperience]["description"] = bufferDescription;
-        if(isCandidate)
-            setExperience(e)
-        else
-            setJobPostings(e);
+        else{
+            // setJobPostings(e);
+        }
+            
+        window.location.reload();
     };
 
     const handleAddExperienceDialog = () => {
         setOpenAddDialog(false);
         if(isCandidate){
-            setExperience([...experience, {
+            // setExperience([...experience, {
+            //     "title": bufferTitle,
+            //     "company": bufferCompany,
+            //     "start_date": bufferStartDate,
+            //     "end_date": bufferEndDate,
+            //     "description": bufferDescription
+            // }]);
+            create_experience({
                 "title": bufferTitle,
                 "company": bufferCompany,
                 "start_date": bufferStartDate,
                 "end_date": bufferEndDate,
-                "description": bufferDescription
-            }]);
+                "description": bufferDescription,
+                //TODO: Add location and skills in the frontend
+                "location": "blank",
+                "skills": "blank",
+                "applicant": userId,
+            });
         }
         else{}
         setJobPostings([...jobPostings, {
@@ -87,8 +123,10 @@ export const ProfilePageJob = () => {
             "company": bufferCompany,
             "start_date": bufferStartDate,
             "end_date": bufferEndDate,
-            "description": bufferDescription
+            "description": bufferDescription,
+
         }]);
+        window.location.reload();
     };
 
     const handleOpenAddExperienceDialog = () => {
@@ -239,7 +277,7 @@ export const ProfilePageJob = () => {
                     <DialogActions>
                         <Button variant="outlined" onClick={handleDeleteExperienceDialog}>Delete</Button>
                     </DialogActions>
-                    <DialogActions onClick={handleSaveExperienceDialog}>
+                    <DialogActions onClick={() => handleSaveExperienceDialog()}>
                         <Button variant="contained">Save</Button>
                     </DialogActions>
                 </Box>
@@ -265,11 +303,30 @@ export const ProfilePageJob = () => {
       });
 
     useEffect(() => {
-        if (isCandidate)
-            getExperience();
-        else
-            getJobPostings();
-    });
+        if(!isUserLoggedIn()){
+            navigatetBackToHome();
+          }
+          else if(!loaded){
+            setLoaded(true)
+            const token = new Cookies().get(auth_token_cookie_name);
+            retrieve_session_user(token).then((s) => {
+              setIsCandidate(s.data.isApplicant);
+              console.log(s.data)
+              if(s.data.isApplicant){
+                setUserId(s.data.applicant_id);
+                setId(s.data.user_id);
+      
+                getExperience(s.data);
+                
+              }
+              else{
+                setUserId(s.data.recruiter_id);
+                getJobPostings()
+              }
+            })
+          }
+        
+    }, [loaded, setIsCandidate, setUserId, setId, getExperience, getJobPostings]);
 
     return (
         <body>
@@ -304,3 +361,7 @@ export const ProfilePageJob = () => {
 };
 
 export default ProfilePageJob;
+function navigatetBackToHome() {
+    throw new Error("Function not implemented.");
+}
+
