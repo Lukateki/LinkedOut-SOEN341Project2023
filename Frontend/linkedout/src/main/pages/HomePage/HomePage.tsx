@@ -52,21 +52,34 @@ const HomePage = () => {
     <div className="home-container">
       <NavBar/>
       <Card className="home-content">
-        <Typography className={"welcome-banner"} variant={'h4'}>Welcome to LinkedOut</Typography>
-        <CardContent>
-          <Card className={"home-jobs-container"} sx={{ backgroundColor: "rgb(26, 32, 39)", color: "white"}}>
-            {jobPostings.map(j => {
-              return (
-                <CardContent>
-                  <Typography variant={"h5"} component={"div"}>{j.title}</Typography>
-                  <Typography variant={"h6"} component={"div"}>{j.recruiter}</Typography>
-                  <Typography>{j.city}</Typography>
-                  <Typography>Expires: {j.expiry_date}</Typography>
-                </CardContent>
-              )
-            })}
-          </Card>
+        <Typography className={"welcome-banner"} variant={'h4'}>
+          Welcome to
+          <span className="home-company-name"> Linked</span>
+          <img 
+            src="img/LinkedoutLogo2.png" 
+            alt="LinkedOut" 
+            className="home-logo"
+            style={{"marginBottom": "-14px"}} 
+          />
+        </Typography>
+        <Typography className={'available-jobs'}>Jobs of the day: </Typography>
+        <CardContent className={"home-jobs-container"}>
+          {jobPostings.map(j => {
+            return (
+              <div onClick={() => goToJobDetails(j.id.toString())}>
+              <CardContent key={j.id} className={"grid-item"}>
+                <Typography variant={"h5"} component={"div"}>{j.title}</Typography>
+                <Typography variant={"h6"} component={"div"}>{j.recruiter}</Typography>
+                <Typography>{j.city}</Typography>
+                <Typography>Expires: {j.expiry_date}</Typography>
+              </CardContent>
+              </div>
+            )
+          })}
         </CardContent>
+        { isRecruiter && <div className='add-job-btn'>
+          <Button variant="contained"onClick={() => { navigate("/addJob"); }}>+</Button>
+        </div>}
       </Card>
     </div>
   );
