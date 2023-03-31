@@ -145,6 +145,7 @@ export const ProfilePage = () => {
   }
 
   const getRecruiter = () => {
+    
     const recruiter = {
       "company_name" : "Amazon",
       "established_date" : "2023",
@@ -185,7 +186,7 @@ export const ProfilePage = () => {
     const information =
           <Box className="profile-jobs-text-details">
             <Typography variant="h6">{item["school"]}</Typography>
-            <Typography variant="subtitle1">{item["degree"]}</Typography>
+            <Typography variant="subtitle1">{item["degree"] + " of " + item["major"]}</Typography>
             <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{item["start_date"].split("-")[0]} - {item["end_date"].split("-")[0]}</Typography>
             <Typography variant="body2">{item["description"]}</Typography>
           </Box>
@@ -219,7 +220,7 @@ export const ProfilePage = () => {
 
           getApplicant(s.data);
           getExperience(s.data);
-          getEducation();
+          getEducation(s.data);
           
         }
         else{

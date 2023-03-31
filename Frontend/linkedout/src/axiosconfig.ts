@@ -152,3 +152,19 @@ export const create_experience = async (experience) => {
 export const delete_experience = async (id: number) => {
     return axios.delete(api + `/experiences/${id}/`);
 }
+
+export const retrieve_applicant_education = async (applicantID: string) => {
+    return axios.get(api + `/applicants/api/get_educations/`, { params: { applicant_id: applicantID }});
+}
+
+export const update_education = async (id: number, education) => {
+    return axios.patch(api + `/educations/${id}/`, education)
+}
+
+export const create_education = async (education) => {
+    return axios.post(api + `/educations/`, education)
+}
+
+export const delete_education = async (id: number) => {
+    return axios.delete(api + `/educations/${id}/`);
+}
