@@ -30,15 +30,6 @@
     text-transform: none;
   }
 
-  .home-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    background-color: rgba(39, 48, 61, 0.1);
-  }
-
   .job-postings {
     list-style: none;
     padding: 0;
@@ -54,10 +45,10 @@
   }
 
   .home-company-name{
-    font-size: 2em;
     font-weight: bold;
     color: #0073b1; 
   }
+
   .home-logo{
     height: 50px;
     margin-bottom: -0.2em;
@@ -71,3 +62,45 @@
     margin: 2%;
     margin-left: 85%;
   }
+
+  /* New Rules */
+.home-content {
+  height: 100%;
+}
+
+.home-content .available-jobs {
+  font-family: "Quicksand";
+  text-align: center;
+  text-decoration: underline;
+  margin-bottom: 0.5em;
+}
+
+.home-container .welcome-banner {
+  font-family: 'Quicksand';
+  text-align: center;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.home-content .home-jobs-container {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: auto auto auto; 
+  color: white;
+}
+
+.home-content .home-jobs-container .grid-item {
+  border: white 1px solid;
+  padding: 2em;
+  text-align: center;
+  background-color: rgb(26, 32, 39);
+  cursor: pointer;
+}
+
+.home-content .home-jobs-container div {
+  font-family: 'Quicksand';
+}
+
+.home-content .home-jobs-container p {
+  font-family: 'Quicksand';
+}
