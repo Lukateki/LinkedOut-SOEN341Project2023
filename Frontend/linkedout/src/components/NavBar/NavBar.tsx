@@ -44,7 +44,8 @@ export const NavBar : React.FC  = () => {
               {isUserLoggedIn() ? (
               <>
               <Box>
-                <a id="profile" href="http://localhost:3000/profile">
+  
+                <Button onClick={handleProfileClick}>Profile</Button>
                 <CardMedia 
                   component="img"
                   height="40px"
@@ -52,7 +53,7 @@ export const NavBar : React.FC  = () => {
                   alt='profile picture'
                   className="navbar-picture"
                 />
-                </a>
+                
               </Box>  
                 <Button onClick={handleLogoutClick}>Logout</Button>
               </>
