@@ -1,0 +1,44 @@
+.add-job-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.add-job-content {
+  height: 93vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  background-color: rgba(39, 48, 61, 0.1);
+  
+}
+
+.double-columns{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 90%;
+}
+
+.add-job-container .job-recruiter, .add-job-container .job-type,.add-job-container .job-location,.add-job-container .job-posting-date, .add-job-container .job-expiry-date,.add-job-container .job-description,.add-job-container .job-url {
+  margin-top: 1em;
+  width: 45%;
+}
+
+.add-job-container .job-title, .add-job-container .job-description, .add-job-container .job-url, .add-job-container .upload-job-btn{
+  width: 90%;
+  margin-top: 1em;
+  justify-content: center;
+}
+
+.card {
+  width: 50%;
+  margin: 2%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
