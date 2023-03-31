@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IconButton, Card, CardContent, Typography, CardMedia, Box, List, ListSubheader, ListItem, ListItemText, Divider, Dialog, DialogContent, DialogTitle, TextField, DialogActions, Button, Select, MenuItem } from '@mui/material';
+import { IconButton, Card, CardContent, Typography, CardMedia, Box, List, ListSubheader, ListItem, ListItemText, Divider, Dialog, DialogContent, DialogTitle, TextField, DialogActions, Button, Select, MenuItem, OutlinedInput, Chip, SelectChangeEvent, FormControl } from '@mui/material';
 import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -30,12 +30,15 @@ export const ProfilePage = () => {
 
   const [openSummaryDialog, setOpenSummaryDialog] = useState(false);
   const [openDescriptionDialog, setOpenDescriptionDialog] = useState(false);
+  const [openSkillsDialog, setOpenSkillsDialog] = useState(false);
 
   const [bufferFirstName, setBufferFirstName] = useState("");
   const [bufferLastName, setBufferLastName] = useState("");
   const [bufferPronoun, setBufferPronoun] = useState("");
   const [bufferBiography, setBufferBiography] = useState("");
   const [bufferEmail, setBufferEmail] = useState("");
+
+  const [bufferSkills, setBufferSkills] = useState([]);
 
   const [bufferCompanyName, setBufferCompanyName] = useState("");
   const [bufferEstablishedDate, setBufferEstablishedDate] = useState("");
@@ -134,6 +137,29 @@ export const ProfilePage = () => {
     setOpenDescriptionDialog(false);
   };
 
+  const handleClickSkillsDialog = () => {
+    setBufferSkills(skills);
+    setOpenSkillsDialog(true);
+  }
+
+  const handleCloseSkillsDialog = () => {
+    setOpenSkillsDialog(false);
+  };
+
+  const handleSaveSkillsDialog = () => {
+    setSkills(bufferSkills);
+    setOpenSkillsDialog(false);
+  };
+
+  const handleSkillsChange = (event: SelectChangeEvent<typeof skills>) => {
+    const {
+      target: { value },
+    } = event;
+    setBufferSkills(
+      typeof value === 'string' ? value.split(',') : value,
+    )
+  };
+
   const getApplicant = (data) => {
     setFirstName(data.first_name);
     setLastName(data.last_name);
@@ -141,8 +167,39 @@ export const ProfilePage = () => {
     setBiography(data.interests);
     setEmail(data.email);
     setDescription(data.description);
-    setSkills([]);
+    setSkills(["JavaScript",
+    "HTML",
+    "CSS",
+    "React",
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "SQL",
+    "Git",]);
   }
+
+  const programmingSkills = [
+    "JavaScript",
+    "HTML",
+    "CSS",
+    "React",
+    "Node.js",
+    "Express.js",
+    "MongoDB",
+    "SQL",
+    "Git",
+    "Agile development",
+    "Responsive web design",
+    "Debugging",
+    "Testing",
+    "Object-oriented programming",
+    "Functional programming",
+    "API design",
+    "Security best practices",
+    "Performance optimization",
+    "Deployment",
+    "Continuous integration/continuous deployment (CI/CD)",
+    ];
 
   const getRecruiter = () => {
     const recruiter = {
@@ -426,7 +483,13 @@ export const ProfilePage = () => {
               >
                 <li key={`section-${"Plang"}`}>
                   <ul>
+                  
+                  <Box sx={{display:"flex", justifyContent:"space-between"}}>
                     <ListSubheader>{isCandidate ? 'Skills' : 'Offices'}</ListSubheader>
+                    <IconButton aria-label="edit skills" onClick={handleClickSkillsDialog}>
+                      <EditIcon/>
+                    </IconButton>
+                  </Box>
                     {(isCandidate ? skills : offices).map((item) => (
                       <ListItem key={`item-"PLang"-${item}`}>
                         <ListItemText primary={`${item}`} />
@@ -435,6 +498,94 @@ export const ProfilePage = () => {
                   </ul>
                 </li>
               </List>
+              <Dialog open={openSkillsDialog} onClose={handleCloseSkillsDialog}>
+                <Box>
+                  <Box sx={{ display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+                    <DialogTitle>Edit Skills</DialogTitle>
+                    <IconButton aria-label="close skills" onClick={handleCloseSkillsDialog}>
+                      <CloseIcon/>
+                    </IconButton>
+                  </Box>
+                  <Divider variant="middle"/>
+                  {isCandidate ? 
+                  <DialogContent>
+                      <Select 
+                        sx={{ m: 1 }}
+                        multiple
+                        input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                        value={bufferSkills}
+                        id="skills-select"
+                        onChange={handleSkillsChange}
+                        label="Pronouns"
+                        size="small"
+                        renderValue={(selected) => (
+                          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                            {selected.map((value) => (
+                              <Chip key={value} label={value} />
+                            ))}
+                          </Box>
+                        )}
+                      >
+                      {
+                      programmingSkills.map((skill) => (
+                        <MenuItem
+                          key={skill}
+                          value={skill}
+                        >
+                          {skill}
+                        </MenuItem>
+                      ))}
+                      </Select>
+                  </DialogContent>
+                  :
+                  <DialogContent>
+                    <Select 
+                      sx={{ m: 1 }}
+                      value={bufferPronoun}
+                      id="pronoun-select"
+                      onChange={(e) => setBufferPronoun(e.target.value)}
+                      label="Pronouns"
+                      size="small"
+                    >
+                      <MenuItem value="None">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={"He/Him"}>He/Him</MenuItem>
+                      <MenuItem value={"She/Her"}>She/Her</MenuItem>
+                      <MenuItem value={"They/Them"}>They/Them</MenuItem>
+                    </Select>
+                  </DialogContent>}
+                  <DialogActions>
+                    <Button variant="contained" onClick={handleSaveSkillsDialog}>Save</Button>
+                  </DialogActions>
+                </Box>
+              </Dialog>
+              {/* <Select
+                labelId="demo-multiple-chip-label"
+                id="demo-multiple-chip"
+                multiple
+                value={personName}
+                onChange={handleChange}
+                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                renderValue={(selected) => (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {selected.map((value) => (
+                      <Chip key={value} label={value} />
+                    ))}
+                  </Box>
+                )}
+                MenuProps={MenuProps}
+              >
+                {names.map((name) => (
+                  <MenuItem
+                    key={name}
+                    value={name}
+                    style={getStyles(name, personName, theme)}
+                  >
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select> */}
             </Card>
           </Box>
 
