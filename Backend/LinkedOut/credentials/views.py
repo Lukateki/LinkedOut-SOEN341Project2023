@@ -162,6 +162,14 @@ class SendEmailView(APIView):
             return Response({"status": "Missing company name!"})
         company = query_params['company']
 
+        if not query_params['subject']:
+            return Response({"status": "Missing subject!"})
+        subject = query_params['subject']
+
+        if not query_params['message']:
+            return Response({"status": "Missing Message!"})
+        message = query_params['message']
+
         recipient = query_params['email']
         if re.fullmatch(email_regex, recipient):
             sender = 'linkedoutnotifications'
@@ -170,9 +178,20 @@ class SendEmailView(APIView):
             email = EmailMessage()
             email['From'] = sender
             email['To'] = recipient
-            email['Subject'] = "You got an Interview!"
+            email['Subject'] = subject
 
-            email.set_content(f"Hello {first_name} {last_name}\nYou got an interview from {company}! Head over to LinkedOut to respond!")
+            #       Allowing frontend to use these keywords to fetch the real value in their message query parameter
+            #       ex:    Hello {firstname} {lastname}, You got a job!
+            #       If the firstname and last name given was Jerry Smith, this would evaluate to:
+            #       Hello Jerry Smith, You got a job!
+
+            message = message.replace("{firstname}", first_name)
+            message = message.replace("{lastname}", last_name)
+            message = message.replace("{company}", company)
+            message = message.replace("{subject}", subject)
+            message = message.replace("{email}", recipient)
+
+            email.set_content(message)
 
             context = ssl.create_default_context()
 
@@ -183,4 +202,4 @@ class SendEmailView(APIView):
         
         else:
             return Response({"status":"Recipient's email address does not have a valid email structure, or was not provided"})
- 
+        
