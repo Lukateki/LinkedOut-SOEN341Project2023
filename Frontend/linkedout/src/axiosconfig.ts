@@ -103,6 +103,17 @@ export const retrieve_session_user = async (token: string) => {
     return axios.get(api + "/users/api/retrieve_session_user/", { headers: {"Authorization" : `Bearer ${token}`}})
 }
 
+export const send_email = async (firstName: string, lastName: string, subject: string, company: string, email: string, message: string) => {
+    return axios.get(rootAPI + "/send-email", {params: {
+        'firstname': firstName,
+        'lastname' : lastName,
+        'subject' : subject,
+        'company' : company,
+        'email' : email,
+        'message' : message
+    }})
+}
+
 export const retrieve_recruiter = async (token:string) => {
     return axios.get(api +"/recruiters/api/retrieve_recruiter/", {headers: {"Authorization" : `Bearer ${token}`}})
 }
