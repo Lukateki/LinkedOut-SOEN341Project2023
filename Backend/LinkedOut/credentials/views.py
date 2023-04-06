@@ -113,6 +113,17 @@ class ApplicantViewSet(viewsets.ModelViewSet):
         for experience in experiences:
             jsonExperiences.append(ExperienceSerializer(experience).data)
         return Response(data=jsonExperiences, status=200)
+    
+    @action(detail=True) # Applicant -> Educations
+    def get_educations(self, request, *args, **kwargs):
+        target_applicant_id = request.query_params['applicant_id']
+        education_id = Education.objects.filter(applicant_id=target_applicant_id).values_list('id', flat=True)
+        educations = Education.objects.filter(id__in=education_id).order_by('-end_date')
+        
+        jsonEducation = []
+        for education in educations:
+            jsonEducation.append(EducationSerializer(education).data)
+        return Response(data=jsonEducation, status=200)
         
 class RecruiterViewSet(viewsets.ModelViewSet):
     queryset = Recruiter.objects.all()

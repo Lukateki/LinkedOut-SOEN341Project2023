@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { retrieve_applicant_experience } from "../../../axiosconfig";
+import { retrieve_applicant_education, retrieve_applicant_experience } from "../../../axiosconfig";
 
 export const useApplicantProfile = () => {
     const [isCandidate, setIsCandidate] = useState<boolean>(false);
@@ -21,28 +21,15 @@ export const useApplicantProfile = () => {
     const getExperience = (data) => {
         retrieve_applicant_experience(String(data.applicant_id)).then(s => {
           setExperience(s.data)
+          setRecentExperience(s.data[0].company)
       })
-        setRecentExperience("Google")
       }
     
-    const getEducation = () => {
-      setEducation([
-        {"school" : "University of Waterloo",
-          "degree" : "Bachelors of Software Engineering",
-          "start_date" : "2020-01-01",
-          "end_date" : "2021-01-01",
-          "description" : "As a data scientist for youtube, I was tasked with retrieving relevant information from the videos and performing queries on the largescale database."
-          },
-          {"school" : "East High",
-          "degree" : null,
-          "start_date" : "2019-01-01",
-          "end_date" : "2020-01-01",
-          "description" : "As a software engineer for facebook, I was tasked with developing the backend for the facebook marketplace."
-        },
-      ]);
-      // let recentEd: Record<string, string> = education[0];
-      // let recentName: string = recentEd["school"];
-      setRecentEducation("University of Waterloo");
+    const getEducation = (data) => {
+      retrieve_applicant_education(String(data.applicant_id)).then(s => {
+        setEducation(s.data)
+        setRecentEducation(s.data[0].school)
+    })
     }
 
     const getJobPostings = () => {

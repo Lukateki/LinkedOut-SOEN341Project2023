@@ -6,10 +6,16 @@ import CloseIcon from '@mui/icons-material/Close';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useApplicantProfile } from "../hooks";
 import AddIcon from '@mui/icons-material/Add';
+import { isUserLoggedIn } from "../../LoginPage/types";
+import Cookies from "universal-cookie";
+import { auth_token_cookie_name, create_education, delete_education, retrieve_session_user, update_education } from "../../../../axiosconfig";
 
 
 export const ProfilePageEducation = () => {
-    const { navigateBackFromEducation, setEducation, education, getEducation } = useApplicantProfile();
+    const { navigateBackFromEducation, setEducation, education, getEducation, setIsCandidate, setUserId, userId, setId } = useApplicantProfile();
+    const [loaded, setLoaded] = React.useState(false);
+
+    const [bufferId, setBufferId] = React.useState(0);
 
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openAddDialog, setOpenAddDialog] = React.useState(false);
@@ -23,8 +29,9 @@ export const ProfilePageEducation = () => {
 
     const handleOpenExperienceDialog = index => {
         setCurrentEducation(index);
+        setBufferId(education[index]["id"]);
         setBufferSchool(education[index]["school"]);
-        setBufferDegree(education[index]["degree"]);
+        setBufferDegree(education[index]["degree"] + " of " + education[index]["major"]);
         setBufferStartDate(education[index]["start_date"]);
         setBufferEndDate(education[index]["end_date"]);
         setBufferDescription(education[index]["description"]);
@@ -38,28 +45,51 @@ export const ProfilePageEducation = () => {
 
     const handleDeleteExperienceDialog = () => {
         setOpenDialog(false);
+        delete_education(bufferId);
         setEducation(education.slice(0, currentEducation).concat(education.slice(currentEducation + 1, education.length)));
     };
 
     const handleSaveExperienceDialog = () => {
         setOpenDialog(false);
-        let e = education;
-        e[currentEducation]["school"] = bufferSchool;
-        e[currentEducation]["degree"] = bufferDegree;
-        e[currentEducation]["start_date"] = bufferStartDate;
-        e[currentEducation]["end_date"] = bufferEndDate;
-        e[currentEducation]["description"] = bufferDescription;
-        setEducation(e);
+        // let e = education;
+        // e[currentEducation]["school"] = bufferSchool;
+        // e[currentEducation]["degree"] = bufferDegree;
+        // e[currentEducation]["start_date"] = bufferStartDate;
+        // e[currentEducation]["end_date"] = bufferEndDate;
+        // e[currentEducation]["description"] = bufferDescription;
+        // setEducation(e);
+        update_education(bufferId, {
+            "school": bufferSchool,
+            "degree": bufferDegree.split(" of ")[0],
+            "major": bufferDegree.split(" of ")[1],
+            "start_date": bufferStartDate,
+            "end_date": bufferEndDate,
+            "description": bufferDescription,
+            
+        });
+
+        window.location.reload();
     };
     const handleAddExperienceDialog = () => {
         setOpenAddDialog(false);
-        setEducation([...education, {
+        // setEducation([...education, {
+        //     "school": bufferSchool,
+        //     "degree": bufferDegree,
+        //     "start_date": bufferStartDate,
+        //     "end_date": bufferEndDate,
+        //     "description": bufferDescription
+        // }]);
+        create_education({
             "school": bufferSchool,
-            "degree": bufferDegree,
+            "degree": bufferDegree.split(" of ")[0],
+            "major": bufferDegree.split(" of ")[1],
             "start_date": bufferStartDate,
             "end_date": bufferEndDate,
-            "description": bufferDescription
-        }]);
+            "description": bufferDescription,
+            "applicant": userId,
+            "skills": "python",
+        });
+        window.location.reload();
     };
 
     const handleOpenAddExperienceDialog = () => {
@@ -217,7 +247,7 @@ export const ProfilePageEducation = () => {
                 </Box>
             </Dialog>
             <Typography variant="h6">{item["school"]}</Typography>
-            <Typography variant="subtitle1">{item["degree"]}</Typography>
+            <Typography variant="subtitle1">{item["degree"] + " of " + item["major"]}</Typography>
             <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{item["start_date"].split("-")[0]} - {item["end_date"].split("-")[0]}</Typography>
             <Typography variant="body2">{item["description"]}</Typography>
         </Box></>;
@@ -234,10 +264,25 @@ export const ProfilePageEducation = () => {
           )
         }
       });
-    useEffect(() => {
-        getEducation();
-    });
-
+      useEffect(() => {
+        if(!isUserLoggedIn()){
+          navigatetBackToHome();
+        }
+        else if(!loaded){
+          setLoaded(true)
+          const token = new Cookies().get(auth_token_cookie_name);
+          retrieve_session_user(token).then((s) => {
+            setIsCandidate(s.data.isApplicant);
+            console.log(s.data)
+            if(s.data.isApplicant){
+              setUserId(s.data.applicant_id);
+              setId(s.data.user_id);
+              getEducation(s.data);
+              
+            }
+          })
+        }
+      }, [loaded, getEducation, setIsCandidate, setId, setUserId])
     return (
         <body>
             <NavBar />
@@ -247,7 +292,7 @@ export const ProfilePageEducation = () => {
                         <Box className="profile-jobs-title">
                             <Box sx={{ display: "flex" }}>
                                 <IconButton aria-label="edit experience" onClick={navigateBackFromEducation} href="/profile">
-                                    <ArrowBackIcon />
+                                    <ArrowBackIcon/>
                                 </IconButton>
                                 <Typography variant="h5" sx={{marginTop:"0.25em"}}>
                                     Education
@@ -271,3 +316,7 @@ export const ProfilePageEducation = () => {
 };
 
 export default ProfilePageEducation;
+function navigatetBackToHome() {
+    throw new Error("Function not implemented.");
+}
+
