@@ -9,6 +9,7 @@ import { auth_token_cookie_name, retrieve_session_user, update_applicant_descrip
 import Cookies from "universal-cookie";
 import "./ProfilePage.css";
 import { isUserLoggedIn } from "../LoginPage/types";
+import Footer from "../../../components/Footer/Footer";
 
 export const ProfilePage = () => {
   const { userId, setUserId, Id, setId, navigatetBackToHome, setIsCandidate, getJobPostings, jobPostings, getExperience, recentExperience, recentEducation, experience, navigateToExperience, navigateToEducation, getEducation, education, isCandidate } = useApplicantProfile();
@@ -671,6 +672,7 @@ export const ProfilePage = () => {
       : null}
        </Box>
       </div>
+      <Footer/>
       </>
     );
 };
