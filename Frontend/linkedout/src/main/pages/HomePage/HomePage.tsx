@@ -10,6 +10,7 @@ import Cookies from "universal-cookie";
 import { useNavigate, generatePath } from 'react-router-dom';
 
 import './HomePage.css';
+import Footer from '../../../components/Footer/Footer';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -81,7 +82,9 @@ const HomePage = () => {
           <Button variant="contained"onClick={() => { navigate("/addJob"); }}>+</Button>
         </div>}
       </Card>
+      <Footer/>
     </div>
+    
   );
 };
 
