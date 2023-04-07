@@ -1,6 +1,7 @@
 from django.db import models
 
 from LinkedOut.credentials.models import Recruiter, Applicant
+from datetime import datetime
 
 # Create your models here.
 class Job(models.Model):
@@ -20,3 +21,4 @@ class Application(models.Model):
     application_id = models.AutoField(primary_key=True)
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    application_date = models.DateField(default=datetime.now().date().__str__())

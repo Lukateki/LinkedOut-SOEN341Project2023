@@ -115,7 +115,7 @@ const JobDetailsPage = () => {
                                                                     <PersonRoundedIcon color='info'/>
                                                                 </Avatar>
                                                             </ListItemAvatar>
-                                                            <ListItemText primary={`${applicant.first_name} ${applicant.last_name} applied on 2023-23-23`}/>
+                                                            <ListItemText primary={`${applicant.first_name} ${applicant.last_name} applied on ${applicant.application_date}`}/>
                                                         </ListItem>
                                                     )
                                                 })

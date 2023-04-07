@@ -160,10 +160,15 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
     def get_applicants(self, request, *args, **kwargs):
         target_job_id = request.query_params['job_id']
         applicants_id = Application.objects.filter(job_id=target_job_id).values_list('applicant_id', flat=True)
+        applicants_dates = Application.objects.filter(job_id=target_job_id).values_list('application_date', flat=True)
         applicants = Applicant.objects.filter(id__in=applicants_id)
         jsonApplicants = []
+        i = 0;
         for applicant in applicants:
-            jsonApplicants.append(applicant.as_dict())
+            applicantDict = applicant.as_dict();
+            applicantDict['application_date'] = applicants_dates[i]
+            jsonApplicants.append(applicantDict)
+            i += 1
         return Response(data=jsonApplicants, status=200)
     
     @action(detail=True)
