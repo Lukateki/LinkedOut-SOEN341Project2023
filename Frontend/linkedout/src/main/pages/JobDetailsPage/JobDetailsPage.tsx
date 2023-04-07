@@ -1,6 +1,6 @@
 import React from 'react';
 import NavBar from '../../../components/NavBar/NavBar';
-import { Avatar, Box, Button, Card, CardContent, IconButton, List, ListItem, ListItemAvatar, ListItemText, TextField, Tooltip, Typography } from '@mui/material';
+import { Avatar, Box, Button, Card, CardContent, IconButton, List, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography, Snackbar, Alert } from '@mui/material';
 import LocationCityRoundedIcon from '@mui/icons-material/LocationCityRounded';
 import EventBusyRoundedIcon from '@mui/icons-material/EventBusyRounded';
 import EventAvailableRoundedIcon from '@mui/icons-material/EventAvailableRounded';
@@ -14,20 +14,15 @@ import './JobDetailsPage.css';
 
 const JobDetailsPage = () => {
     const { isEmployer, isOtherEmployer, applicants, jobDetails, jobRecruiter } = useJobDetails();
-    const { 
-        firstName, 
-        lastName, 
-        address, 
-        phone, 
-        email,
-        handleFirstNameChange,
-        handleLastNameChange,
-        handlePhoneChange,
-        handleAddressChange,
-        handleEmailChange,
-        handleApply
+    const {
+        showSuccessNotification,
+        showFailNotification,
+        handleApply,
+        setShowSuccessNotification,
+        setShowFailNotification,
+        hasApplied
     } = useApplicant();
-
+    
     return (
         <>
             <NavBar />
@@ -66,61 +61,32 @@ const JobDetailsPage = () => {
                             <div className={`application-form ${ isEmployer ? "employer-view" : ""}`}>
                                 { !isEmployer ? 
                                     <>
-                                        <p className='form-hint'>Interested? Apply here!</p>
+                                        <p className='form-hint'>Interested? One click and you're a candidate already! Yep, it's just as simple as that.</p>
                                         <div className="form">
-                                            <div className='horizontal'>
-                                                <TextField 
-                                                    className="form-input first-input" 
-                                                    label={"First Name"} 
-                                                    variant={"outlined"} 
-                                                    color={"info"} 
-                                                    value={firstName}
-                                                    onChange={handleFirstNameChange}
-                                                />
-
-                                                <TextField 
-                                                    className="form-input second-input" 
-                                                    label={"Last Name"} 
-                                                    variant={"outlined"} 
-                                                    color={"info"}
-                                                    value={lastName}
-                                                    onChange={handleLastNameChange}
-                                                />
-                                            </div>
-                                            <div className='horizontal'>
-                                                <TextField 
-                                                    className="form-input first-input" 
-                                                    label={"Email"} 
-                                                    variant={"outlined"} 
-                                                    color={"info"}
-                                                    value={email}
-                                                    onChange={handleEmailChange}
-                                                />
-
-                                                <TextField 
-                                                    className="form-input second-input" 
-                                                    label={"Phone Number"} 
-                                                    variant={"outlined"} 
-                                                    color={"info"}
-                                                    value={phone}
-                                                    onChange={handlePhoneChange}
-                                                />
-                                            </div>
-                                            <TextField 
-                                                className="form-input lone-input" 
-                                                label={"Address"} 
-                                                variant={"outlined"} 
-                                                color={"info"}
-                                                value={address}
-                                                onChange={handleAddressChange}
-                                            />
                                             <Button
+                                                disabled={hasApplied}
                                                 className='apply-btn' 
                                                 variant='contained'
                                                 onClick={() => handleApply()}
                                             >
                                                 Apply
                                             </Button>
+                                            <Snackbar 
+                                                open={showSuccessNotification} 
+                                                autoHideDuration={3500} 
+                                                anchorOrigin={{ vertical: "bottom", horizontal: "center"}} 
+                                                onClose={() => setShowSuccessNotification(false) }
+                                            >
+                                                <Alert severity={"success"}>Congrats, you have successfully applied!</Alert>
+                                            </Snackbar>
+                                            <Snackbar 
+                                                open={showFailNotification} 
+                                                autoHideDuration={3500} 
+                                                anchorOrigin={{ vertical: "bottom", horizontal: "center"}} 
+                                                onClose={() => setShowFailNotification(false) }
+                                            >
+                                                <Alert severity={"error"}>Oops! Something went wrong while applying to this job. Please try again later.</Alert>
+                                            </Snackbar>
                                         </div>
                                     </> :
                                     <>

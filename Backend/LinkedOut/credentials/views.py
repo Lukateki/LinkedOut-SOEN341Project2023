@@ -165,6 +165,15 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
         for applicant in applicants:
             jsonApplicants.append(applicant.as_dict())
         return Response(data=jsonApplicants, status=200)
+    
+    @action(detail=True)
+    def has_applied(self, request, *args, **kwargs):
+        target_job_id = request.query_params['job_id'];
+        applicant_id = request.query_params['applicant_id'];
+        application = Application.objects.filter(job_id=target_job_id, applicant_id=applicant_id).first();
+        if application == None:
+            return Response(data={ "hasApplied": False }, status=200);
+        return Response(data={ "hasApplied": True }, status=200);
 
 class SendEmailView(APIView):
 

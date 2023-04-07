@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "universal-cookie";
+import { JobApplication } from "./main/pages/JobDetailsPage/Types";
 
 //const auth = { username: "admin", password: "Password" };
 const rootAPI = "http://127.0.0.1:8000"; 
@@ -182,4 +183,12 @@ export const delete_education = async (id: number) => {
 
 export const retrieve_recruiter_jobs = async (recruiterID: string) => {
     return axios.get(api + `/recruiters/api/get_jobs/`, { params: { recruiter_id: recruiterID }});
+}
+
+export const create_job_application = async (job_application: JobApplication) => {
+    return axios.post(api + `/applications/`, { applicant: job_application.applicant_id, job: job_application.job_id });
+}
+
+export const candidate_has_applied_to_job = async (job_application: JobApplication) => {
+    return axios.get(api + `/applications/api/has_applied`, { params: {...job_application}});
 }
