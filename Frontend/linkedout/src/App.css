@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.white-content {
+  background: #27303D;
+  color: #f2f2f2;
+}
+
+.white-content .home-jobs-container {
+  /* background-color: #61dafb; */
+}
