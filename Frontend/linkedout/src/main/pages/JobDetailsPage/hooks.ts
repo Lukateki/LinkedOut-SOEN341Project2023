@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "universal-cookie";
-import { auth_token_cookie_name, candidate_has_applied_to_job, create_job_application, get_job_recruiter, retrieve_job_applications, retrieve_job_details, retrieve_session_user, send_email, update_application_status } from "../../../axiosconfig";
+import { auth_token_cookie_name, candidate_has_applied_to_job, create_job_application, retrieve_job_applications, retrieve_job_details, retrieve_session_user, send_email, update_application_status } from "../../../axiosconfig";
 import { isUserLoggedIn } from "../LoginPage/types";
 import { Applicant, EmailNotification, JobApplication } from "./Types";
 
