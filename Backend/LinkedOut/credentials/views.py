@@ -16,7 +16,7 @@ from LinkedOut.JobListings.models import Job
 from LinkedOut.credentials.models import Applicant, Education, Experience, Recruiter
 from LinkedOut.JobListings.models import Application, Job
 from .serializers import ApplicantSerializer, EducationSerializer, ExperienceSerializer, RecruiterSerializer, UserSerializer, GroupSerializer
-from LinkedOut.JobListings.serializers import ApplicationSerializer
+from LinkedOut.JobListings.serializers import ApplicationSerializer, JobSerializer
 from email.message import EmailMessage
 import ssl
 import smtplib
@@ -129,6 +129,17 @@ class RecruiterViewSet(viewsets.ModelViewSet):
     queryset = Recruiter.objects.all()
     serializer_class = RecruiterSerializer
     # permission_classes = [permissions.IsAuthenticated]
+
+    @action(detail=True)
+    def get_jobs(self, request, *args, **kwargs):
+        target_recruiter_id = request.query_params['recruiter_id']
+        job_id = Job.objects.filter(recruiter_id=target_recruiter_id).values_list('id', flat=True)
+        jobs = Job.objects.filter(id__in=job_id).order_by('-posting_date')
+        
+        jsonJobs = []
+        for job in jobs:
+            jsonJobs.append(JobSerializer(job).data)
+        return Response(data=jsonJobs, status=200)
 
 class EducationViewSet(viewsets.ModelViewSet):
     queryset = Education.objects.all()

@@ -233,6 +233,7 @@ export const ProfilePageJob = () => {
                     fullWidth
                     variant="standard"
                     />
+                    {isCandidate ? <>
                     <TextField
                     sx={{ marginTop: 0.5 }}
                     autoFocus
@@ -260,7 +261,8 @@ export const ProfilePageJob = () => {
                     value={bufferEndDate}
                     onChange={(e) => setBufferEndDate(e.target.value)}
                     variant="standard"
-                    />
+                    /></>
+                    : null}
                     <TextField
                     sx={{ marginTop: 0.5 }}
                     id="Description"
@@ -285,7 +287,7 @@ export const ProfilePageJob = () => {
             </Dialog>
             <Typography variant="h6">{item["title"]}</Typography>
             <Typography variant="subtitle1">{item["company"]}</Typography>
-            <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{item["start_date"].split("-")[0]} - {item["end_date"].split("-")[0]}</Typography>
+            <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{isCandidate ?(item["start_date"].split("-")[0] + "-" + item["end_date"].split("-")[0] ) : item["posting_date"]}</Typography>
             <Typography variant="body2">{item["description"]}</Typography>
         </Box></>;
         if(i + 1 === row.length) {
@@ -321,7 +323,7 @@ export const ProfilePageJob = () => {
               }
               else{
                 setUserId(s.data.recruiter_id);
-                getJobPostings()
+                getJobPostings(s.data)
               }
             })
           }
