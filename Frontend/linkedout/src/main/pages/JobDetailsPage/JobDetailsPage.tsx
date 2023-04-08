@@ -12,6 +12,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { useApplicant, useJobDetails } from './hooks';
 
 import './JobDetailsPage.css';
+import Footer from '../../../components/Footer/Footer';
 
 const JobDetailsPage = () => {
     const { isEmployer, isOtherEmployer, applicants, jobDetails, jobRecruiter, handleCandidateAcception } = useJobDetails();
@@ -148,6 +149,7 @@ const JobDetailsPage = () => {
                     </CardContent>
                 </Card>
             </div>
+            <Footer/>
         </>
     ); 
 }
