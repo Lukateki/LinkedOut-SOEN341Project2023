@@ -6,8 +6,9 @@ import EventBusyRoundedIcon from '@mui/icons-material/EventBusyRounded';
 import EventAvailableRoundedIcon from '@mui/icons-material/EventAvailableRounded';
 import WorkHistoryRoundedIcon from '@mui/icons-material/WorkHistoryRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
-import DriveFolderUploadRoundedIcon from '@mui/icons-material/DriveFolderUploadRounded';
-import HistoryEduRoundedIcon from '@mui/icons-material/HistoryEduRounded';
+import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckIcon from '@mui/icons-material/Check';
 import { useApplicant, useJobDetails } from './hooks';
 
 import './JobDetailsPage.css';
@@ -97,14 +98,19 @@ const JobDetailsPage = () => {
                                                         <ListItem key={applicant.applicant_id}
                                                             secondaryAction = {
                                                                 <div>
-                                                                    <Tooltip title={`See ${applicant.first_name} ${applicant.last_name}'s cover letter`} placement={"top"}>
+                                                                    <Tooltip title={`Reject ${applicant.first_name} ${applicant.last_name}'s application?`} placement={"top"}>
                                                                         <IconButton edge={"end"}>
-                                                                            <HistoryEduRoundedIcon color='primary'/>
+                                                                            <CancelIcon color='error'/>
                                                                         </IconButton>
                                                                     </Tooltip>
-                                                                    <Tooltip title={`See ${applicant.first_name} ${applicant.last_name}'s CV`} placement={"top"}>
+                                                                    <Tooltip title={`Accept ${applicant.first_name} ${applicant.last_name}'s application?`} placement={"top"}>
                                                                         <IconButton edge={"end"}>
-                                                                            <DriveFolderUploadRoundedIcon color='secondary'/>
+                                                                            <CheckIcon color='success'/>
+                                                                        </IconButton>
+                                                                    </Tooltip>
+                                                                    <Tooltip title={`Application Accepted! Candidate informed`} placement={"top"}>
+                                                                        <IconButton edge={"end"}>
+                                                                            <PermContactCalendarIcon color='success'/>
                                                                         </IconButton>
                                                                     </Tooltip>
                                                                 </div>
