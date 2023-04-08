@@ -14,7 +14,7 @@ import { useApplicant, useJobDetails } from './hooks';
 import './JobDetailsPage.css';
 
 const JobDetailsPage = () => {
-    const { isEmployer, isOtherEmployer, applicants, jobDetails, jobRecruiter } = useJobDetails();
+    const { isEmployer, isOtherEmployer, applicants, jobDetails, jobRecruiter, handleCandidateAcception } = useJobDetails();
     const {
         showSuccessNotification,
         showFailNotification,
@@ -93,26 +93,40 @@ const JobDetailsPage = () => {
                                     <>
                                         <p className='job-description-header'>List of Applicants:</p>
                                         <List className={"applicant-list"}>
-                                            { applicants?.map(applicant => {
+                                            { applicants.map(applicant => {
                                                     return (
-                                                        <ListItem key={applicant.applicant_id}
+                                                        <ListItem key={applicant.applicant_id.toString()}
                                                             secondaryAction = {
                                                                 <div>
-                                                                    <Tooltip title={`Reject ${applicant.first_name} ${applicant.last_name}'s application?`} placement={"top"}>
-                                                                        <IconButton edge={"end"}>
-                                                                            <CancelIcon color='error'/>
-                                                                        </IconButton>
-                                                                    </Tooltip>
-                                                                    <Tooltip title={`Accept ${applicant.first_name} ${applicant.last_name}'s application?`} placement={"top"}>
-                                                                        <IconButton edge={"end"}>
-                                                                            <CheckIcon color='success'/>
-                                                                        </IconButton>
-                                                                    </Tooltip>
-                                                                    <Tooltip title={`Application Accepted! Candidate informed`} placement={"top"}>
-                                                                        <IconButton edge={"end"}>
-                                                                            <PermContactCalendarIcon color='success'/>
-                                                                        </IconButton>
-                                                                    </Tooltip>
+                                                                    { applicant.application_accepted === null &&
+                                                                        <>
+                                                                            <Tooltip 
+                                                                                title={`Reject ${applicant.first_name} ${applicant.last_name}'s application?`} 
+                                                                                placement={"top"}
+                                                                                onClick={() => handleCandidateAcception(applicant.applicant_id, false)}
+                                                                            >
+                                                                                <IconButton edge={"end"}>
+                                                                                    <CancelIcon color='error'/>
+                                                                                </IconButton>
+                                                                            </Tooltip>
+                                                                            <Tooltip 
+                                                                                title={`Accept ${applicant.first_name} ${applicant.last_name}'s application?`} 
+                                                                                placement={"top"}
+                                                                                onClick={() => handleCandidateAcception(applicant.applicant_id, true)}
+                                                                            >
+                                                                                <IconButton edge={"end"}>
+                                                                                    <CheckIcon color='success'/>
+                                                                                </IconButton>
+                                                                            </Tooltip>
+                                                                        </>
+                                                                    }
+                                                                    { applicant.application_accepted !== null &&
+                                                                        <Tooltip title={`Application ${applicant.application_accepted ? "Accepted" : "Rejected"}! Candidate informed`} placement={"top"}>
+                                                                            <IconButton edge={"end"}>
+                                                                                <PermContactCalendarIcon color={`${applicant.application_accepted ? "success" : "error"}`}/>
+                                                                            </IconButton>
+                                                                        </Tooltip>
+                                                                    }
                                                                 </div>
                                                             }
                                                         >

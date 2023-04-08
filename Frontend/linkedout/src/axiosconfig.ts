@@ -129,6 +129,7 @@ export const retrieve_job_details = async (jobID: string) => {
 export const get_job_recruiter = async (recruiter_id: string) => {
     return axios.get(api + `/recruiters/${recruiter_id}`);
 }
+
 export const update_recruiter_about = async (id: number, about: string) => {
     return axios.patch(api + `/recruiters/${id}/`, {about: about})
 }
@@ -191,4 +192,8 @@ export const create_job_application = async (job_application: JobApplication) =>
 
 export const candidate_has_applied_to_job = async (job_application: JobApplication) => {
     return axios.get(api + `/applications/api/has_applied`, { params: {...job_application}});
+}
+
+export const update_application_status = async (application_id: number, application_accepted: boolean | undefined) => {
+    return axios.patch(api + `/applications/${application_id}/`, {application_accepted})
 }

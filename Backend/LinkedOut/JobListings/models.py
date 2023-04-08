@@ -22,3 +22,4 @@ class Application(models.Model):
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
     application_date = models.DateField(default=datetime.now().date().__str__())
+    application_accepted = models.BooleanField(null=True, default=None)

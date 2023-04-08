@@ -1,5 +1,8 @@
 export interface Applicant {
-    applicant_id: Number;
+    applicant_id: number;
+    application_accepted?: Boolean;
+    application_date?: string;
+    application_id: number;
     description: string;
     email: string;
     first_name: string;
@@ -9,13 +12,22 @@ export interface Applicant {
     last_name: string;
     referred_pronouns: string;
     skills: string;
-    user_id: Number;
+    user_id: number;
     username: string;
 }
 
 export interface JobApplication {
     applicant_id: Number;
     job_id: Number;
+}
+
+export interface EmailNotification {
+    firstname: string;
+    lastname: string;
+    subject: string;
+    company: string;
+    email: string;
+    message: string;
 }
 
 /* Validation methods for inputs like name, email */
