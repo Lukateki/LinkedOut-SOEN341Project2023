@@ -48,9 +48,7 @@ export const useJobDetails = () => {
             if (jobDetails === undefined) {
                 retrieve_job_details(job_id).then(s => {
                     setJobDetails(s.data);
-                    get_job_recruiter(s.data.recruiter).then(s => {
-                        setJobRecruiter(s.data);
-                    })
+                    setJobRecruiter(s.data.recruiter)
                 }).catch((e) => {
                     console.log(e);
                     navigate("/404");

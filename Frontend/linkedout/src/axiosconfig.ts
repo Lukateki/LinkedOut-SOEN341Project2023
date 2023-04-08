@@ -41,7 +41,7 @@ export const candidate_login = async (username: string, password: string) => {
 }
 
 export const get_all_jobs = async () => {
-    return axios.get(api + '/jobs');
+    return axios.get(api + '/jobs/v1/get_all_jobs');
 }
 
 //for the applicant/student/candidate registration
@@ -82,7 +82,7 @@ export const update_recruiter = async (id: number, user_id: number) => {
     return axios.patch(api + `/recruiters/${id}/`, {user: user_id})
 }
 
-export const upload_job = async (title: string, recruiter: Object, posting_url: string, posting_date: string, expiry_date: string, city: string, job_type: string, description: string ) => {
+export const upload_job = async (title: string, recruiter: number, posting_url: string, posting_date: string, expiry_date: string, city: string, job_type: string, description: string ) => {
     const token = new Cookies().get(auth_token_cookie_name)
     return axios.post(api + "/jobs/", {
         title: title, 

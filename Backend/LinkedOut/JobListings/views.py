@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from .models import Job
 from LinkedOut.credentials.models import Recruiter
 from LinkedOut.credentials.serializers import RecruiterSerializer
-from .serializers import JobSerializer
+from .serializers import JobSerializer, JobFetcherSerializer
 from django.http import JsonResponse
 from rest_framework.response import Response
 
@@ -68,3 +68,9 @@ class JobViewSet(viewsets.ModelViewSet):
         
         #default return if search is empty or if search is not specified
         return Job.objects.all()
+
+    @action(detail=True)
+    def get_all_jobs(self, request, *args, **kwargs):
+        jobs_queryset = Job.objects.all()
+        jsonData = JobFetcherSerializer(jobs_queryset, many=True)
+        return Response(data=jsonData.data, status=200)
