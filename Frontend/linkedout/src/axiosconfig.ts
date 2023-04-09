@@ -179,3 +179,13 @@ export const create_education = async (education) => {
 export const delete_education = async (id: number) => {
     return axios.delete(api + `/educations/${id}/`);
 }
+
+export const search_jobs = async (searchText) => {  
+    return axios.get(api + `/jobs/=${searchText}`)
+      .then(response => {
+        return response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };

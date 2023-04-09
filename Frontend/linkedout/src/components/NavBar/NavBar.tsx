@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, CardMedia, TextField } from '@mui/material';
 import { isUserLoggedIn } from "../../main/pages/LoginPage/types";
+import { search_jobs } from '../../axiosconfig';
 
 import "./NavBar.css"
 import Cookies from "universal-cookie";
 
-export const NavBar : React.FC  = () => {
+const NavBar = ({jobPostings, setSearchResults}) => {
 
     const navigate = useNavigate();
 
@@ -27,6 +28,15 @@ export const NavBar : React.FC  = () => {
       
       navigate('/');
     };
+
+    const handleSearch = (e) => {
+      e.preventDefault()};
+    const handleSearchChange = (e) => {
+      if (!e.target.value) return setSearchResults(jobPostings)
+
+      const resultsArray = jobPostings.filter(jobPosting => jobPosting.title.includes(e.targer.value) || jobPosting.body.includes(e.target.value))
+      setSearchResults(resultsArray)
+    }
     
     return(
       <div style={{ backgroundColor: "white"}}>
@@ -36,9 +46,14 @@ export const NavBar : React.FC  = () => {
               <a id="logo" href="http://localhost:3000/">
                 <img src={"/img/LinkedoutLogo2.png"} alt="LinkedOut" className="home-logo" />
               </a>
-              <div className="navbar-search-bar">
-                <TextField size="small" id="outlined-basic" label="Search" placeholder="Search job postings"/>
-              </div>
+              <form className="navbar-search-bar" onSubmit={handleSearch}>
+                <input 
+                  className="search_input"
+                  type="text"
+                  id="search"
+                  onChange={handleSearchChange}
+                />
+              </form>
             </div>
             <div className="navbar-right-header">
               {isUserLoggedIn() ? (
