@@ -5,7 +5,7 @@ import './RegistrationPage.css';
 
 export const RegistrationPage = () => {
     //Toggles between the student and employer forms 
-    const { handleRegisterStudentBtnClick, firstNameStudent, lastNameStudent, emailStudent, passwordStudent, errorS1, errorS2, errorS3, errorS5, handleFirstNameStudentChange, handleLastNameStudentChange, handleEmailStudentChange, handlePasswordStudentChange} = useRegisterStudent();
+    const { handleRegisterStudentBtnClick, firstNameStudent, lastNameStudent, emailStudent, passwordStudent, errorS1, errorS2, errorS3, errorS4, handleFirstNameStudentChange, handleLastNameStudentChange, handleEmailStudentChange, handlePasswordStudentChange} = useRegisterStudent();
     const { handleRegisterEmployerBtnClick, firstNameEmployer, lastNameEmployer, emailEmployer, passwordEmployer, company, headquarter, errorE1, errorE2, errorE3, errorE4, errorE5, errorE6, handleHeadquarterChange, handleCompanyChange, handleFirstNameEmployerChange, handleLastNameEmployerChange, handleEmailEmployerChange, handlePasswordEmployerChange} = useRegisterEmployer();
 
 
@@ -58,7 +58,7 @@ export const RegistrationPage = () => {
                     value={firstNameStudent}
                     onChange={handleFirstNameStudentChange}
                     error={errorS1}
-                    helperText={ errorS1 ? "Missing First Name" : "" }
+                    helperText={ errorS1 ? "Invalid First Name" : "" }
 
                 />
                 <TextField
@@ -67,7 +67,7 @@ export const RegistrationPage = () => {
                     value={lastNameStudent}
                     onChange={handleLastNameStudentChange}
                     error={errorS2}
-                    helperText={ errorS2 ? "Missing Last Name" : "" }
+                    helperText={ errorS2 ? "Invalid Last Name" : "" }
 
                 />
             </div>
@@ -88,11 +88,12 @@ export const RegistrationPage = () => {
                 type="password"
                 value={passwordStudent}
                 onChange={handlePasswordStudentChange}
-                error={errorS5}
-                helperText={ errorS5 ? "Invalid Password" : "" }
+                error={errorS4}
+                helperText={ errorS4 ? "Invalid Password (must be 8 characters or longer)" : "" }
             />    
             
-            <Button 
+            <Button
+                disabled={ errorS1 || errorS2 || errorS3 || errorS4 }
                 className='registration-student-btn'
                 variant='contained'
                 onClick={handleRegisterStudentBtnClick}
@@ -112,7 +113,7 @@ export const RegistrationPage = () => {
                     value={firstNameEmployer}
                     onChange={handleFirstNameEmployerChange}
                     error={errorE1}
-                    helperText={ errorE1 ? "Missing First Name" : "" }    
+                    helperText={ errorE1 ? "Invalid First Name" : "" }    
                 />
                 <TextField
                     className='lastName-employer-field'
@@ -120,7 +121,7 @@ export const RegistrationPage = () => {
                     value={lastNameEmployer}
                     onChange={handleLastNameEmployerChange}
                     error={errorE2}
-                    helperText={ errorE2 ? "Missing First Name" : "" }     
+                    helperText={ errorE2 ? "Invalid Last Name" : "" }     
                 />
             </div>
             <div className='company-info'>
@@ -130,7 +131,7 @@ export const RegistrationPage = () => {
                     value={company}
                     onChange={handleCompanyChange}
                     error={errorE5}
-                    helperText={ errorE5 ? "Missing Company" : "" }
+                    helperText={ errorE5 ? "Invalid Company" : "" }
                 />
                 <TextField
                     className='headquarter-employer-field'
@@ -138,7 +139,7 @@ export const RegistrationPage = () => {
                     value={headquarter}
                     onChange={handleHeadquarterChange}
                     error={errorE6}
-                    helperText={ errorE6 ? "Missing Headquarters" : "" }
+                    helperText={ errorE6 ? "Invalid Headquarters" : "" }
                 />
             </div>
             <TextField
@@ -148,7 +149,7 @@ export const RegistrationPage = () => {
                 value={emailEmployer}
                 onChange={handleEmailEmployerChange}
                 error={errorE3}
-                helperText={ errorE3 ? "Missing or Invalid Email" : "" }
+                helperText={ errorE3 ? "Invalid Email" : "" }
             />
 
             <TextField
@@ -158,12 +159,13 @@ export const RegistrationPage = () => {
                 value={passwordEmployer}
                 onChange={handlePasswordEmployerChange}
                 error={errorE4}
-                helperText={ errorE4 ? "Missing Password" : "" }
+                helperText={ errorE4 ? "Invalid Password (must be 8 or more characters)" : "" }
             />  
               
             <Button 
                 className='registration-employer-btn'
                 variant='contained'
+                disabled={errorE1 || errorE2 || errorE3 || errorE4 || errorE5 || errorE6}
                 onClick={handleRegisterEmployerBtnClick}
             >
                 Register

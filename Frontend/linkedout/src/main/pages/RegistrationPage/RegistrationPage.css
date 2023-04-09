@@ -2,6 +2,22 @@
     margin-top: 7em;
 }
 
+.registration-page-wrapper button {
+    font-family: 'Quicksand';
+}
+
+.registration-page-wrapper input {
+    font-family: 'Quicksand';
+}
+
+.registration-page-wrapper label {
+    font-family: 'Quicksand';
+}
+
+.registration-page-wrapper p {
+    font-family: 'Quicksand';
+}
+
 .linkedout-banner, .student-employer-choice {
     text-align: center;
     margin-bottom: 0;

@@ -37,3 +37,19 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.login-container input {
+    font-family: 'Quicksand';
+}
+
+.login-container label {
+    font-family: 'Quicksand';
+}
+
+.login-container button {
+    font-family: 'Quicksand';
+}
+
+.login-container p {
+    font-family: 'Quicksand';
+}
