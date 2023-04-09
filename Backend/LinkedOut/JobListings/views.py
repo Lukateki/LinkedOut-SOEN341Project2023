@@ -6,6 +6,7 @@ from LinkedOut.credentials.serializers import RecruiterSerializer
 from .serializers import JobSerializer, JobFetcherSerializer
 from django.http import JsonResponse
 from rest_framework.response import Response
+import datetime
 
 # Create your views here.
 class JobViewSet(viewsets.ModelViewSet):
@@ -71,6 +72,6 @@ class JobViewSet(viewsets.ModelViewSet):
 
     @action(detail=True)
     def get_all_jobs(self, request, *args, **kwargs):
-        jobs_queryset = Job.objects.all()
+        jobs_queryset = Job.objects.filter(expiry_date__gte=datetime.date.today()).order_by("expiry_date")
         jsonData = JobFetcherSerializer(jobs_queryset, many=True)
         return Response(data=jsonData.data, status=200)
