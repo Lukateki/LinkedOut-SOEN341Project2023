@@ -56,7 +56,7 @@
 }
 
 .white-content .jobDetails-container {
-  background-color: black;
+  background-color:  #1A2027;
   color: white;
   border: solid white thin;
 }
@@ -87,13 +87,13 @@
 }
 
 .white-content .profile-jobs , .white-content .profile-description, .white-content .profile-name-card .MuiCardContent-root, .white-content .profile-skill-card, .white-content .profile-skill-card .MuiListItem-root, .white-content .profile-skill-card .MuiBox-root  {
-  background-color: black;
+  background-color:  #1A2027;
   color: white;
   border: white thin solid;
 }
 
 .white-content .profile-jobs-text-details, .white-content .profile-skill-card .MuiListSubheader-root {
-  background-color: black;
+  background-color: #1A2027;
   color: white;
 }
 
