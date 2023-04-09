@@ -97,7 +97,7 @@
   color: white;
 }
 
-.white-content .MuiDivider-root, .white-content .profile-jobs-text-details .MuiTypography-root, .white-content .MuiSvgIcon-root   {
+.white-content .profile-jobs-text-details .MuiTypography-root, .white-content .MuiSvgIcon-root   {
   color: white;
 }
 
@@ -109,4 +109,8 @@
   padding-top: 1%;
   padding-bottom: 1%;
   width: 70%;
+}
+
+.white-content hr{
+  background-color: white;
 }
