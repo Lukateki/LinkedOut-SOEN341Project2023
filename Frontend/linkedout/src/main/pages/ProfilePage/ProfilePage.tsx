@@ -297,7 +297,7 @@ export const ProfilePage = () => {
   }, [loaded, getEducation, getExperience, getJobPostings, navigatetBackToHome, setIsCandidate, setId, setUserId])
 
   return (
-    <><NavBar/>
+    <><NavBar jobPostings={jobPostings} setSearchResults={setSearchResults}/>
     <div className="profile-body">
       <Box className="profile-cards">
         <Box className="profile-first-cards">

@@ -5,7 +5,7 @@ import { Button, Card, CardContent, Typography } from '@mui/material';
 import {retrieve_session_user} from "../../../axiosconfig";
 import { auth_token_cookie_name } from "../../../axiosconfig"
 import Cookies from "universal-cookie";
-
+import JobListings from './JobListings/JobListings';
 
 import { useNavigate, generatePath } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ const HomePage = () => {
   const navigate = useNavigate();
   const [jobPostings, setJobPostings] = useState([]);
   const [isRecruiter, setIsRecruiter] = useState(false);
-  
+  const [searchResults, setSearchResults] = useState([]);
 
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const HomePage = () => {
 
   return (
     <div className="home-container">
-      <NavBar/>
+      <NavBar jobPostings={jobPostings} setSearchResults={setSearchResults} />
       <Card className="home-content">
         <Typography className={"welcome-banner"} variant={'h4'}>
           Welcome to
@@ -64,20 +64,7 @@ const HomePage = () => {
           />
         </Typography>
         <Typography className={'available-jobs'}>Jobs of the day: </Typography>
-        <CardContent className={"home-jobs-container"}>
-          {jobPostings.map(j => {
-            return (
-              <div onClick={() => goToJobDetails(j.id.toString())}>
-              <CardContent key={j.id} className={"grid-item"}>
-                <Typography variant={"h5"} component={"div"}>{j.title}</Typography>
-                <Typography variant={"h6"} component={"div"}>{j.recruiter}</Typography>
-                <Typography>{j.city}</Typography>
-                <Typography>Expires: {j.expiry_date}</Typography>
-              </CardContent>
-              </div>
-            )
-          })}
-        </CardContent>
+        <JobListings searchResults={searchResults}/>
         { isRecruiter && <div className='add-job-btn'>
           <Button variant="contained"onClick={() => { navigate("/addJob"); }}>+</Button>
         </div>}
