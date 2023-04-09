@@ -42,6 +42,71 @@
   color: #f2f2f2;
 }
 
-.white-content .home-jobs-container {
-  /* background-color: #61dafb; */
+.white-content .home-content {
+   background-color: #27303D;
+}
+
+.white-content .welcome-banner, .white-content .available-jobs {
+  color: white;
+}
+
+.white-content .grid-item {
+  background-color: grey;
+  color: white;
+}
+
+.white-content .jobDetails-container {
+  background-color: black;
+  color: white;
+  border: solid white thin;
+}
+
+.white-content .add-job-content {
+  background-color: #27303D;
+}
+
+.white-content .card {
+  color: #27303D; 
+}
+
+.white-content .login-container{
+  background-color: white;
+  padding: 2%;
+  color: #27303D;
+  border: black thin solid;
+  border-radius: 2%;
+}
+
+.white-content .registration-container {
+  padding: 2%;
+  background-color: white;
+  color: #27303D;
+  border: solid black thin;
+  border-radius: 2%;
+
+}
+
+.white-content .profile-jobs , .white-content .profile-description, .white-content .profile-name-card .MuiCardContent-root, .white-content .profile-skill-card, .white-content .profile-skill-card .MuiListItem-root, .white-content .profile-skill-card .MuiBox-root  {
+  background-color: black;
+  color: white;
+  border: white thin solid;
+}
+
+.white-content .profile-jobs-text-details, .white-content .profile-skill-card .MuiListSubheader-root {
+  background-color: black;
+  color: white;
+}
+
+.white-content .MuiDivider-root, .white-content .profile-jobs-text-details .MuiTypography-root, .white-content .MuiSvgIcon-root   {
+  color: white;
+}
+
+.white-content .application-form {
+  background-color: white !important;
+  color: black;
+  border: #27303D thin solid;
+  border-radius: 2%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  width: 70%;
 }
