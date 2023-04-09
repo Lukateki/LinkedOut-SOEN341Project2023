@@ -36,41 +36,6 @@ export const useApplicantProfile = () => {
       retrieve_recruiter_jobs(String(data.recruiter_id)).then(s => {
         setJobPostings(s.data)
       })
-      // setJobPostings([
-      //   {"title" : "Software Engineer",
-      //     "company" : "Google",
-      //     "location" : "Mountain View, CA",
-      //     "description" : "As a software engineer for google, you will be responsible for developing the backend for the google search engine.",
-      //     "requirements" : ["Bachelors of Computer Science", "2+ years of experience"],
-      //     "salary" : "100,000 - 150,000",
-      //     "start_date" : "2021-01-01",
-      //     "end_date" : "2021-06-01",
-      //     "posting_date" : "2021-05-01",
-      //     "application_link" : "https://www.google.com"
-      //   },
-      //   {"title" : "Data Scientist",
-      //     "company" : "Google",
-      //     "location" : "Mountain View, CA",
-      //     "description" : "As a data scientist for google, you will be responsible for developing the backend for the google search engine.",
-      //     "requirements" : ["Bachelors of Computer Science", "2+ years of experience"],
-      //     "salary" : "100,000 - 150,000",
-      //     "start_date" : "2021-01-01",
-      //     "end_date" : "2021-06-01",
-      //     "posting_date" : "2021-05-01",
-      //     "application_link" : "https://www.google.com"
-      //   },
-      //   {"title" : "Software Engineer",
-      //     "company" : "Google",
-      //     "location" : "Mountain View, CA",
-      //     "description" : "As a software engineer for google, you will be responsible for developing the backend for the google search engine.",
-      //     "requirements" : ["Bachelors of Computer Science", "2+ years of experience"],
-      //     "salary" : "100,000 - 150,000",
-      //     "start_date" : "2021-01-01",
-      //     "end_date" : "2021-06-01",
-      //     "posting_date" : "2021-05-01",
-      //     "application_link" : "https://www.google.com"
-      //   },
-      // ]);
     }
 
     const scrollTo = (location) =>{
