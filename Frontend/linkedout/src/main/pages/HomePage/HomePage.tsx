@@ -52,17 +52,19 @@ const HomePage = () => {
     <div className="home-container">
       <NavBar/>
       <Card className="home-content">
-        <Typography className={"welcome-banner"} variant={'h4'}>
-          Welcome to
-          <span className="home-company-name"> Linked</span>
-          <img 
-            src="img/LinkedoutLogo2.png" 
-            alt="LinkedOut" 
-            className="home-logo"
-            style={{"marginBottom": "-14px"}} 
-          />
-        </Typography>
-        <Typography className={'available-jobs'}>Jobs of the day: </Typography>
+        <Card className='welcome-banner-container'>
+          <Typography className={"welcome-banner"} variant={'h4'}>
+            Welcome to
+            <span className="home-company-name"> Linked</span>
+            <img 
+              src="img/LinkedoutLogo2.png" 
+              alt="LinkedOut" 
+              className="home-logo"
+              style={{"marginBottom": "-14px"}} 
+            />
+          </Typography>
+          <Typography className={'available-jobs'}>Jobs of the day: </Typography>
+        </Card>
         <CardContent className={"home-jobs-container"}>
           {jobPostings.map(j => {
             return (
@@ -78,7 +80,7 @@ const HomePage = () => {
           })}
         </CardContent>
         { isRecruiter && <div className='add-job-btn'>
-          <Button variant="contained"onClick={() => { navigate("/addJob"); }}>+</Button>
+          <Button sx={{ fontFamily: "Quicksand" }} variant="contained" onClick={() => { navigate("/addJob"); }}>Add Job</Button>
         </div>}
       </Card>
       <Footer/>

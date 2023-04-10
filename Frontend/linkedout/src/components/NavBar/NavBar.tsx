@@ -58,7 +58,6 @@ export const NavBar : React.FC  = () => {
                   </a>
                 </Box>
                 <div className="navbar-buttons"> 
-                  <Button onClick={handleProfileClick}>Profile</Button>
                   <Button onClick={handleLogoutClick}>Logout</Button>
                 </div>
               </>
