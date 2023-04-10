@@ -181,7 +181,7 @@ export const delete_education = async (id: number) => {
 }
 
 export const search_jobs = async (searchText) => {  
-    return axios.get(api + `/jobs/=${searchText}`)
+    return axios.get(api + `/jobs?search=${searchText}`)
       .then(response => {
         return response.data;
       })
