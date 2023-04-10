@@ -17,10 +17,6 @@ export const NavBar : React.FC  = () => {
       navigate('/register');
     };
 
-    const handleProfileClick = () => {
-        navigate('/profile');
-    };
-
     const handleLogoutClick = () => {
       const cookies = new Cookies();
       cookies.remove('auth-token');
