@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "universal-cookie";
+import { JobApplication } from "./main/pages/JobDetailsPage/Types";
 
 //const auth = { username: "admin", password: "Password" };
 const rootAPI = "http://127.0.0.1:8000"; 
@@ -40,7 +41,7 @@ export const candidate_login = async (username: string, password: string) => {
 }
 
 export const get_all_jobs = async () => {
-    return axios.get(api + '/jobs');
+    return axios.get(api + '/jobs/v1/get_all_jobs');
 }
 
 //for the applicant/student/candidate registration
@@ -81,7 +82,7 @@ export const update_recruiter = async (id: number, user_id: number) => {
     return axios.patch(api + `/recruiters/${id}/`, {user: user_id})
 }
 
-export const upload_job = async (title: string, recruiter: Object, posting_url: string, posting_date: string, expiry_date: string, city: string, job_type: string, description: string ) => {
+export const upload_job = async (title: string, recruiter: number, posting_url: string, posting_date: string, expiry_date: string, city: string, job_type: string, description: string ) => {
     const token = new Cookies().get(auth_token_cookie_name)
     return axios.post(api + "/jobs/", {
         title: title, 
@@ -128,6 +129,7 @@ export const retrieve_job_details = async (jobID: string) => {
 export const get_job_recruiter = async (recruiter_id: string) => {
     return axios.get(api + `/recruiters/${recruiter_id}`);
 }
+
 export const update_recruiter_about = async (id: number, about: string) => {
     return axios.patch(api + `/recruiters/${id}/`, {about: about})
 }
@@ -182,4 +184,16 @@ export const delete_education = async (id: number) => {
 
 export const retrieve_recruiter_jobs = async (recruiterID: string) => {
     return axios.get(api + `/recruiters/api/get_jobs/`, { params: { recruiter_id: recruiterID }});
+}
+
+export const create_job_application = async (job_application: JobApplication) => {
+    return axios.post(api + `/applications/`, { applicant: job_application.applicant_id, job: job_application.job_id });
+}
+
+export const candidate_has_applied_to_job = async (job_application: JobApplication) => {
+    return axios.get(api + `/applications/api/has_applied`, { params: {...job_application}});
+}
+
+export const update_application_status = async (application_id: number, application_accepted: boolean | undefined) => {
+    return axios.patch(api + `/applications/${application_id}/`, {application_accepted})
 }

@@ -24,7 +24,6 @@ const HomePage = () => {
       try {
         const response = await get_all_jobs();
         setJobPostings(response.data);
-        console.log(response.data)
       } catch (error) {
         console.log(error);
       }
@@ -67,13 +66,13 @@ const HomePage = () => {
         <CardContent className={"home-jobs-container"}>
           {jobPostings.map(j => {
             return (
-              <div onClick={() => goToJobDetails(j.id.toString())}>
-              <CardContent key={j.id} className={"grid-item"}>
-                <Typography variant={"h5"} component={"div"}>{j.title}</Typography>
-                <Typography variant={"h6"} component={"div"}>{j.recruiter}</Typography>
-                <Typography>{j.city}</Typography>
-                <Typography>Expires: {j.expiry_date}</Typography>
-              </CardContent>
+              <div key={j.id} onClick={() => goToJobDetails(j.id.toString())}>
+                <CardContent key={j.id} className={"grid-item"}>
+                  <Typography variant={"h5"} component={"div"}>{j.title}</Typography>
+                  <Typography variant={"h6"} component={"div"}>{j.recruiter.company}</Typography>
+                  <Typography>{j.city}</Typography>
+                  <Typography>Expires: {j.expiry_date}</Typography>
+                </CardContent>
               </div>
             )
           })}

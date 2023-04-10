@@ -1,14 +1,14 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Box, Button, CardMedia, TextField } from '@mui/material';
 import { isUserLoggedIn } from "../../main/pages/LoginPage/types";
-
-import "./NavBar.css"
 import Cookies from "universal-cookie";
 
-export const NavBar : React.FC  = () => {
+import "./NavBar.css"
 
+export const NavBar : React.FC  = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleLoginClick = () => {
         navigate('/login');
@@ -24,10 +24,13 @@ export const NavBar : React.FC  = () => {
     const handleLogoutClick = () => {
       const cookies = new Cookies();
       cookies.remove('auth-token');
-      
-      navigate('/');
+      if (location.pathname === "/" ) {
+        window.location.reload();
+      } else {
+        navigate('/');
+      }
     };
-    
+
     return(
       <div style={{ backgroundColor: "white"}}>
         <div className="navbar-header">

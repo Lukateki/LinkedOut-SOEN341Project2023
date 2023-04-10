@@ -1,33 +1,30 @@
 import React from 'react';
 import NavBar from '../../../components/NavBar/NavBar';
-import { Avatar, Box, Button, Card, CardContent, IconButton, List, ListItem, ListItemAvatar, ListItemText, TextField, Tooltip, Typography } from '@mui/material';
+import { Avatar, Box, Button, Card, CardContent, IconButton, List, ListItem, ListItemAvatar, ListItemText, Tooltip, Typography, Snackbar, Alert } from '@mui/material';
 import LocationCityRoundedIcon from '@mui/icons-material/LocationCityRounded';
 import EventBusyRoundedIcon from '@mui/icons-material/EventBusyRounded';
 import EventAvailableRoundedIcon from '@mui/icons-material/EventAvailableRounded';
 import WorkHistoryRoundedIcon from '@mui/icons-material/WorkHistoryRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
-import DriveFolderUploadRoundedIcon from '@mui/icons-material/DriveFolderUploadRounded';
-import HistoryEduRoundedIcon from '@mui/icons-material/HistoryEduRounded';
+import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
+import CancelIcon from '@mui/icons-material/Cancel';
+import CheckIcon from '@mui/icons-material/Check';
 import { useApplicant, useJobDetails } from './hooks';
 
 import './JobDetailsPage.css';
+import Footer from '../../../components/Footer/Footer';
 
 const JobDetailsPage = () => {
-    const { isEmployer, isOtherEmployer, applicants, jobDetails, jobRecruiter } = useJobDetails();
-    const { 
-        firstName, 
-        lastName, 
-        address, 
-        phone, 
-        email,
-        handleFirstNameChange,
-        handleLastNameChange,
-        handlePhoneChange,
-        handleAddressChange,
-        handleEmailChange,
-        handleApply
+    const { isEmployer, isOtherEmployer, applicants, jobDetails, jobRecruiter, handleCandidateAcception } = useJobDetails();
+    const {
+        showSuccessNotification,
+        showFailNotification,
+        handleApply,
+        setShowSuccessNotification,
+        setShowFailNotification,
+        hasApplied
     } = useApplicant();
-
+    
     return (
         <>
             <NavBar />
@@ -66,81 +63,71 @@ const JobDetailsPage = () => {
                             <div className={`application-form ${ isEmployer ? "employer-view" : ""}`}>
                                 { !isEmployer ? 
                                     <>
-                                        <p className='form-hint'>Interested? Apply here!</p>
+                                        <p className='form-hint'>Interested? One click and you're a candidate already! Yep, it's just as simple as that.</p>
                                         <div className="form">
-                                            <div className='horizontal'>
-                                                <TextField 
-                                                    className="form-input first-input" 
-                                                    label={"First Name"} 
-                                                    variant={"outlined"} 
-                                                    color={"info"} 
-                                                    value={firstName}
-                                                    onChange={handleFirstNameChange}
-                                                />
-
-                                                <TextField 
-                                                    className="form-input second-input" 
-                                                    label={"Last Name"} 
-                                                    variant={"outlined"} 
-                                                    color={"info"}
-                                                    value={lastName}
-                                                    onChange={handleLastNameChange}
-                                                />
-                                            </div>
-                                            <div className='horizontal'>
-                                                <TextField 
-                                                    className="form-input first-input" 
-                                                    label={"Email"} 
-                                                    variant={"outlined"} 
-                                                    color={"info"}
-                                                    value={email}
-                                                    onChange={handleEmailChange}
-                                                />
-
-                                                <TextField 
-                                                    className="form-input second-input" 
-                                                    label={"Phone Number"} 
-                                                    variant={"outlined"} 
-                                                    color={"info"}
-                                                    value={phone}
-                                                    onChange={handlePhoneChange}
-                                                />
-                                            </div>
-                                            <TextField 
-                                                className="form-input lone-input" 
-                                                label={"Address"} 
-                                                variant={"outlined"} 
-                                                color={"info"}
-                                                value={address}
-                                                onChange={handleAddressChange}
-                                            />
                                             <Button
+                                                disabled={hasApplied}
                                                 className='apply-btn' 
                                                 variant='contained'
                                                 onClick={() => handleApply()}
                                             >
                                                 Apply
                                             </Button>
+                                            <Snackbar 
+                                                open={showSuccessNotification} 
+                                                autoHideDuration={3500} 
+                                                anchorOrigin={{ vertical: "bottom", horizontal: "center"}} 
+                                                onClose={() => setShowSuccessNotification(false) }
+                                            >
+                                                <Alert severity={"success"}>Congrats, you have successfully applied!</Alert>
+                                            </Snackbar>
+                                            <Snackbar 
+                                                open={showFailNotification} 
+                                                autoHideDuration={3500} 
+                                                anchorOrigin={{ vertical: "bottom", horizontal: "center"}} 
+                                                onClose={() => setShowFailNotification(false) }
+                                            >
+                                                <Alert severity={"error"}>Oops! Something went wrong while applying to this job. Please try again later.</Alert>
+                                            </Snackbar>
                                         </div>
                                     </> :
                                     <>
                                         <p className='job-description-header'>List of Applicants:</p>
                                         <List className={"applicant-list"}>
-                                            { applicants?.map(applicant => {
+                                            { applicants.map(applicant => {
                                                     return (
-                                                        <ListItem key={applicant.applicant_id}
+                                                        <ListItem key={applicant.applicant_id.toString()}
                                                             secondaryAction = {
                                                                 <div>
-                                                                    <Tooltip title={`See ${applicant.first_name} ${applicant.last_name}'s cover letter`} placement={"top"}>
-                                                                        <IconButton edge={"end"}>
-                                                                            <HistoryEduRoundedIcon color='primary'/>
-                                                                        </IconButton>
-                                                                    </Tooltip>
-                                                                    <Tooltip title={`See ${applicant.first_name} ${applicant.last_name}'s CV`} placement={"top"}>
-                                                                        <IconButton edge={"end"}>
-                                                                            <DriveFolderUploadRoundedIcon color='secondary'/>
-                                                                        </IconButton>
-                                                                    </Tooltip>
+                                                                    { applicant.application_accepted === null &&
+                                                                        <>
+                                                                            <Tooltip 
+                                                                                title={`Reject ${applicant.first_name} ${applicant.last_name}'s application?`} 
+                                                                                placement={"top"}
+                                                                                onClick={() => handleCandidateAcception(applicant.applicant_id, false)}
+                                                                            >
+                                                                                <IconButton edge={"end"}>
+                                                                                    <CancelIcon color='error'/>
+                                                                                </IconButton>
+                                                                            </Tooltip>
+                                                                            <Tooltip 
+                                                                                title={`Accept ${applicant.first_name} ${applicant.last_name}'s application?`} 
+                                                                                placement={"top"}
+                                                                                onClick={() => handleCandidateAcception(applicant.applicant_id, true)}
+                                                                            >
+                                                                                <IconButton edge={"end"}>
+                                                                                    <CheckIcon color='success'/>
+                                                                                </IconButton>
+                                                                            </Tooltip>
+                                                                        </>
+                                                                    }
+                                                                    { applicant.application_accepted !== null &&
+                                                                        <Tooltip title={`Application ${applicant.application_accepted ? "Accepted" : "Rejected"}! Candidate informed`} placement={"top"}>
+                                                                            <IconButton edge={"end"}>
+                                                                                <PermContactCalendarIcon color={`${applicant.application_accepted ? "success" : "error"}`}/>
+                                                                            </IconButton>
+                                                                        </Tooltip>
+                                                                    }
                                                                 </div>
                                                             }
                                                         >
@@ -149,7 +136,7 @@ const JobDetailsPage = () => {
                                                                     <PersonRoundedIcon color='info'/>
                                                                 </Avatar>
                                                             </ListItemAvatar>
-                                                            <ListItemText primary={`${applicant.first_name} ${applicant.last_name} applied on 2023-23-23`}/>
+                                                            <ListItemText primary={`${applicant.first_name} ${applicant.last_name} applied on ${applicant.application_date}`}/>
                                                         </ListItem>
                                                     )
                                                 })
@@ -162,6 +149,7 @@ const JobDetailsPage = () => {
                     </CardContent>
                 </Card>
             </div>
+            <Footer/>
         </>
     ); 
 }

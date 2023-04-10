@@ -93,7 +93,7 @@ export const useUploadJob = () => {
 
         const token = new Cookies().get(auth_token_cookie_name)
         const response = await retrieve_session_user(token);
-        const recruiterNew = response.data.id;
+        const recruiterNew = response.data.recruiter_id;
         if(!errorTitle && !errorType && !errorCity && !errorDate && !errorExpiry && !errorDescription && !errorUrl){
            uploadIt(recruiterNew);
        
