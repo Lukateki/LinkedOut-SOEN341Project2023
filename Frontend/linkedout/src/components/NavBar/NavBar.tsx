@@ -17,10 +17,6 @@ export const NavBar : React.FC  = () => {
       navigate('/register');
     };
 
-    const handleProfileClick = () => {
-        navigate('/profile');
-    };
-
     const handleLogoutClick = () => {
       const cookies = new Cookies();
       cookies.remove('auth-token');
@@ -46,19 +42,20 @@ export const NavBar : React.FC  = () => {
             <div className="navbar-right-header">
               {isUserLoggedIn() ? (
               <>
-              <Box>
-                <a id="profile" href="http://localhost:3000/profile">
-                <CardMedia 
-                  component="img"
-                  height="40px"
-                  image='https://picsum.photos/200/200'
-                  alt='profile picture'
-                  className="navbar-picture"
-                />
-                </a>
-              </Box>  
-                <Button onClick={handleProfileClick}>Profile</Button>
-                <Button onClick={handleLogoutClick}>Logout</Button>
+                <Box>
+                  <a id="profile" href="http://localhost:3000/profile">
+                  <CardMedia 
+                    component="img"
+                    height="40px"
+                    image='https://picsum.photos/200/200'
+                    alt='profile picture'
+                    className="navbar-picture"
+                  />
+                  </a>
+                </Box>
+                <div className="navbar-buttons"> 
+                  <Button onClick={handleLogoutClick}>Logout</Button>
+                </div>
               </>
               ):(
                 <>

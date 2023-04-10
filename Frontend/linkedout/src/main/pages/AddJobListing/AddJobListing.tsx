@@ -7,7 +7,7 @@ import './AddJobListing.css';
 import { useUploadJob } from './hooks';
 
 const AddJobListingPage = () => {
-    const { errorUrl, errorType,errorTitle,errorExpiry,errorDescription,errorDate,errorCity, handleUploadJobBtnClick, handleTitleChange, handleTypeChange, handleCityChange, handleDateChange, handleExpiryChange, handleDescriptionChange,handleUrlChange, title, type, city, date, expiry, description, url } = useUploadJob();
+    const { errorUrl, errorTitle,errorExpiry,errorDescription, errorCity, handleUploadJobBtnClick, handleTitleChange, handleTypeChange, handleCityChange, handleExpiryChange, handleDescriptionChange,handleUrlChange, title, type, city, date, expiry, description, url } = useUploadJob();
     
     const jobTypes = [
         {
@@ -40,20 +40,19 @@ const AddJobListingPage = () => {
                             value={title}
                             onChange={handleTitleChange}
                             error={errorTitle}
+                            helperText={errorTitle ? "Invalid Job title" : ""}
                         />
                         
                     <div className='double-columns'>
                         <TextField
                             className='job-type'
                             select
-                            defaultValue={"Full-time"}
                             SelectProps={{    
                                 native:true
                             }}
                             value={type}
                             onChange={handleTypeChange}
-                            error={errorType}
-
+                            helperText={"Job Type"}
                         >
                             {jobTypes.map((option) => (
                                 <option key={option.value} value={option.value}>
@@ -67,26 +66,24 @@ const AddJobListingPage = () => {
                             value={city}
                             onChange={handleCityChange}
                             error={errorCity}
+                            helperText={errorCity ? "Invalid City" : ""}
                         />
                     </div>
                     <div className='double-columns'>
                         <TextField
+                            disabled={true}
                             className='job-posting-date'
                             type="date"
                             value={date}
-                            onChange={handleDateChange}
-                            helperText="Current Date"
-                            error={errorDate}
-
+                            helperText={"Posting Date"}
                         />
                         <TextField
                             className='job-expiry-date'
                             type="date"
                             value={expiry}
                             onChange={handleExpiryChange}
-                            helperText="Expiry Date"
+                            helperText={errorExpiry ? "Expiry Date cannot be before posting date" : ""}
                             error={errorExpiry}
-
                         />
                     </div>
                     <TextField
@@ -97,7 +94,7 @@ const AddJobListingPage = () => {
                         value={description}
                         onChange={handleDescriptionChange}
                         error={errorDescription}
-
+                        helperText={errorDescription ? "Invalid Description" : ""}
                     />
                     <TextField
                         className='job-url'
@@ -105,7 +102,7 @@ const AddJobListingPage = () => {
                         value={url}
                         onChange={handleUrlChange}
                         error={errorUrl}
-
+                        helperText={errorUrl ? "Invalid URL" : ""}
                     />
                     <Button 
                         className='upload-job-btn'
