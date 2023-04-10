@@ -223,7 +223,7 @@ export const ProfilePage = () => {
     const information = 
           <Box className="profile-jobs-text-details">
             <Typography variant="h6">{item["title"]}</Typography>
-            <Typography variant="subtitle1">{item["company"]}</Typography>
+            <Typography variant="subtitle1">{isCandidate ? item["company"] : companyName}</Typography>
             <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{isCandidate ? item["start_date"].split("-")[0] + "-" + item["end_date"].split("-")[0] : item["posting_date"]}</Typography>
             <Typography variant="body2">{item["description"]}</Typography>
           </Box>
@@ -290,7 +290,7 @@ export const ProfilePage = () => {
           console.log(s.data)
 
           getRecruiter()
-          getJobPostings()
+          getJobPostings(s.data)
         }
       })
     }

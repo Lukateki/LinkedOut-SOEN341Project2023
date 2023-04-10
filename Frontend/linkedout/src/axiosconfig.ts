@@ -179,3 +179,7 @@ export const create_education = async (education) => {
 export const delete_education = async (id: number) => {
     return axios.delete(api + `/educations/${id}/`);
 }
+
+export const retrieve_recruiter_jobs = async (recruiterID: string) => {
+    return axios.get(api + `/recruiters/api/get_jobs/`, { params: { recruiter_id: recruiterID }});
+}
