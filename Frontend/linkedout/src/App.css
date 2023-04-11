@@ -50,11 +50,6 @@
   color: white;
 }
 
-.white-content .grid-item {
-  background-color: grey;
-  color: white;
-}
-
 .white-content .jobDetails-container {
   background-color:  #1A2027;
   color: white;
@@ -113,4 +108,16 @@
 
 .white-content hr{
   background-color: white;
+}
+
+.white-content .welcome-banner-container {
+  background-color: #1A2027;
+  color: white;
+  border: white thin solid;
+}
+
+.white-content .home-content .home-jobs-container .grid-item{
+  background-color: #1A2027 !important;
+  color: white !important;
+  border: white thin solid;
 }
