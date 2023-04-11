@@ -70,14 +70,14 @@
 }
 
 .home-content .available-jobs {
-  font-family: "Quicksand";
+  font-family: "Quicksand", sans-serif;
   text-align: center;
   text-decoration: underline;
   margin-bottom: 0.5em;
 }
 
 .home-container .welcome-banner {
-  font-family: 'Quicksand';
+  font-family: 'Quicksand', sans-serif;
   text-align: center;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
@@ -100,11 +100,11 @@
 }
 
 .home-content .home-jobs-container div {
-  font-family: 'Quicksand';
+  font-family: 'Quicksand', sans-serif;
 }
 
 .home-content .home-jobs-container p {
-  font-family: 'Quicksand';
+  font-family: 'Quicksand', sans-serif;
 }
 
 .home-content .welcome-banner-container {
