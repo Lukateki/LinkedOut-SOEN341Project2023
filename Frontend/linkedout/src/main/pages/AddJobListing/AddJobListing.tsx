@@ -108,6 +108,7 @@ const AddJobListingPage = () => {
                         className='upload-job-btn'
                         variant='contained'
                         onClick={handleUploadJobBtnClick}
+                        disabled={errorCity || errorDescription || errorExpiry || errorUrl || errorTitle}
                     >
                         Upload Job
                     </Button> 
