@@ -7,6 +7,7 @@ from LinkedOut.JobListings.models import Job
 class TestUserViewSet:
 
     endpoint = '/api/v1/jobs/'
+    time_string = "%Y-%m-%d"
     
     @pytest.mark.django_db
     def test_list(self, client, job1, job2):
@@ -91,8 +92,8 @@ class TestUserViewSet:
         assert job.title == data['title']
         assert job.recruiter.id == data['recruiter']
         assert job.posting_url == data['posting_url']
-        assert job.posting_date.strftime("%Y-%m-%d") == data['posting_date']
-        assert job.expiry_date.strftime("%Y-%m-%d") == data['expiry_date']
+        assert job.posting_date.strftime(self.time_string) == data['posting_date']
+        assert job.expiry_date.strftime(self.time_string) == data['expiry_date']
         assert job.city == data['city']
         assert job.job_type == data['job_type']
         assert job.description == data['description']
@@ -131,8 +132,8 @@ class TestUserViewSet:
         assert job.title == data['title']
         assert job.recruiter.id == data['recruiter']
         assert job.posting_url == data['posting_url']
-        assert job.posting_date.strftime("%Y-%m-%d") == data['posting_date']
-        assert job.expiry_date.strftime("%Y-%m-%d") == data['expiry_date']
+        assert job.posting_date.strftime(self.time_string) == data['posting_date']
+        assert job.expiry_date.strftime(self.time_string) == data['expiry_date']
         assert job.city == data['city']
         assert job.job_type == data['job_type']
         assert job.description == data['description']

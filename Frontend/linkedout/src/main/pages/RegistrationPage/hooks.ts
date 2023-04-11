@@ -67,10 +67,10 @@ export const useRegisterStudent = () => {
 
         //they must all be false
         if (!errorS1 && !errorS2 && !errorS3 && !errorS4){
-            var applicantID = -1;
+            let applicantID = -1;
             register_applicant(emailStudent).then(result => {
                 const registeredApplicant = result.data;
-                var tempApplicantID = registeredApplicant.id;
+                let tempApplicantID = registeredApplicant.id;
                 applicantID=tempApplicantID;
                 register_user(firstNameStudent, lastNameStudent, emailStudent, passwordStudent).then(success => {
                     const userID = success.data.user_id;
@@ -154,10 +154,10 @@ export const useRegisterEmployer = () => {
     const handleRegisterEmployerBtnClick =() => {
         //they must all be false
         if (!errorE1 && !errorE2 && !errorE3 && !errorE4 && !errorE5 && !errorE6){
-            var recruiterID = -1;
+            let recruiterID = -1;
             register_recruiter(company, headquarter, emailEmployer).then(result => {
                 const registeredRecruiter = result.data;
-                var tempRecruiterID = registeredRecruiter.id;
+                let tempRecruiterID = registeredRecruiter.id;
                 recruiterID = tempRecruiterID;
                 register_user(firstNameEmployer, lastNameEmployer, emailEmployer,passwordEmployer).then(success => {
                     const userID = success.data.user_id;
