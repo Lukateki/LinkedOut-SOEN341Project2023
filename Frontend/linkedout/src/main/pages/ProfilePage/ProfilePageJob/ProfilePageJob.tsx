@@ -1,4 +1,4 @@
-import { Box, Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, NativeSelect, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import NavBar from "../../../../components/NavBar/NavBar";
 import EditIcon from '@mui/icons-material/Edit';
@@ -8,7 +8,7 @@ import { useApplicantProfile } from "../hooks";
 import ArrowbackIcon from '@mui/icons-material/ArrowBack';
 import { isUserLoggedIn } from "../../LoginPage/types";
 import Cookies from "universal-cookie";
-import { auth_token_cookie_name, create_experience, delete_applications, delete_experience, retrieve_session_user, update_experience } from "../../../../axiosconfig";
+import { auth_token_cookie_name, create_experience, delete_applications, delete_experience, delete_job, retrieve_session_user, update_experience, update_jobs, upload_job } from "../../../../axiosconfig";
 import { getCurrentDate } from "../../AddJobListing/types";
 
 export const ProfilePageJob = () => {
@@ -18,11 +18,14 @@ export const ProfilePageJob = () => {
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openAddDialog, setOpenAddDialog] = React.useState(false);
 
+    const [company, setCompany] = React.useState("");
     const [bufferId, setBufferId] = React.useState(0);
     const [bufferTitle, setBufferTitle] = React.useState("");
     const [bufferCompany, setBufferCompany] = React.useState("");
     const [bufferStartDate, setBufferStartDate] = React.useState("");
     const [bufferEndDate, setBufferEndDate] = React.useState("");
+    const [bufferLocation, setBufferLocation] = React.useState("");
+    const [bufferType, setBufferType] = React.useState("");
     const [bufferDescription, setBufferDescription] = React.useState("");
     const [currentExperience, setCurrentExperience] = React.useState(0);
 
@@ -38,11 +41,14 @@ export const ProfilePageJob = () => {
             setBufferDescription(experience[index]["description"]);
         }
         else{
+            setBufferId(jobPostings[index]["id"]);
             setBufferTitle(jobPostings[index]["title"]);
-            setBufferCompany(jobPostings[index]["company"]);
+            setBufferCompany(company);
             setBufferStartDate(jobPostings[index]["start_date"]);
             setBufferEndDate(jobPostings[index]["end_date"]);
             setBufferDescription(jobPostings[index]["description"]);
+            setBufferLocation(jobPostings[index]["city"]);
+            setBufferType(jobPostings[index]["job_type"]);
         }
         setOpenDialog(true);
     };
@@ -58,7 +64,7 @@ export const ProfilePageJob = () => {
             delete_experience(bufferId);
         }       
         else{
-            setJobPostings(jobPostings.slice(0, currentExperience).concat(jobPostings.slice(currentExperience + 1, jobPostings.length)));
+            delete_job(bufferId)
         }
         window.location.reload();
 
@@ -66,18 +72,7 @@ export const ProfilePageJob = () => {
 
     const handleSaveExperienceDialog = () => {
         setOpenDialog(false);
-        // let e = jobPostings;
-
-        // if(isCandidate){
-        //     e = experience;
-        // }
-        // e[currentExperience]["title"] = bufferTitle;
-        // e[currentExperience]["company"] = bufferCompany;
-        // e[currentExperience]["start_date"] = bufferStartDate;
-        // e[currentExperience]["end_date"] = bufferEndDate;
-        // e[currentExperience]["description"] = bufferDescription;
         if(isCandidate){
-            // setExperience(e)
             console.log(experience)
             update_experience(bufferId,{
                 "title": bufferTitle,
@@ -90,7 +85,16 @@ export const ProfilePageJob = () => {
 
         }
         else{
-            // setJobPostings(e);
+            update_jobs(jobPostings[currentExperience].id, {
+                "title": bufferTitle,
+                "company": bufferCompany,
+                "start_date": bufferStartDate,
+                "end_date": bufferEndDate,
+                "description": bufferDescription,
+                "location": bufferLocation,
+                "skills": "blank",
+                "job_type": bufferType,
+                })
             delete_applications(jobPostings[currentExperience].id)
                 .then(s => console.log(s))
                 .catch(e => console.log(e))
@@ -101,34 +105,20 @@ export const ProfilePageJob = () => {
     const handleAddExperienceDialog = () => {
         setOpenAddDialog(false);
         if(isCandidate){
-            // setExperience([...experience, {
-            //     "title": bufferTitle,
-            //     "company": bufferCompany,
-            //     "start_date": bufferStartDate,
-            //     "end_date": bufferEndDate,
-            //     "description": bufferDescription
-            // }]);
             create_experience({
                 "title": bufferTitle,
                 "company": bufferCompany,
                 "start_date": bufferStartDate,
                 "end_date": bufferEndDate,
                 "description": bufferDescription,
-                //TODO: Add location and skills in the frontend
                 "location": "blank",
                 "skills": "blank",
                 "applicant": userId,
             });
         }
-        else{}
-        setJobPostings([...jobPostings, {
-            "title": bufferTitle,
-            "company": bufferCompany,
-            "start_date": bufferStartDate,
-            "end_date": bufferEndDate,
-            "description": bufferDescription,
-
-        }]);
+        else{
+            upload_job(bufferTitle, userId, bufferCompany + ".com", bufferStartDate, bufferEndDate, bufferLocation, bufferType, bufferDescription).then().catch();
+        }
 
         //add deletion of applications here
         window.location.reload();
@@ -137,6 +127,8 @@ export const ProfilePageJob = () => {
     const [errorTitle, setErrorTitle] = useState(true);
     const [errorCompany, setErrorCompany] = useState(true);
     const [errorDescription, setErrorDescription] = useState(true);
+    const [errorType, setErrorType] = useState(true);
+    const [errorLocation, setErrorLocation] = useState(true);
     const [errorExpiry, setErrorExpiry] = useState(false);
 
     const handleOpenAddExperienceDialog = () => {
@@ -150,6 +142,15 @@ export const ProfilePageJob = () => {
         setErrorCompany(true);
         setErrorDescription(true);
         setErrorExpiry(false);
+        if (!isCandidate) {
+            console.log(jobPostings)
+            setBufferLocation("");
+            setBufferType("");
+            setBufferCompany(company);
+            setErrorCompany(false);
+            setErrorType(true);
+            setErrorLocation(true);
+        }
     };
 
     const dialogProps = !isCandidate ? {
@@ -187,6 +188,7 @@ export const ProfilePageJob = () => {
                 error={errorTitle}
             />
             <TextField
+                disabled={!isCandidate ? true : false}
                 sx={{ marginTop: "1em" }}
                 autoFocus
                 id="company"
@@ -233,6 +235,35 @@ export const ProfilePageJob = () => {
                 {...dialogProps}
             />
             <TextField
+                sx={{ marginTop: 2.5}}
+                autoFocus
+                id="location"
+                fullWidth
+                label="Location"
+                value={bufferLocation}
+                onChange={(e) => {
+                    setErrorLocation(e.target.value.toString().length === 0);
+                    setBufferLocation(e.target.value)
+                }}
+                variant="standard"
+                error={errorLocation}
+            />
+            <NativeSelect
+                sx={{ marginTop: 2.5 }}
+                value={bufferType}
+                id="type-select"
+                onChange={(e) => {
+                    setBufferType(e.target.value)
+                }}
+                defaultValue={"Full-Time"}
+                size="small"
+            >
+            <option value={"Full-Time"}>Full-Time</option>
+            <option value={"Internship"}>Internship</option>
+            <option value={"Seasonal"}>Seasonal</option>
+            <option value={"Part-Time"}>Part-Time</option>
+            </NativeSelect>
+            <TextField
                 sx={{ marginTop: "1em" }}
                 id="Description"
                 label="Description"
@@ -250,8 +281,8 @@ export const ProfilePageJob = () => {
             />
         </DialogContent>
         <Box sx={{right:0, justifyContent:"space-between"}}>
-            <DialogActions onClick={handleAddExperienceDialog}>
-                <Button variant="contained" disabled={errorExpiry || errorCompany || errorTitle || errorDescription}>Add</Button>
+            <DialogActions>
+                <Button variant="contained" onClick={handleAddExperienceDialog} disabled={errorExpiry || errorCompany || errorTitle || errorDescription || errorLocation}>Add</Button>
             </DialogActions>
         </Box>
         </Box>
@@ -386,7 +417,7 @@ export const ProfilePageJob = () => {
                 </Box>
             </Dialog>
             <Typography variant="h6">{item["title"]}</Typography>
-            <Typography variant="subtitle1">{item["company"]}</Typography>
+            <Typography variant="subtitle1">{isCandidate ? item["company"] : company}</Typography>
             <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{isCandidate ?(item["start_date"].split("-")[0] + "-" + item["end_date"].split("-")[0] ) : item["posting_date"]}</Typography>
             <Typography variant="body2">{item["description"]}</Typography>
         </Box></>;
@@ -417,13 +448,15 @@ export const ProfilePageJob = () => {
               if(s.data.isApplicant){
                 setUserId(s.data.applicant_id);
                 setId(s.data.user_id);
-      
+                
                 getExperience(s.data);
                 
               }
               else{
                 setUserId(s.data.recruiter_id);
                 getJobPostings(s.data)
+                setCompany(s.data.company)
+                
               }
             })
           }

@@ -201,3 +201,11 @@ export const update_application_status = async (application_id: number, applicat
 export const delete_applications = (job_id: number) => {
     return axios.get(api + `/applications/api/delete_applications/`, {params: { job_id: job_id}})
 }
+
+export const update_jobs = async (id: number, jobs) => {
+    return axios.patch(api + `/jobs/${id}/`, jobs)
+}
+
+export const delete_job = async (id: number) => {
+    return axios.delete(api + `/jobs/${id}/`);
+}
