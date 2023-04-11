@@ -68,27 +68,6 @@ class UserViewSet(viewsets.ModelViewSet):
                 return Response(data=responseData, status=200);
         return Response(data={"status":"No Session User found"}, status=404)
 
-    @action(detail=True)
-    def retrieve_session_user(self, request, *args, **kwargs):
-        headerAuthToken = request.headers["authorization"];
-        if headerAuthToken != None:
-            responseData = None;
-            token = headerAuthToken[7:];
-            targetTokenObj = Token.objects.filter(key=token).first()
-            if targetTokenObj != None:
-                targetApplicant = Applicant.objects.filter(user_id=targetTokenObj.user.id).first();
-                targetRecruiter = Recruiter.objects.filter(user_id=targetTokenObj.user.id).first();
-                if targetApplicant != None:
-                    responseData = targetApplicant.as_dict();
-                    responseData["isApplicant"] = True;
-                    responseData["isRecruiter"] = False;
-                elif targetRecruiter != None:
-                    responseData = targetRecruiter.as_dict();
-                    responseData["isRecruiter"] = True;
-                    responseData["isApplicant"] = False;
-                    responseData["associated_jobs"] = Job.objects.filter(recruiter_id=responseData["recruiter_id"]).values("id");
-                return Response(data=responseData, status=200);
-        return Response(data={"status":"No Session User found"}, status=404)
 class GroupViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
@@ -183,6 +162,14 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
         if application == None:
             return Response(data={ "hasApplied": False }, status=200);
         return Response(data={ "hasApplied": True }, status=200);
+
+    @action(detail=True)
+    def delete_applications(self, request, *args, **kwargs):
+        target_job_id = request.query_params['job_id'];
+        deletionResults = Application.objects.filter(job_id=target_job_id).delete();
+        print(deletionResults[0]);
+        return Response(data={"deletionCount": deletionResults[0]}, status=200);
+
 
 class SendEmailView(APIView):
 

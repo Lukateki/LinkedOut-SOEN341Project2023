@@ -8,7 +8,7 @@ import { useApplicantProfile } from "../hooks";
 import ArrowbackIcon from '@mui/icons-material/ArrowBack';
 import { isUserLoggedIn } from "../../LoginPage/types";
 import Cookies from "universal-cookie";
-import { auth_token_cookie_name, create_experience, delete_experience, retrieve_session_user, update_experience } from "../../../../axiosconfig";
+import { auth_token_cookie_name, create_experience, delete_applications, delete_experience, retrieve_session_user, update_experience } from "../../../../axiosconfig";
 import { getCurrentDate } from "../../AddJobListing/types";
 
 export const ProfilePageJob = () => {
@@ -91,9 +91,10 @@ export const ProfilePageJob = () => {
         }
         else{
             // setJobPostings(e);
+            delete_applications(jobPostings[currentExperience].id)
+                .then(s => console.log(s))
+                .catch(e => console.log(e))
         }
-        
-        //add deletion of applications here
         window.location.reload();
     };
 
