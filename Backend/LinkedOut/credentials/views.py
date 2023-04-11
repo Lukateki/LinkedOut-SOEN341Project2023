@@ -22,6 +22,7 @@ import ssl
 import smtplib
 import re
 import json
+import os
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -194,7 +195,7 @@ class SendEmailView(APIView):
         recipient = query_params['email']
         if re.fullmatch(email_regex, recipient):
             sender = 'linkedoutnotifications'
-            password = 'lkcpvpfjtfwvnuwp'
+            password = os.environ.get("LinkedOutPassword")
 
             email = EmailMessage()
             email['From'] = sender
