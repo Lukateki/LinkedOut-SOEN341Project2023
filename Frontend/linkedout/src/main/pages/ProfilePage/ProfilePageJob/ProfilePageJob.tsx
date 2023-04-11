@@ -12,7 +12,7 @@ import { auth_token_cookie_name, create_experience, delete_applications, delete_
 import { getCurrentDate } from "../../AddJobListing/types";
 
 export const ProfilePageJob = () => {
-    const { setId, setUserId, userId, getJobPostings, jobPostings, setJobPostings, getExperience, experience, navigateBackFromExperience, isCandidate, setIsCandidate } = useApplicantProfile();
+    const { setId, setUserId, userId, getJobPostings, jobPostings, getExperience, experience, navigateBackFromExperience, isCandidate, setIsCandidate } = useApplicantProfile();
     const [loaded, setLoaded] = React.useState(false);
 
     const [openDialog, setOpenDialog] = React.useState(false);
@@ -127,7 +127,6 @@ export const ProfilePageJob = () => {
     const [errorTitle, setErrorTitle] = useState(true);
     const [errorCompany, setErrorCompany] = useState(true);
     const [errorDescription, setErrorDescription] = useState(true);
-    const [errorType, setErrorType] = useState(true);
     const [errorLocation, setErrorLocation] = useState(true);
     const [errorExpiry, setErrorExpiry] = useState(false);
 
@@ -148,7 +147,6 @@ export const ProfilePageJob = () => {
             setBufferType("");
             setBufferCompany(company);
             setErrorCompany(false);
-            setErrorType(true);
             setErrorLocation(true);
         }
     };
