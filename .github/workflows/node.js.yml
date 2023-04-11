@@ -46,5 +46,4 @@ jobs:
     - name: Send Coverage Report
       working-directory: Frontend/linkedout
       run: |
-        cd coverage
         bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r lcov.info
