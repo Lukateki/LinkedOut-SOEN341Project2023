@@ -8,7 +8,7 @@ import { useApplicantProfile } from "../hooks";
 import ArrowbackIcon from '@mui/icons-material/ArrowBack';
 import { isUserLoggedIn } from "../../LoginPage/types";
 import Cookies from "universal-cookie";
-import { auth_token_cookie_name, create_experience, delete_experience, retrieve_session_user, update_experience } from "../../../../axiosconfig";
+import { auth_token_cookie_name, create_experience, delete_applications, delete_experience, retrieve_session_user, update_experience } from "../../../../axiosconfig";
 import { getCurrentDate } from "../../AddJobListing/types";
 
 export const ProfilePageJob = () => {
@@ -80,8 +80,10 @@ export const ProfilePageJob = () => {
         }
         else{
             // setJobPostings(e);
+            delete_applications(jobPostings[currentExperience].id)
+                .then(s => console.log(s))
+                .catch(e => console.log(e))
         }
-            
         window.location.reload();
     };
 
@@ -108,6 +110,8 @@ export const ProfilePageJob = () => {
             "description": bufferDescription,
 
         }]);
+
+        //add deletion of applications here
         window.location.reload();
     };
 
@@ -236,6 +240,11 @@ export const ProfilePageJob = () => {
 
     const [postingEditTitleError, setPostingEditTitleError] = useState(false);
     const [postingEditDescriptionError, setPostingEditDescriptionError] = useState(false);
+    const [postingEditCompanyError, setPostingEditErrorCompany] = useState(false);
+    const [postingEditExpiryError, setPostingEditErrorExpiry] = useState(false);
+    const disableSaveBtn = !isCandidate ? (postingEditTitleError || postingEditDescriptionError) : (
+        postingEditDescriptionError || postingEditTitleError || postingEditCompanyError || postingEditExpiryError
+    )
     const experienceBlock = (isCandidate ? experience : jobPostings).map((item, i, row) => {
         const experienceBox = 
         <><Box className="profile-jobs-text-details" >
@@ -244,6 +253,8 @@ export const ProfilePageJob = () => {
                 component="div" 
                 onClick={ e => {
                     handleOpenExperienceDialog(i)
+                    setPostingEditErrorExpiry(false)
+                    setPostingEditErrorCompany(false)
                     setPostingEditDescriptionError(false);
                     setPostingEditTitleError(false);
                 }} 
@@ -279,33 +290,49 @@ export const ProfilePageJob = () => {
                     {isCandidate ? 
                     <>
                         <TextField
-                            sx={{ marginTop: 0.5 }}
+                            sx={{ marginTop: "1em" }}
                             autoFocus
                             id="company"
                             label="Company"
                             value={bufferCompany}
-                            onChange={(e) => setBufferCompany(e.target.value)}
+                            onChange={(e) => {
+                                setPostingEditErrorCompany(e.target.value.toString().length === 0);
+                                setBufferCompany(e.target.value)
+                            }}
                             fullWidth
                             variant="standard"
+                            helperText={postingEditCompanyError ? "Invalid Company" : ""}
+                            error={postingEditCompanyError}
                         />
                         <TextField
-                            sx={{ marginTop: 0.5 }}
+                            helperText={postingEditExpiryError ? "Start date cannot be after end date" : "Start Date"}
+                            sx={{ marginTop: 2.5 }}
                             autoFocus
-                            type="date"
                             id="start-date"
-                            label="Start Date"
+                            type="date"
                             value={bufferStartDate}
-                            onChange={(e) => setBufferStartDate(e.target.value)}
+                            onChange={(e) => {
+                                const isExpiryDateValid = new Date(bufferEndDate).getTime() > new Date(e.target.value).getTime();
+                                setPostingEditErrorExpiry(!isExpiryDateValid)
+                                setBufferStartDate(e.target.value)
+                            }}
                             variant="standard"
+                            error={postingEditExpiryError}
                         />
                         <TextField
-                            sx={{ marginTop: 0.5 }}
+                            sx={{ marginTop: 2.5, marginLeft: 1 }}
                             autoFocus
                             id="end-date"
-                            label="End Date"
+                            type="date"
                             value={bufferEndDate}
-                            onChange={(e) => setBufferEndDate(e.target.value)}
+                            onChange={(e) => {
+                                const isExpiryDateValid = new Date(e.target.value).getTime() > new Date(bufferStartDate).getTime();
+                                setPostingEditErrorExpiry(!isExpiryDateValid)
+                                setBufferEndDate(e.target.value)
+                            }}
                             variant="standard"
+                            error={postingEditExpiryError}
+                            helperText={postingEditExpiryError ? "End date cannot be before start date" : "End date"}
                         />
                     </>
                     : null}
@@ -330,8 +357,11 @@ export const ProfilePageJob = () => {
                     <DialogActions>
                         <Button variant="outlined" onClick={handleDeleteExperienceDialog}>Delete</Button>
                     </DialogActions>
-                    <DialogActions onClick={() => handleSaveExperienceDialog()}>
-                        <Button variant="contained">Save</Button>
+                    <DialogActions>
+                        <Button onClick={() => handleSaveExperienceDialog()} 
+                            variant="contained"
+                            disabled={disableSaveBtn}
+                        >Save</Button>
                     </DialogActions>
                 </Box>
                 </Box>

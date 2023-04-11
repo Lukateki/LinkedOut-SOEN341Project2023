@@ -197,3 +197,7 @@ export const candidate_has_applied_to_job = async (job_application: JobApplicati
 export const update_application_status = async (application_id: number, application_accepted: boolean | undefined) => {
     return axios.patch(api + `/applications/${application_id}/`, {application_accepted})
 }
+
+export const delete_applications = (job_id: number) => {
+    return axios.get(api + `/applications/api/delete_applications/`, {params: { job_id: job_id}})
+}
