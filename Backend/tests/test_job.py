@@ -3,7 +3,7 @@ import pytest
 
 from LinkedOut.JobListings.models import Job
 
-
+time_string = "%Y-%m-%d"
 class TestUserViewSet:
 
     endpoint = '/api/v1/jobs/'
@@ -18,25 +18,9 @@ class TestUserViewSet:
 
         assert len(response_json) == Job.objects.count()
 
-        assert response_json[0]['id'] == job1.id
-        assert response_json[0]['title'] == job1.title
-        assert response_json[0]['recruiter'] == job1.recruiter.id
-        assert response_json[0]['posting_url'] == job1.posting_url
-        assert response_json[0]['posting_date'] == job1.posting_date
-        assert response_json[0]['expiry_date'] == job1.expiry_date
-        assert response_json[0]['city'] == job1.city
-        assert response_json[0]['job_type'] == job1.job_type
-        assert response_json[0]['description'] == job1.description
+        assert_json_with_job(response_json[0], job1)
         
-        assert response_json[1]['id'] == job2.id
-        assert response_json[1]['title'] == job2.title
-        assert response_json[1]['recruiter'] == job2.recruiter.id
-        assert response_json[1]['posting_url'] == job2.posting_url
-        assert response_json[1]['posting_date'] == job2.posting_date
-        assert response_json[1]['expiry_date'] == job2.expiry_date
-        assert response_json[1]['city'] == job2.city
-        assert response_json[1]['job_type'] == job2.job_type
-        assert response_json[1]['description'] == job2.description
+        assert_json_with_job(response_json[1], job2)
 
     @pytest.mark.django_db
     def test_retrieve(self, client, job1):
@@ -46,15 +30,7 @@ class TestUserViewSet:
         response_json = response.json()
         assert response_json != None
 
-        assert response_json['id'] == job1.id
-        assert response_json['title'] == job1.title
-        assert response_json['recruiter'] == job1.recruiter.id
-        assert response_json['posting_url'] == job1.posting_url
-        assert response_json['posting_date'] == job1.posting_date
-        assert response_json['expiry_date'] == job1.expiry_date
-        assert response_json['city'] == job1.city
-        assert response_json['job_type'] == job1.job_type
-        assert response_json['description'] == job1.description
+        assert_json_with_job(response_json, job1)
 
     @pytest.mark.django_db
     def test_create(self, client, recruiter):
@@ -76,26 +52,12 @@ class TestUserViewSet:
         response_json = response.json()
         assert response_json != None
 
-        assert response_json['title'] == data['title']
-        assert response_json['recruiter'] == data['recruiter']
-        assert response_json['posting_url'] == data['posting_url']
-        assert response_json['posting_date'] == data['posting_date']
-        assert response_json['expiry_date'] == data['expiry_date']
-        assert response_json['city'] == data['city']
-        assert response_json['job_type'] == data['job_type']
-        assert response_json['description'] == data['description']
+        assert_json(response_json, data)
 
         assert Job.objects.count() == 1
 
         job = Job.objects.first()
-        assert job.title == data['title']
-        assert job.recruiter.id == data['recruiter']
-        assert job.posting_url == data['posting_url']
-        assert job.posting_date.strftime("%Y-%m-%d") == data['posting_date']
-        assert job.expiry_date.strftime("%Y-%m-%d") == data['expiry_date']
-        assert job.city == data['city']
-        assert job.job_type == data['job_type']
-        assert job.description == data['description']
+        assert_job(job, data)
 
     @pytest.mark.django_db
     def test_update(self, client, job1, recruiter):
@@ -116,25 +78,40 @@ class TestUserViewSet:
         response_json = response.json()
         assert response_json != None
 
-        assert response_json['title'] == data['title']
-        assert response_json['recruiter'] == data['recruiter']
-        assert response_json['posting_url'] == data['posting_url']
-        assert response_json['posting_date'] == data['posting_date']
-        assert response_json['expiry_date'] == data['expiry_date']
-        assert response_json['city'] == data['city']
-        assert response_json['job_type'] == data['job_type']
-        assert response_json['description'] == data['description']
+        assert_json(response_json,data)
 
         assert Job.objects.count() == 1
 
         job = Job.objects.first()
-        assert job.title == data['title']
-        assert job.recruiter.id == data['recruiter']
-        assert job.posting_url == data['posting_url']
-        assert job.posting_date.strftime("%Y-%m-%d") == data['posting_date']
-        assert job.expiry_date.strftime("%Y-%m-%d") == data['expiry_date']
-        assert job.city == data['city']
-        assert job.job_type == data['job_type']
-        assert job.description == data['description']
+        assert_job(job, data)
 
-            
+def assert_job(job: Job, data):
+    assert job.title == data['title']
+    assert job.recruiter.id == data['recruiter']
+    assert job.posting_url == data['posting_url']
+    assert job.posting_date.strftime(time_string) == data['posting_date']
+    assert job.expiry_date.strftime(time_string) == data['expiry_date']
+    assert job.city == data['city']
+    assert job.job_type == data['job_type']
+    assert job.description == data['description']
+    
+def assert_json(json, data):
+    assert json['title'] == data['title']
+    assert json['recruiter'] == data['recruiter']
+    assert json['posting_url'] == data['posting_url']
+    assert json['posting_date'] == data['posting_date']
+    assert json['expiry_date'] == data['expiry_date']
+    assert json['city'] == data['city']
+    assert json['job_type'] == data['job_type']
+    assert json['description'] == data['description']
+
+def assert_json_with_job(json, job):
+    assert json['id'] == job.id
+    assert json['title'] == job.title
+    assert json['recruiter'] == job.recruiter.id
+    assert json['posting_url'] == job.posting_url
+    assert json['posting_date'] == job.posting_date
+    assert json['expiry_date'] == job.expiry_date
+    assert json['city'] == job.city
+    assert json['job_type'] == job.job_type
+    assert json['description'] == job.description

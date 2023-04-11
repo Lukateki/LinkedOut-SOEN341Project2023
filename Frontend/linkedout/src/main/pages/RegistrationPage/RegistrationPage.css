@@ -3,19 +3,19 @@
 }
 
 .registration-page-wrapper button {
-    font-family: 'Quicksand';
+    font-family: 'Quicksand', sans-serif;
 }
 
 .registration-page-wrapper input {
-    font-family: 'Quicksand';
+    font-family: 'Quicksand', sans-serif;
 }
 
 .registration-page-wrapper label {
-    font-family: 'Quicksand';
+    font-family: 'Quicksand', sans-serif;
 }
 
 .registration-page-wrapper p {
-    font-family: 'Quicksand';
+    font-family: 'Quicksand', sans-serif;
 }
 
 .linkedout-banner, .student-employer-choice {

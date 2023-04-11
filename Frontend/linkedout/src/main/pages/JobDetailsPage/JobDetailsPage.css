@@ -15,12 +15,12 @@ body {
 .jobDetails-container {
     height: 50em;
     width: 60em;
-    font-family: 'Quicksand' !important;
+    font-family: 'Quicksand', sans-serif !important;
     margin: auto;
 }
 
 .jobDetails-company {
-    font-family: "Russo One" !important;
+    font-family: "Russo One", sans-serif !important;
     font-size: 64px;
     text-align: center;
     margin: 0;
@@ -28,7 +28,7 @@ body {
 
 .jobDetails-position {
     text-align: center;
-    font-family: 'Quicksand' !important;
+    font-family: 'Quicksand', sans-serif !important;
 }
 
 .jobDetails-meta .jobDetails-specifics {

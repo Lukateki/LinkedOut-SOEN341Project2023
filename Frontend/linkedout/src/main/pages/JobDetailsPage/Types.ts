@@ -1,14 +1,14 @@
 export interface Applicant {
     applicant_id: number;
-    application_accepted?: Boolean;
+    application_accepted?: boolean;
     application_date?: string;
     application_id: number;
     description: string;
     email: string;
     first_name: string;
     interests: string;
-    isApplicant: Boolean;
-    isRecruiter: Boolean;
+    isApplicant: boolean;
+    isRecruiter: boolean;
     last_name: string;
     referred_pronouns: string;
     skills: string;
@@ -17,8 +17,8 @@ export interface Applicant {
 }
 
 export interface JobApplication {
-    applicant_id: Number;
-    job_id: Number;
+    applicant_id: number;
+    job_id: number;
 }
 
 export interface EmailNotification {

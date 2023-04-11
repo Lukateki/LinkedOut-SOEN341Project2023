@@ -54,7 +54,6 @@ export const ProfilePageJob = () => {
     const handleDeleteExperienceDialog = () => {
         setOpenDialog(false);
         if(isCandidate){
-            // setExperience(experience.slice(0, currentExperience).concat(experience.slice(currentExperience + 1, experience.length)));
             delete_experience(bufferId);
         }       
         else{
@@ -66,16 +65,6 @@ export const ProfilePageJob = () => {
 
     const handleSaveExperienceDialog = () => {
         setOpenDialog(false);
-        // let e = jobPostings;
-
-        // if(isCandidate){
-        //     e = experience;
-        // }
-        // e[currentExperience]["title"] = bufferTitle;
-        // e[currentExperience]["company"] = bufferCompany;
-        // e[currentExperience]["start_date"] = bufferStartDate;
-        // e[currentExperience]["end_date"] = bufferEndDate;
-        // e[currentExperience]["description"] = bufferDescription;
         if(isCandidate){
             // setExperience(e)
             console.log(experience)
@@ -101,13 +90,6 @@ export const ProfilePageJob = () => {
     const handleAddExperienceDialog = () => {
         setOpenAddDialog(false);
         if(isCandidate){
-            // setExperience([...experience, {
-            //     "title": bufferTitle,
-            //     "company": bufferCompany,
-            //     "start_date": bufferStartDate,
-            //     "end_date": bufferEndDate,
-            //     "description": bufferDescription
-            // }]);
             create_experience({
                 "title": bufferTitle,
                 "company": bufferCompany,
@@ -120,7 +102,6 @@ export const ProfilePageJob = () => {
                 "applicant": userId,
             });
         }
-        else{}
         setJobPostings([...jobPostings, {
             "title": bufferTitle,
             "company": bufferCompany,

@@ -9,8 +9,6 @@ import { ThemeContext, themes } from '../../contexts/ThemeContext';
 import "./NavBar.css"
 import Cookies from "universal-cookie";
 
-import "./NavBar.css"
-
 export const NavBar : React.FC  = () => {
     const navigate = useNavigate();
     const [darkMode, setDarkMode] = React.useState(true);

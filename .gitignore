@@ -5,3 +5,5 @@ Backend/db.sqlite3
 Backend/Pipfile.lock
 *.pyc 
 Backend/db.sqlite3-journal
+.scannerwork/.sonar_lock
+.scannerwork/report-task.txt
