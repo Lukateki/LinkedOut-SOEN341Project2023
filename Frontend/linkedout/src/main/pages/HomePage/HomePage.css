@@ -66,6 +66,7 @@
   /* New Rules */
 .home-content {
   height: 100%;
+  background-color: rgba(39, 48, 61, 0.1) !important;
 }
 
 .home-content .available-jobs {
@@ -90,10 +91,11 @@
 }
 
 .home-content .home-jobs-container .grid-item {
-  border: white 1px solid;
+  border: rgb(26, 32, 39) 1px solid;
   padding: 2em;
   text-align: center;
-  background-color: rgb(26, 32, 39);
+  background-color: white;
+  color: rgb(26, 32, 39);
   cursor: pointer;
 }
 
@@ -103,4 +105,14 @@
 
 .home-content .home-jobs-container p {
   font-family: 'Quicksand';
+}
+
+.home-content .welcome-banner-container {
+  width: 98.4%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  border: rgb(26, 32, 39) 1px solid;
+  border-radius: 0;
 }

@@ -1,5 +1,5 @@
 import { Box, Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, TextField, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../../../../components/NavBar/NavBar";
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -9,6 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { isUserLoggedIn } from "../../LoginPage/types";
 import Cookies from "universal-cookie";
 import { auth_token_cookie_name, create_education, delete_education, retrieve_session_user, update_education } from "../../../../axiosconfig";
+import { getCurrentDate } from "../../AddJobListing/types";
 
 
 export const ProfilePageEducation = () => {
@@ -27,6 +28,10 @@ export const ProfilePageEducation = () => {
     const [bufferDescription, setBufferDescription] = React.useState("");
     const [currentEducation, setCurrentEducation] = React.useState(0);
 
+    const [errorEditSchool, setErrorEditSchool] = useState(false);
+    const [errorEditDegree, setErrorEditDegree] = useState(false);
+    const [errorEditDescription, setErrorEditDescription] = useState(false);
+    const [errorEditEndDate, setErrorEditEndDate] = useState(false);
     const handleOpenExperienceDialog = index => {
         setCurrentEducation(index);
         setBufferId(education[index]["id"]);
@@ -35,7 +40,10 @@ export const ProfilePageEducation = () => {
         setBufferStartDate(education[index]["start_date"]);
         setBufferEndDate(education[index]["end_date"]);
         setBufferDescription(education[index]["description"]);
-        
+        setErrorEditSchool(false)
+        setErrorEditDegree(false)
+        setErrorEditDescription(false)
+        setErrorEditEndDate(false)
         setOpenDialog(true);
     };
 
@@ -92,12 +100,21 @@ export const ProfilePageEducation = () => {
         window.location.reload();
     };
 
+    const [errorSchool, setErrorSchool] = useState(false);
+    const [errorDegree, setErrorDegree] = useState(false);
+    const [errorDescription, setErrorDescription] = useState(false);
+    const [errorEndDate, setErrorEndDate] = useState(false);
+
     const handleOpenAddExperienceDialog = () => {
         setBufferSchool("");
         setBufferDegree("");
-        setBufferStartDate("");
-        setBufferEndDate("");
+        setBufferStartDate(getCurrentDate());
+        setBufferEndDate(getCurrentDate());
         setBufferDescription("");
+        setErrorSchool(true);
+        setErrorDegree(true);
+        setErrorDescription(true)
+        setErrorEndDate(false);
         setOpenAddDialog(true);
     };
     
@@ -105,7 +122,7 @@ export const ProfilePageEducation = () => {
     <Dialog open={openAddDialog} onClose={() => setOpenAddDialog(false)}>
         <Box>
         <Box sx={{ display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-            <DialogTitle>Add Experience</DialogTitle>
+            <DialogTitle>Add Education</DialogTitle>
             <IconButton aria-label="close experience" onClick={() => setOpenAddDialog(false)}>
                 <CloseIcon/>
             </IconButton>
@@ -113,58 +130,85 @@ export const ProfilePageEducation = () => {
         <Divider variant="middle"/>
         <DialogContent>
             <TextField
-            sx={{ marginTop: 0.5 }}
-            autoFocus
-            id="school"
-            label="School"
-            value={bufferSchool}
-            onChange={(e) => setBufferSchool(e.target.value)}
-            fullWidth
-            variant="standard"
+                sx={{ marginTop: 0.5 }}
+                autoFocus
+                id="school"
+                label="School"
+                value={bufferSchool}
+                onChange={(e) => {
+                    setErrorSchool(e.target.value.length === 0)
+                    setBufferSchool(e.target.value)
+                }}
+                helperText={errorSchool ? "Invalid School" : ""}
+                fullWidth
+                variant="standard"
+                error={errorSchool}
             />
             <TextField
-            sx={{ marginTop: 0.5 }}
-            autoFocus
-            id="degree"
-            label="Degree"
-            value={bufferDegree}
-            onChange={(e) => setBufferDegree(e.target.value)}
-            fullWidth
-            variant="standard"
+                sx={{ marginTop: 0.5 }}
+                autoFocus
+                id="degree"
+                label="Degree"
+                value={bufferDegree}
+                onChange={(e) => {
+                    setErrorDegree(e.target.value.length === 0)
+                    setBufferDegree(e.target.value)
+                }}
+                error={errorDegree}
+                helperText={errorDegree ? "Invalid Degree" : ""}
+                fullWidth
+                variant="standard"
             />
             <TextField
-            sx={{ marginTop: 0.5 }}
-            autoFocus
-            id="start-date"
-            label="Start Date"
-            value={bufferStartDate}
-            onChange={(e) => setBufferStartDate(e.target.value)}
-            variant="standard"
+                sx={{ marginTop: "1em" }}
+                autoFocus
+                id="start-date"
+                type="date"
+                value={bufferStartDate}
+                helperText={errorEndDate ? "Start date cannot be after end date" : "Start Date"}
+                error={errorEndDate}
+                onChange={(e) => {
+                    const isEndDateValid = new Date(bufferEndDate).getTime() > new Date(e.target.value).getTime();
+                    setErrorEndDate(!isEndDateValid)
+                    setBufferStartDate(e.target.value)
+                }}
+                variant="standard"
             />
             <TextField
-            sx={{ marginTop: 0.5 }}
-            autoFocus
-            id="end-date"
-            label="End Date"
-            value={bufferEndDate}
-            onChange={(e) => setBufferEndDate(e.target.value)}
-            variant="standard"
+                sx={{ marginTop: "1em", marginLeft: "1em" }}
+                autoFocus
+                id="end-date"
+                type="date"
+                value={bufferEndDate}
+                error={errorEndDate}
+                helperText={errorEndDate ? "End date cannot be before start date" : "End Date"}
+                onChange={(e) => {
+                    const isEndDateValid = new Date(e.target.value).getTime() > new Date(bufferStartDate).getTime();
+                    setErrorEndDate(!isEndDateValid)
+                    setBufferEndDate(e.target.value)
+                }}
+                variant="standard"
             />
             <TextField
-            sx={{ marginTop: 0.5 }}
-            id="Description"
-            label="Description"
-            value={bufferDescription}
-            onChange={(e) => setBufferDescription(e.target.value)}
-            fullWidth
-            multiline
-            maxRows={2}
-            variant="standard"
+                sx={{ marginTop: 0.5 }}
+                id="Description"
+                label="Description"
+                value={bufferDescription}
+                onChange={(e) => {
+                    setErrorDescription(e.target.value.length === 0)
+                    setBufferDescription(e.target.value)
+                }}
+                helperText={errorDescription ? "Invalid Description" : ""}
+                error={errorDescription}
+                fullWidth
+                multiline
+                maxRows={2}
+                variant="standard"
             />
         </DialogContent>
         <Box sx={{right:0, justifyContent:"space-between"}}>
             <DialogActions onClick={handleAddExperienceDialog}>
-                <Button variant="contained">Add</Button>
+                <Button variant="contained" disabled={errorDegree || errorDescription || errorEndDate || errorSchool}>Add</Button>
             </DialogActions>
         </Box>
         </Box>
@@ -187,53 +231,80 @@ export const ProfilePageEducation = () => {
                 <Divider variant="middle"/>
                 <DialogContent>
                     <TextField
-                    sx={{ marginTop: 0.5 }}
-                    autoFocus
-                    id="school"
-                    label="School"
-                    value={bufferSchool}
-                    onChange={(e) => setBufferSchool(e.target.value)}
-                    fullWidth
-                    variant="standard"
+                        sx={{ marginTop: 0.5 }}
+                        autoFocus
+                        id="school"
+                        label="School"
+                        value={bufferSchool}
+                        onChange={(e) => {
+                            setErrorEditSchool(e.target.value.length === 0)
+                            setBufferSchool(e.target.value)
+                        }}
+                        helperText={errorEditSchool ? "Invalid School" : ""}
+                        fullWidth
+                        variant="standard"
+                        error={errorEditSchool}
                     />
                     <TextField
-                    sx={{ marginTop: 0.5 }}
-                    autoFocus
-                    id="degree"
-                    label="Degree"
-                    value={bufferDegree}
-                    onChange={(e) => setBufferDegree(e.target.value)}
-                    fullWidth
-                    variant="standard"
+                        sx={{ marginTop: 0.5 }}
+                        autoFocus
+                        id="degree"
+                        label="Degree"
+                        value={bufferDegree}
+                        onChange={(e) => {
+                            setErrorEditDegree(e.target.value.length === 0)
+                            setBufferDegree(e.target.value)
+                        }}
+                        error={errorEditDegree}
+                        helperText={errorEditDegree ? "Invalid Degree" : ""}
+                        fullWidth
+                        variant="standard"
                     />
                     <TextField
-                    sx={{ marginTop: 0.5 }}
-                    autoFocus
-                    id="start-date"
-                    label="Start Date"
-                    value={bufferStartDate}
-                    onChange={(e) => setBufferStartDate(e.target.value)}
-                    variant="standard"
+                        sx={{ marginTop: "1em" }}
+                        autoFocus
+                        id="start-date"
+                        type="date"
+                        value={bufferStartDate}
+                        helperText={errorEditEndDate ? "Start date cannot be after end date" : "Start Date"}
+                        error={errorEditEndDate}
+                        onChange={(e) => {
+                            const isEndDateValid = new Date(bufferEndDate).getTime() > new Date(e.target.value).getTime();
+                            setErrorEditEndDate(!isEndDateValid)
+                            setBufferStartDate(e.target.value)
+                        }}
+                        variant="standard"
                     />
                     <TextField
-                    sx={{ marginTop: 0.5 }}
-                    autoFocus
-                    id="end-date"
-                    label="End Date"
-                    value={bufferEndDate}
-                    onChange={(e) => setBufferEndDate(e.target.value)}
-                    variant="standard"
+                        sx={{ marginTop: "1em", marginLeft: "1em" }}
+                        autoFocus
+                        id="end-date"
+                        type="date"
+                        value={bufferEndDate}
+                        error={errorEditEndDate}
+                        helperText={errorEditEndDate ? "End date cannot be before start date" : "End Date"}
+                        onChange={(e) => {
+                            const isEndDateValid = new Date(e.target.value).getTime() > new Date(bufferStartDate).getTime();
+                            setErrorEditEndDate(!isEndDateValid)
+                            setBufferEndDate(e.target.value)
+                        }}
+                        variant="standard"
                     />
                     <TextField
-                    sx={{ marginTop: 0.5 }}
-                    id="Description"
-                    label="Description"
-                    value={bufferDescription}
-                    onChange={(e) => setBufferDescription(e.target.value)}
-                    fullWidth
-                    multiline
-                    maxRows={2}
-                    variant="standard"
+                        sx={{ marginTop: 0.5 }}
+                        id="Description"
+                        label="Description"
+                        value={bufferDescription}
+                        onChange={(e) => {
+                            setErrorEditDescription(e.target.value.length === 0)
+                            setBufferDescription(e.target.value)
+                        }}
+                        helperText={errorEditDescription ? "Invalid Description" : ""}
+                        error={errorEditDescription}
+                        fullWidth
+                        multiline
+                        maxRows={2}
+                        variant="standard"
                     />
                 </DialogContent>
                 <Box sx={{display:"flex", justifyContent:"space-between"}}>
@@ -241,7 +312,7 @@ export const ProfilePageEducation = () => {
                         <Button variant="outlined" onClick={handleDeleteExperienceDialog}>Delete</Button>
                     </DialogActions>
                     <DialogActions onClick={handleSaveExperienceDialog}>
-                        <Button variant="contained">Save</Button>
+                        <Button variant="contained" disabled={errorEditDegree || errorEditDescription || errorEditEndDate || errorEditSchool}>Save</Button>
                     </DialogActions>
                 </Box>
                 </Box>

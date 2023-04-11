@@ -8,9 +8,9 @@
   }
 
 .navbar-left-header{
-display: flex;
-justify-content: space-between;
-align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .navbar-right-header{
@@ -26,12 +26,20 @@ align-items: center;
 }
 
 .navbar-logo{
-height: 50px;
-margin-bottom: -0.2em;
+    height: 50px;
+    margin-bottom: -0.2em;
 }
 
 .navbar-search-bar {
-padding-left: 0.5em;
+    padding-left: 0.5em;
+}
+
+.navbar-search-bar input {
+    font-family: 'Quicksand';
+}
+
+.navbar-search-bar label {
+    font-family: 'Quicksand';
 }
 
 .navbar-picture {
@@ -102,3 +110,7 @@ padding-left: 0.5em;
     border-radius: 50%;
   }
   
+.navbar-buttons button {
+    font-family: 'Quicksand';
+    font-weight: 400;
+}

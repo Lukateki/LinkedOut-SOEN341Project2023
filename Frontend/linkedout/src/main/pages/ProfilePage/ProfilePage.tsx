@@ -161,6 +161,15 @@ export const ProfilePage = () => {
     )
   };
 
+  const handleOfficesChange = (event: SelectChangeEvent<typeof offices>) => {
+    const {
+      target: { value },
+    } = event;
+    setBufferOffices(
+      typeof value === 'string' ? value.split(',') : value,
+    )
+  };
+
   const getApplicant = (data) => {
     setFirstName(data.first_name);
     setLastName(data.last_name);
@@ -209,7 +218,7 @@ export const ProfilePage = () => {
       "established_date" : "2023",
       "awards" : ["Best Company in RAM usage",
                   "Rated #1 in AI until this year"],
-      "offices" : ["Mountain View, CA", "New York, NY", "London, UK"],
+      "offices" : ["Mountain View, CA", "New York, NY", "London, UK", "Tokyo, Japan", "Beijing, China", "Sydney, Australia", "Bangalore, India", ],
       "about_us" : "We are a company that is dedicated to making the world a better place.",
     }
     // setCompanyName(recruiter["company_name"]);
@@ -223,7 +232,7 @@ export const ProfilePage = () => {
     const information = 
           <Box className="profile-jobs-text-details">
             <Typography variant="h6">{item["title"]}</Typography>
-            <Typography variant="subtitle1">{item["company"]}</Typography>
+            <Typography variant="subtitle1">{isCandidate ? item["company"] : companyName}</Typography>
             <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{isCandidate ? item["start_date"].split("-")[0] + "-" + item["end_date"].split("-")[0] : item["posting_date"]}</Typography>
             <Typography variant="body2">{item["description"]}</Typography>
           </Box>
@@ -290,7 +299,7 @@ export const ProfilePage = () => {
           console.log(s.data)
 
           getRecruiter()
-          getJobPostings()
+          getJobPostings(s.data)
         }
       })
     }
@@ -503,7 +512,7 @@ export const ProfilePage = () => {
               <Dialog open={openSkillsDialog} onClose={handleCloseSkillsDialog}>
                 <Box>
                   <Box sx={{ display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-                    <DialogTitle>Edit Skills</DialogTitle>
+                    <DialogTitle>{isCandidate ? "Edit Skills" : "Edit Offices"}</DialogTitle>
                     <IconButton aria-label="close skills" onClick={handleCloseSkillsDialog}>
                       <CloseIcon/>
                     </IconButton>
@@ -543,18 +552,31 @@ export const ProfilePage = () => {
                   <DialogContent>
                     <Select 
                       sx={{ m: 1 }}
-                      value={bufferPronoun}
+                      value={bufferOffices}
+                      input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                       id="pronoun-select"
-                      onChange={(e) => setBufferPronoun(e.target.value)}
-                      label="Pronouns"
+                      onChange={handleOfficesChange}
+                      label="Offices"
                       size="small"
+                      renderValue={(selected) => (
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                          {selected.map((value) => (
+                            <Chip key={value} label={value} />
+                          ))}
+                        </Box>
+                      )}
                     >
                       <MenuItem value="None">
-                        <em>None</em>
                       </MenuItem>
-                      <MenuItem value={"He/Him"}>He/Him</MenuItem>
-                      <MenuItem value={"She/Her"}>She/Her</MenuItem>
-                      <MenuItem value={"They/Them"}>They/Them</MenuItem>
+                      {
+                      offices.map((office) => (
+                        <MenuItem
+                          key={office}
+                          value={office}
+                        >
+                          {office}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </DialogContent>}
                   <DialogActions>

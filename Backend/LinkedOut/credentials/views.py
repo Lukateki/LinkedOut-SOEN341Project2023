@@ -16,7 +16,7 @@ from LinkedOut.JobListings.models import Job
 from LinkedOut.credentials.models import Applicant, Education, Experience, Recruiter
 from LinkedOut.JobListings.models import Application, Job
 from .serializers import ApplicantSerializer, EducationSerializer, ExperienceSerializer, RecruiterSerializer, UserSerializer, GroupSerializer
-from LinkedOut.JobListings.serializers import ApplicationSerializer
+from LinkedOut.JobListings.serializers import ApplicationSerializer, JobSerializer
 from email.message import EmailMessage
 import ssl
 import smtplib
@@ -130,6 +130,17 @@ class RecruiterViewSet(viewsets.ModelViewSet):
     serializer_class = RecruiterSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
+    @action(detail=True)
+    def get_jobs(self, request, *args, **kwargs):
+        target_recruiter_id = request.query_params['recruiter_id']
+        job_id = Job.objects.filter(recruiter_id=target_recruiter_id).values_list('id', flat=True)
+        jobs = Job.objects.filter(id__in=job_id).order_by('-posting_date')
+        
+        jsonJobs = []
+        for job in jobs:
+            jsonJobs.append(JobSerializer(job).data)
+        return Response(data=jsonJobs, status=200)
+
 class EducationViewSet(viewsets.ModelViewSet):
     queryset = Education.objects.all()
     serializer_class = EducationSerializer
@@ -149,11 +160,29 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
     def get_applicants(self, request, *args, **kwargs):
         target_job_id = request.query_params['job_id']
         applicants_id = Application.objects.filter(job_id=target_job_id).values_list('applicant_id', flat=True)
+        applicants_dates = Application.objects.filter(job_id=target_job_id).values_list('application_date', flat=True)
+        applicants_accepted = Application.objects.filter(job_id=target_job_id).values_list('application_accepted', flat=True)
+        applicants_application_ids = Application.objects.filter(job_id=target_job_id).values_list('application_id', flat=True)
         applicants = Applicant.objects.filter(id__in=applicants_id)
         jsonApplicants = []
+        i = 0;
         for applicant in applicants:
-            jsonApplicants.append(applicant.as_dict())
+            applicantDict = applicant.as_dict();
+            applicantDict['application_date'] = applicants_dates[i]
+            applicantDict['application_accepted'] = applicants_accepted[i]
+            applicantDict['application_id'] = applicants_application_ids[i]
+            jsonApplicants.append(applicantDict)
+            i += 1
         return Response(data=jsonApplicants, status=200)
+    
+    @action(detail=True)
+    def has_applied(self, request, *args, **kwargs):
+        target_job_id = request.query_params['job_id'];
+        applicant_id = request.query_params['applicant_id'];
+        application = Application.objects.filter(job_id=target_job_id, applicant_id=applicant_id).first();
+        if application == None:
+            return Response(data={ "hasApplied": False }, status=200);
+        return Response(data={ "hasApplied": True }, status=200);
 
 class SendEmailView(APIView):
 

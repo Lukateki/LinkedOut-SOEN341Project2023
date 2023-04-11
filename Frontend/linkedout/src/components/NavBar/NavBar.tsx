@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Box, Button, CardMedia, TextField } from '@mui/material';
 import { isUserLoggedIn } from "../../main/pages/LoginPage/types";
 import ToggleDark from '../../components/toggleDark';
@@ -9,10 +9,12 @@ import { ThemeContext, themes } from '../../contexts/ThemeContext';
 import "./NavBar.css"
 import Cookies from "universal-cookie";
 
-export const NavBar : React.FC  = () => {
+import "./NavBar.css"
 
+export const NavBar : React.FC  = () => {
     const navigate = useNavigate();
     const [darkMode, setDarkMode] = React.useState(true);
+    const location = useLocation();
 
     const handleLoginClick = () => {
         navigate('/login');
@@ -21,17 +23,16 @@ export const NavBar : React.FC  = () => {
       navigate('/register');
     };
 
-    const handleProfileClick = () => {
-        navigate('/profile');
-    };
-
     const handleLogoutClick = () => {
       const cookies = new Cookies();
       cookies.remove('auth-token');
-      
-      navigate('/');
+      if (location.pathname === "/" ) {
+        window.location.reload();
+      } else {
+        navigate('/');
+      }
     };
-    
+
     return(
       <div style={{ backgroundColor: "white"}}>
         <div className="navbar-header">
@@ -58,19 +59,20 @@ export const NavBar : React.FC  = () => {
                   
               {isUserLoggedIn() ? (
               <>
-              <Box>
-                <a id="profile" href="http://localhost:3000/profile">
-                <CardMedia 
-                  component="img"
-                  height="40px"
-                  image='https://picsum.photos/200/200'
-                  alt='profile picture'
-                  className="navbar-picture"
-                />
-                </a>
-              </Box>  
-                <Button onClick={handleProfileClick}>Profile</Button>
-                <Button onClick={handleLogoutClick}>Logout</Button>
+                <Box>
+                  <a id="profile" href="http://localhost:3000/profile">
+                  <CardMedia 
+                    component="img"
+                    height="40px"
+                    image='https://picsum.photos/200/200'
+                    alt='profile picture'
+                    className="navbar-picture"
+                  />
+                  </a>
+                </Box>
+                <div className="navbar-buttons"> 
+                  <Button onClick={handleLogoutClick}>Logout</Button>
+                </div>
               </>
               ):(
                 <>

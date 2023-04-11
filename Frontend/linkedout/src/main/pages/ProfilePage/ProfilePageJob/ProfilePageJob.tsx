@@ -1,5 +1,5 @@
 import { Box, Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, Divider, IconButton, TextField, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../../../../components/NavBar/NavBar";
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
@@ -9,6 +9,7 @@ import ArrowbackIcon from '@mui/icons-material/ArrowBack';
 import { isUserLoggedIn } from "../../LoginPage/types";
 import Cookies from "universal-cookie";
 import { auth_token_cookie_name, create_experience, delete_experience, retrieve_session_user, update_experience } from "../../../../axiosconfig";
+import { getCurrentDate } from "../../AddJobListing/types";
 
 export const ProfilePageJob = () => {
     const { setId, setUserId, userId, getJobPostings, jobPostings, setJobPostings, getExperience, experience, navigateBackFromExperience, isCandidate, setIsCandidate } = useApplicantProfile();
@@ -129,20 +130,37 @@ export const ProfilePageJob = () => {
         window.location.reload();
     };
 
+    const [errorTitle, setErrorTitle] = useState(true);
+    const [errorCompany, setErrorCompany] = useState(true);
+    const [errorDescription, setErrorDescription] = useState(true);
+    const [errorExpiry, setErrorExpiry] = useState(false);
+
     const handleOpenAddExperienceDialog = () => {
         setBufferTitle("");
         setBufferCompany("");
-        setBufferStartDate("");
-        setBufferEndDate("");
+        setBufferStartDate(getCurrentDate());
+        setBufferEndDate(getCurrentDate());
         setBufferDescription("");
         setOpenAddDialog(true);
+        setErrorTitle(true);
+        setErrorCompany(true);
+        setErrorDescription(true);
+        setErrorExpiry(false);
     };
-    
+
+    const dialogProps = !isCandidate ? {
+        error: errorExpiry,
+        helperText: errorExpiry ? "Expiry Date cannot be before posting date" : ""
+    } : {
+        error: errorExpiry,
+        helperText: !errorExpiry ? "End Date" : "End Date cannot be before posting date"
+    }
+
     const addExperienceDialog = 
     <Dialog open={openAddDialog} onClose={() => setOpenAddDialog(false)}>
         <Box>
         <Box sx={{ display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-            <DialogTitle>Add Experience</DialogTitle>
+            <DialogTitle>{isCandidate ? "Add Experience" : "Add Job Posting"}</DialogTitle>
             <IconButton aria-label="close experience" onClick={() => setOpenAddDialog(false)}>
                 <CloseIcon/>
             </IconButton>
@@ -150,67 +168,106 @@ export const ProfilePageJob = () => {
         <Divider variant="middle"/>
         <DialogContent>
             <TextField
-            sx={{ marginTop: 0.5 }}
-            autoFocus
-            id="title"
-            label="Title"
-            value={bufferTitle}
-            onChange={(e) => setBufferTitle(e.target.value)}
-            fullWidth
-            variant="standard"
+                sx={{ marginTop: 0.5 }}
+                autoFocus
+                id="title"
+                label="Title"
+                value={bufferTitle}
+                onChange={(e) => {
+                    setErrorTitle(e.target.value.toString().length === 0);
+                    setBufferTitle(e.target.value)
+                }}
+                fullWidth
+                variant="standard"
+                helperText={errorTitle ? "Invalid Title" : ""}
+                error={errorTitle}
             />
             <TextField
-            sx={{ marginTop: 0.5 }}
-            autoFocus
-            id="company"
-            label="Company"
-            value={bufferCompany}
-            onChange={(e) => setBufferCompany(e.target.value)}
-            fullWidth
-            variant="standard"
+                sx={{ marginTop: "1em" }}
+                autoFocus
+                id="company"
+                label="Company"
+                value={bufferCompany}
+                onChange={(e) => {
+                    setErrorCompany(e.target.value.toString().length === 0);
+                    setBufferCompany(e.target.value)
+                }}
+                fullWidth
+                variant="standard"
+                helperText={errorCompany ? "Invalid Company" : ""}
+                error={errorCompany}
             />
             <TextField
-            sx={{ marginTop: 0.5 }}
-            autoFocus
-            id="start-date"
-            label="Start Date"
-            value={bufferStartDate}
-            onChange={(e) => setBufferStartDate(e.target.value)}
-            variant="standard"
+                disabled={!isCandidate ? true : false}
+                helperText={!isCandidate ? "Posting Date" : "Start Date"}
+                sx={{ marginTop: 2.5 }}
+                autoFocus
+                id="start-date"
+                type="date"
+                value={bufferStartDate}
+                onChange={(e) => {
+                    if (isCandidate) {
+                        const isExpiryDateValid = new Date(bufferEndDate).getTime() > new Date(e.target.value).getTime();
+                        setErrorExpiry(!isExpiryDateValid)
+                    }
+                    setBufferStartDate(e.target.value)
+                }}
+                variant="standard"
             />
             <TextField
-            sx={{ marginTop: 0.5 }}
-            autoFocus
-            id="end-date"
-            label="End Date"
-            value={bufferEndDate}
-            onChange={(e) => setBufferEndDate(e.target.value)}
-            variant="standard"
+                sx={{ marginTop: 2.5, marginLeft: 1 }}
+                autoFocus
+                id="end-date"
+                type="date"
+                value={bufferEndDate}
+                onChange={(e) => {
+                    const isExpiryDateValid = new Date(e.target.value).getTime() > new Date(bufferStartDate).getTime();
+                    setErrorExpiry(!isExpiryDateValid)
+                    setBufferEndDate(e.target.value)
+                }}
+                variant="standard"
+                {...dialogProps}
             />
             <TextField
-            sx={{ marginTop: 0.5 }}
-            id="Description"
-            label="Description"
-            value={bufferDescription}
-            onChange={(e) => setBufferDescription(e.target.value)}
-            fullWidth
-            multiline
-            maxRows={2}
-            variant="standard"
+                sx={{ marginTop: "1em" }}
+                id="Description"
+                label="Description"
+                value={bufferDescription}
+                onChange={(e) => {
+                    setErrorDescription(e.target.value.toString().length === 0);
+                    setBufferDescription(e.target.value)
+                }}
+                fullWidth
+                multiline
+                maxRows={2}
+                variant="standard"
+                helperText={errorDescription ? "Invalid Description" : ""}
+                error={errorDescription}
             />
         </DialogContent>
         <Box sx={{right:0, justifyContent:"space-between"}}>
             <DialogActions onClick={handleAddExperienceDialog}>
-                <Button variant="contained">Add</Button>
+                <Button variant="contained" disabled={errorExpiry || errorCompany || errorTitle || errorDescription}>Add</Button>
             </DialogActions>
         </Box>
         </Box>
     </Dialog>
 
+    const [postingEditTitleError, setPostingEditTitleError] = useState(false);
+    const [postingEditDescriptionError, setPostingEditDescriptionError] = useState(false);
     const experienceBlock = (isCandidate ? experience : jobPostings).map((item, i, row) => {
         const experienceBox = 
         <><Box className="profile-jobs-text-details" >
-            <IconButton aria-label="edit experience" component="div" onClick={ e => handleOpenExperienceDialog(i)} sx={{float:"right"}}>
+            <IconButton 
+                aria-label="edit experience" 
+                component="div" 
+                onClick={ e => {
+                    handleOpenExperienceDialog(i)
+                    setPostingEditDescriptionError(false);
+                    setPostingEditTitleError(false);
+                }} 
+                sx={{float:"right"}}
+            >
                 <EditIcon />
             </IconButton>
             <Dialog open={openDialog} onClose={handleCloseExperienceDialog}>
@@ -224,53 +281,68 @@ export const ProfilePageJob = () => {
                 <Divider variant="middle"/>
                 <DialogContent>
                     <TextField
-                    sx={{ marginTop: 0.5 }}
-                    autoFocus
-                    id="title"
-                    label="Title"
-                    value={bufferTitle}
-                    onChange={(e) => setBufferTitle(e.target.value)}
-                    fullWidth
-                    variant="standard"
+                        sx={{ marginTop: 0 }}
+                        autoFocus
+                        id="title"
+                        label="Title"
+                        value={bufferTitle}
+                        onChange={(e) => {
+                            setPostingEditTitleError(e.target.value.length === 0)
+                            setBufferTitle(e.target.value)
+                        }}
+                        helperText={postingEditTitleError ? "Invalid Title" : ""}
+                        error={postingEditTitleError}
+                        fullWidth
+                        variant="standard"
                     />
+                    {isCandidate ? 
+                    <>
+                        <TextField
+                            sx={{ marginTop: 0.5 }}
+                            autoFocus
+                            id="company"
+                            label="Company"
+                            value={bufferCompany}
+                            onChange={(e) => setBufferCompany(e.target.value)}
+                            fullWidth
+                            variant="standard"
+                        />
+                        <TextField
+                            sx={{ marginTop: 0.5 }}
+                            autoFocus
+                            type="date"
+                            id="start-date"
+                            label="Start Date"
+                            value={bufferStartDate}
+                            onChange={(e) => setBufferStartDate(e.target.value)}
+                            variant="standard"
+                        />
+                        <TextField
+                            sx={{ marginTop: 0.5 }}
+                            autoFocus
+                            id="end-date"
+                            label="End Date"
+                            value={bufferEndDate}
+                            onChange={(e) => setBufferEndDate(e.target.value)}
+                            variant="standard"
+                        />
+                    </>
+                    : null}
                     <TextField
-                    sx={{ marginTop: 0.5 }}
-                    autoFocus
-                    id="company"
-                    label="Company"
-                    value={bufferCompany}
-                    onChange={(e) => setBufferCompany(e.target.value)}
-                    fullWidth
-                    variant="standard"
-                    />
-                    <TextField
-                    sx={{ marginTop: 0.5 }}
-                    autoFocus
-                    id="start-date"
-                    label="Start Date"
-                    value={bufferStartDate}
-                    onChange={(e) => setBufferStartDate(e.target.value)}
-                    variant="standard"
-                    />
-                    <TextField
-                    sx={{ marginTop: 0.5 }}
-                    autoFocus
-                    id="end-date"
-                    label="End Date"
-                    value={bufferEndDate}
-                    onChange={(e) => setBufferEndDate(e.target.value)}
-                    variant="standard"
-                    />
-                    <TextField
-                    sx={{ marginTop: 0.5 }}
-                    id="Description"
-                    label="Description"
-                    value={bufferDescription}
-                    onChange={(e) => setBufferDescription(e.target.value)}
-                    fullWidth
-                    multiline
-                    maxRows={2}
-                    variant="standard"
+                        sx={{ marginTop: "2em" }}
+                        id="Description"
+                        label="Description"
+                        value={bufferDescription}
+                        onChange={(e) => {
+                            setPostingEditDescriptionError(e.target.value.length === 0);
+                            setBufferDescription(e.target.value)
+                        }}
+                        helperText={postingEditDescriptionError ? "Invalid Description" : ""}
+                        error={postingEditDescriptionError}
+                        fullWidth
+                        multiline
+                        maxRows={2}
+                        variant="standard"
                     />
                 </DialogContent>
                 <Box sx={{display:"flex", justifyContent:"space-between"}}>
@@ -285,7 +357,7 @@ export const ProfilePageJob = () => {
             </Dialog>
             <Typography variant="h6">{item["title"]}</Typography>
             <Typography variant="subtitle1">{item["company"]}</Typography>
-            <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{item["start_date"].split("-")[0]} - {item["end_date"].split("-")[0]}</Typography>
+            <Typography variant="subtitle2" color="rgba(39, 48, 61, 0.75)">{isCandidate ?(item["start_date"].split("-")[0] + "-" + item["end_date"].split("-")[0] ) : item["posting_date"]}</Typography>
             <Typography variant="body2">{item["description"]}</Typography>
         </Box></>;
         if(i + 1 === row.length) {
@@ -321,7 +393,7 @@ export const ProfilePageJob = () => {
               }
               else{
                 setUserId(s.data.recruiter_id);
-                getJobPostings()
+                getJobPostings(s.data)
               }
             })
           }

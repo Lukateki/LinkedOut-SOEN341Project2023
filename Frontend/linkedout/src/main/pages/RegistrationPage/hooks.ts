@@ -16,27 +16,36 @@ export const useRegisterStudent = () => {
     const [errorS2, setErrorS2] = useState(false);
     const [errorS3, setErrorS3] = useState(false);
     const [errorS4, setErrorS4] = useState(false);
-    const [errorS5, setErrorS5] = useState(false);
-
 
     const navigate = useNavigate();
-
+    
+    const isValidName = (name: string) => {
+        const nameRegex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ]+$/;
+        return nameRegex.test(name);
+    }
+    
+    const isValidEmail = (email: string) => {
+        const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return emailRegex.test(email);
+    }
+    
     const handleFirstNameStudentChange = (inputFirstName: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setErrorS1(false);
+        setErrorS1(!isValidName(inputFirstName.target.value));
         setFirstNameS(inputFirstName.target.value);
     }
+
     const handleLastNameStudentChange = (inputLastName: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setErrorS2(false);
+        setErrorS2(!isValidName(inputLastName.target.value));
         setLastNameS(inputLastName.target.value);
     }
     
     const handleEmailStudentChange = (inputEmail: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setErrorS3(false);
+        setErrorS3(!isValidEmail(inputEmail.target.value));
         setEmailS(inputEmail.target.value);
     }
 
     const handlePasswordStudentChange = (inputPassword: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setErrorS5(false);
+        setErrorS4(inputPassword.target.value.length < 8);
         setPasswordS(inputPassword.target.value);
     }
     
@@ -53,20 +62,15 @@ export const useRegisterStudent = () => {
         }
 
         if(passwordStudent === ''){
-            setErrorS5(true)
+            setErrorS4(true)
         }
 
         //they must all be false
-        if (!errorS1 && !errorS2 && !errorS3 && !errorS4 && !errorS5 ){
+        if (!errorS1 && !errorS2 && !errorS3 && !errorS4){
             var applicantID = -1;
             register_applicant(emailStudent).then(result => {
                 const registeredApplicant = result.data;
                 var tempApplicantID = registeredApplicant.id;
-                setErrorS1(false);
-                setErrorS2(false);
-                setErrorS3(false);
-                setErrorS4(false);
-                setErrorS5(false);
                 applicantID=tempApplicantID;
                 register_user(firstNameStudent, lastNameStudent, emailStudent, passwordStudent).then(success => {
                     const userID = success.data.user_id;
@@ -83,7 +87,7 @@ export const useRegisterStudent = () => {
         }
     });
 
-    return { handleRegisterStudentBtnClick, firstNameStudent , lastNameStudent, emailStudent,passwordStudent, handleFirstNameStudentChange, handleLastNameStudentChange, handleEmailStudentChange,handlePasswordStudentChange, errorS1, errorS2, errorS3, errorS4, errorS5};
+    return { handleRegisterStudentBtnClick, firstNameStudent , lastNameStudent, emailStudent,passwordStudent, handleFirstNameStudentChange, handleLastNameStudentChange, handleEmailStudentChange,handlePasswordStudentChange, errorS1, errorS2, errorS3, errorS4 };
 }
 
 
@@ -106,73 +110,55 @@ export const useRegisterEmployer = () => {
     const [errorE5, setErrorE5] = useState(false);
     const [errorE6, setErrorE6] = useState(false);
 
-
-
-
     const navigate = useNavigate();
 
+    const isValidName = (name: string) => {
+        const nameRegex = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ]+$/;
+        return nameRegex.test(name);
+    }
+    
+    const isValidEmail = (email: string) => {
+        const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return emailRegex.test(email);
+    }
+
     const handleFirstNameEmployerChange = (inputFirstName: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setErrorE1(false);
+        setErrorE1(!isValidName(inputFirstName.target.value));
         setFirstNameE(inputFirstName.target.value);
     }
+
     const handleLastNameEmployerChange = (inputLastName: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setErrorE2(false);
+        setErrorE2(!isValidName(inputLastName.target.value));
         setLastNameE(inputLastName.target.value);
     }
     
     const handleEmailEmployerChange = (inputEmail: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setErrorE3(false);
+        setErrorE3(!isValidEmail(inputEmail.target.value));
         setEmailE(inputEmail.target.value);
     }
 
     const handlePasswordEmployerChange = (inputPassword: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setErrorE4(false);
+        setErrorE4(inputPassword.target.value.length < 8);
         setPasswordE(inputPassword.target.value);
     }
 
     const handleCompanyChange = (inputCompany: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setErrorE5(false);
+        setErrorE5(inputCompany.target.value.length === 0);
         setCompany(inputCompany.target.value);
     }
     const handleHeadquarterChange = (inputHeadquarter: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setErrorE6(false);
+        setErrorE6(inputHeadquarter.target.value.length === 0);
         setHeadquarter(inputHeadquarter.target.value);
     }
 
     const handleRegisterEmployerBtnClick =() => {
-        if(firstNameEmployer === ''){
-            setErrorE1(true)
-        }
-        if(lastNameEmployer ===''){
-            setErrorE2(true)
-        }
-        if(emailEmployer === ''|| !emailEmployer.includes("@")){
-            setErrorE3(true)
-        }
-        if(passwordEmployer === ''){
-            setErrorE4(true)
-        }
-        if (company === ''){
-            setErrorE5(true)
-        }
-        if (headquarter === ''){
-            setErrorE6(true);
-        }
-
         //they must all be false
         if (!errorE1 && !errorE2 && !errorE3 && !errorE4 && !errorE5 && !errorE6){
             var recruiterID = -1;
             register_recruiter(company, headquarter, emailEmployer).then(result => {
                 const registeredRecruiter = result.data;
                 var tempRecruiterID = registeredRecruiter.id;
-                setErrorE1(false);
-                setErrorE2(false);
-                setErrorE3(false);
-                setErrorE4(false);
-                setErrorE5(false);
-                setErrorE6(false);
-
-                recruiterID=tempRecruiterID;
+                recruiterID = tempRecruiterID;
                 register_user(firstNameEmployer, lastNameEmployer, emailEmployer,passwordEmployer).then(success => {
                     const userID = success.data.user_id;
                     update_recruiter(recruiterID, userID)
