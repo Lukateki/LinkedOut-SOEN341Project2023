@@ -10,8 +10,9 @@ const LoginPage = () => {
 
     return (
         <div className='login-page-wrapper'>
-            <h2 className='linkedout-banner'>LinkedOut</h2>
+            {/* <h2 className='linkedout-banner'>LinkedOut</h2> */}
             <div className='login-container'>
+                <h2 className='linkedout-banner'>LinkedOut</h2>
                 <TextField
                     className='username-field'
                     label="Email"
