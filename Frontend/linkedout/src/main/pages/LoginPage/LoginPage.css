@@ -39,17 +39,17 @@
 }
 
 .login-container input {
-    font-family: 'Quicksand';
+    font-family: 'Quicksand', sans-serif;
 }
 
 .login-container label {
-    font-family: 'Quicksand';
+    font-family: 'Quicksand', sans-serif;
 }
 
 .login-container button {
-    font-family: 'Quicksand';
+    font-family: 'Quicksand', sans-serif;
 }
 
 .login-container p {
-    font-family: 'Quicksand';
+    font-family: 'Quicksand', sans-serif;
 }

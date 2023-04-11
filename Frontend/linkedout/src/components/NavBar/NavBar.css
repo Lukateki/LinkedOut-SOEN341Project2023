@@ -35,11 +35,11 @@
 }
 
 .navbar-search-bar input {
-    font-family: 'Quicksand';
+    font-family: 'Quicksand', sans-serif;
 }
 
 .navbar-search-bar label {
-    font-family: 'Quicksand';
+    font-family: 'Quicksand', sans-serif;
 }
 
 .navbar-picture {
@@ -111,6 +111,6 @@
   }
   
 .navbar-buttons button {
-    font-family: 'Quicksand';
+    font-family: 'Quicksand', sans-serif;
     font-weight: 400;
 }
