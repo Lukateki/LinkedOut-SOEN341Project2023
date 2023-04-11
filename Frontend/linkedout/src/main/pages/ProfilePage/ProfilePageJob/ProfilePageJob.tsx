@@ -140,14 +140,6 @@ export const ProfilePageJob = () => {
         setErrorCompany(true);
         setErrorDescription(true);
         setErrorExpiry(false);
-        if (!isCandidate) {
-            console.log(jobPostings)
-            setBufferLocation("");
-            setBufferType("");
-            setBufferCompany(company);
-            setErrorCompany(false);
-            setErrorLocation(true);
-        }
     };
 
     const dialogProps = !isCandidate ? {
