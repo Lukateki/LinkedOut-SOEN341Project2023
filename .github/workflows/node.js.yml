@@ -41,7 +41,7 @@ jobs:
     
     - name: Run tests and coverage
       working-directory: Frontend/linkedout
-      run: npm coverage
+      run: npm test --coverage
 
     - name: Send Coverage Report
       working-directory: Frontend/linkedout/coverage
