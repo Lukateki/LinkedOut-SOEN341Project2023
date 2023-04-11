@@ -15,14 +15,14 @@ class JobViewSet(viewsets.ModelViewSet):
 
     @action(detail=True)
     def get_job_recruiter(self, request, *args, **kwargs):
-        target_jobID = request.query_params["job_id"]
-        job = Job.objects.filter(id=target_jobID).first()
-        responseData = None
+        target_job_id = request.query_params["job_id"]
+        job = Job.objects.filter(id=target_job_id).first()
+        response_data = None
         if job != None:
             recruiter = Recruiter.objects.filter(id=job.recruiter_id).first()
             serializer = RecruiterSerializer(recruiter)
-            responseData = serializer.data
-        return Response(data=responseData, status=200)
+            response_data = serializer.data
+        return Response(data=response_data, status=200)
 
     def get_queryset(self):
         search_text = self.request.query_params.get("search")
@@ -30,7 +30,6 @@ class JobViewSet(viewsets.ModelViewSet):
             keywords = search_text.split()
             #retrieving all entries containing the keywords
             entries = list()
-            used_ids = list()
             for keyword in keywords:
                 titles = list(Job.objects.filter(title__contains= keyword).values())
                 descriptions = list(Job.objects.filter(description__contains= keyword).values())
@@ -73,5 +72,5 @@ class JobViewSet(viewsets.ModelViewSet):
     @action(detail=True)
     def get_all_jobs(self, request, *args, **kwargs):
         jobs_queryset = Job.objects.filter(expiry_date__gte=datetime.date.today()).order_by("expiry_date")
-        jsonData = JobFetcherSerializer(jobs_queryset, many=True)
-        return Response(data=jsonData.data, status=200)
+        json_data = JobFetcherSerializer(jobs_queryset, many=True)
+        return Response(data=json_data.data, status=200)

@@ -48,24 +48,24 @@ class UserViewSet(viewsets.ModelViewSet):
         
     @action(detail=True)
     def retrieve_session_user(self, request, *args, **kwargs):
-        headerAuthToken = request.headers["authorization"];
-        if headerAuthToken != None:
-            responseData = None;
-            token = headerAuthToken[7:];
-            targetTokenObj = Token.objects.filter(key=token).first()
-            if targetTokenObj != None:
-                targetApplicant = Applicant.objects.filter(user_id=targetTokenObj.user.id).first();
-                targetRecruiter = Recruiter.objects.filter(user_id=targetTokenObj.user.id).first();
-                if targetApplicant != None:
-                    responseData = targetApplicant.as_dict();
-                    responseData["isApplicant"] = True;
-                    responseData["isRecruiter"] = False;
-                elif targetRecruiter != None:
-                    responseData = targetRecruiter.as_dict();
-                    responseData["isRecruiter"] = True;
-                    responseData["isApplicant"] = False;
-                    responseData["associated_jobs"] = Job.objects.filter(recruiter_id=responseData["recruiter_id"]).values("id");
-                return Response(data=responseData, status=200);
+        header_auth_token = request.headers["authorization"];
+        if header_auth_token != None:
+            response_data = None;
+            token = header_auth_token[7:];
+            target_token_obj = Token.objects.filter(key=token).first()
+            if target_token_obj != None:
+                target_applicant = Applicant.objects.filter(user_id=target_token_obj.user.id).first();
+                target_recruiter = Recruiter.objects.filter(user_id=target_token_obj.user.id).first();
+                if target_applicant != None:
+                    response_data = target_applicant.as_dict();
+                    response_data["isApplicant"] = True;
+                    response_data["isRecruiter"] = False;
+                elif target_recruiter != None:
+                    response_data = target_recruiter.as_dict();
+                    response_data["isRecruiter"] = True;
+                    response_data["isApplicant"] = False;
+                    response_data["associated_jobs"] = Job.objects.filter(recruiter_id=response_data["recruiter_id"]).values("id");
+                return Response(data=response_data, status=200);
         return Response(data={"status":"No Session User found"}, status=404)
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -74,13 +74,11 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    # permission_classes = [permissions.IsAuthenticated]
 
 # Create your views here.
 class ApplicantViewSet(viewsets.ModelViewSet):
     queryset = Applicant.objects.all()
     serializer_class = ApplicantSerializer
-    # permission_classes = [permissions.IsAuthenticated]
    
     @action(detail=True) # Applicant -> Experiences
     def get_experiences(self, request, *args, **kwargs):
@@ -88,10 +86,10 @@ class ApplicantViewSet(viewsets.ModelViewSet):
         experience_id = Experience.objects.filter(applicant_id=target_applicant_id).values_list('id', flat=True)
         experiences = Experience.objects.filter(id__in=experience_id).order_by('-end_date')
         
-        jsonExperiences = []
+        json_experiences = []
         for experience in experiences:
-            jsonExperiences.append(ExperienceSerializer(experience).data)
-        return Response(data=jsonExperiences, status=200)
+            json_experiences.append(ExperienceSerializer(experience).data)
+        return Response(data=json_experiences, status=200)
     
     @action(detail=True) # Applicant -> Educations
     def get_educations(self, request, *args, **kwargs):
@@ -99,15 +97,14 @@ class ApplicantViewSet(viewsets.ModelViewSet):
         education_id = Education.objects.filter(applicant_id=target_applicant_id).values_list('id', flat=True)
         educations = Education.objects.filter(id__in=education_id).order_by('-end_date')
         
-        jsonEducation = []
+        json_education = []
         for education in educations:
-            jsonEducation.append(EducationSerializer(education).data)
-        return Response(data=jsonEducation, status=200)
+            json_education.append(EducationSerializer(education).data)
+        return Response(data=json_education, status=200)
         
 class RecruiterViewSet(viewsets.ModelViewSet):
     queryset = Recruiter.objects.all()
     serializer_class = RecruiterSerializer
-    # permission_classes = [permissions.IsAuthenticated]
 
     @action(detail=True)
     def get_jobs(self, request, *args, **kwargs):
@@ -115,25 +112,22 @@ class RecruiterViewSet(viewsets.ModelViewSet):
         job_id = Job.objects.filter(recruiter_id=target_recruiter_id).values_list('id', flat=True)
         jobs = Job.objects.filter(id__in=job_id).order_by('-posting_date')
         
-        jsonJobs = []
+        json_jobs = []
         for job in jobs:
-            jsonJobs.append(JobSerializer(job).data)
-        return Response(data=jsonJobs, status=200)
+            json_jobs.append(JobSerializer(job).data)
+        return Response(data=json_jobs, status=200)
 
 class EducationViewSet(viewsets.ModelViewSet):
     queryset = Education.objects.all()
     serializer_class = EducationSerializer
-    # permission_classes = [permissions.IsAuthenticated]
 
 class ExperienceViewSet(viewsets.ModelViewSet):
     queryset = Experience.objects.all()
     serializer_class = ExperienceSerializer
-    # permission_classes = [permissions.IsAuthenticated]
 
 class ApplicationsViewSet(viewsets.ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
-    # permission_classes = [permissions.IsAuthenticated]
 
     @action(detail=True) # Job -> Applicant
     def get_applicants(self, request, *args, **kwargs):
@@ -143,16 +137,16 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
         applicants_accepted = Application.objects.filter(job_id=target_job_id).values_list('application_accepted', flat=True)
         applicants_application_ids = Application.objects.filter(job_id=target_job_id).values_list('application_id', flat=True)
         applicants = Applicant.objects.filter(id__in=applicants_id)
-        jsonApplicants = []
+        json_applicants = []
         i = 0;
         for applicant in applicants:
-            applicantDict = applicant.as_dict();
-            applicantDict['application_date'] = applicants_dates[i]
-            applicantDict['application_accepted'] = applicants_accepted[i]
-            applicantDict['application_id'] = applicants_application_ids[i]
-            jsonApplicants.append(applicantDict)
+            applicant_dict = applicant.as_dict();
+            applicant_dict['application_date'] = applicants_dates[i]
+            applicant_dict['application_accepted'] = applicants_accepted[i]
+            applicant_dict['application_id'] = applicants_application_ids[i]
+            json_applicants.append(applicant_dict)
             i += 1
-        return Response(data=jsonApplicants, status=200)
+        return Response(data=json_applicants, status=200)
     
     @action(detail=True)
     def has_applied(self, request, *args, **kwargs):

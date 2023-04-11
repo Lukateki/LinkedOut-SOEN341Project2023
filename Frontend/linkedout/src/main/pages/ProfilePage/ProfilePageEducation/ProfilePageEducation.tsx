@@ -59,13 +59,6 @@ export const ProfilePageEducation = () => {
 
     const handleSaveExperienceDialog = () => {
         setOpenDialog(false);
-        // let e = education;
-        // e[currentEducation]["school"] = bufferSchool;
-        // e[currentEducation]["degree"] = bufferDegree;
-        // e[currentEducation]["start_date"] = bufferStartDate;
-        // e[currentEducation]["end_date"] = bufferEndDate;
-        // e[currentEducation]["description"] = bufferDescription;
-        // setEducation(e);
         update_education(bufferId, {
             "school": bufferSchool,
             "degree": bufferDegree.split(" of ")[0],
@@ -80,13 +73,6 @@ export const ProfilePageEducation = () => {
     };
     const handleAddExperienceDialog = () => {
         setOpenAddDialog(false);
-        // setEducation([...education, {
-        //     "school": bufferSchool,
-        //     "degree": bufferDegree,
-        //     "start_date": bufferStartDate,
-        //     "end_date": bufferEndDate,
-        //     "description": bufferDescription
-        // }]);
         create_education({
             "school": bufferSchool,
             "degree": bufferDegree.split(" of ")[0],

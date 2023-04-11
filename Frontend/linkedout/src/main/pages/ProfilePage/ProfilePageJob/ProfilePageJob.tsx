@@ -60,7 +60,6 @@ export const ProfilePageJob = () => {
     const handleDeleteExperienceDialog = () => {
         setOpenDialog(false);
         if(isCandidate){
-            // setExperience(experience.slice(0, currentExperience).concat(experience.slice(currentExperience + 1, experience.length)));
             delete_experience(bufferId);
         }       
         else{
