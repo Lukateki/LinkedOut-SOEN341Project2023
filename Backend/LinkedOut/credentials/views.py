@@ -22,6 +22,7 @@ import ssl
 import smtplib
 import re
 import json
+import os
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -68,27 +69,6 @@ class UserViewSet(viewsets.ModelViewSet):
                 return Response(data=response_data, status=200);
         return Response(data={"status":"No Session User found"}, status=404)
 
-    @action(detail=True)
-    def retrieve_session_user(self, request, *args, **kwargs):
-        header_auth_token = request.headers["authorization"];
-        if header_auth_token != None:
-            response_data = None;
-            token = header_auth_token[7:];
-            target_token_obj = Token.objects.filter(key=token).first()
-            if target_token_obj != None:
-                target_applicant = Applicant.objects.filter(user_id=target_token_obj.user.id).first();
-                target_recruiter = Recruiter.objects.filter(user_id=target_token_obj.user.id).first();
-                if target_applicant != None:
-                    response_data = target_applicant.as_dict();
-                    response_data["isApplicant"] = True;
-                    response_data["isRecruiter"] = False;
-                elif target_recruiter != None:
-                    response_data = target_recruiter.as_dict();
-                    response_data["isRecruiter"] = True;
-                    response_data["isApplicant"] = False;
-                    response_data["associated_jobs"] = Job.objects.filter(recruiter_id=response_data["recruiter_id"]).values("id");
-                return Response(data=response_data, status=200);
-        return Response(data={"status":"No Session User found"}, status=404)
 class GroupViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
@@ -207,7 +187,7 @@ class SendEmailView(APIView):
         recipient = query_params['email']
         if re.fullmatch(email_regex, recipient):
             sender = 'linkedoutnotifications'
-            password = 'lkcpvpfjtfwvnuwp'
+            password = os.environ.get("LinkedOutPassword")
 
             email = EmailMessage()
             email['From'] = sender
