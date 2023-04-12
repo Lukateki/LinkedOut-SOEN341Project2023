@@ -119,7 +119,7 @@ export const ProfilePageJob = () => {
             upload_job(bufferTitle, userId, bufferCompany + ".com", bufferStartDate, bufferEndDate, bufferLocation, bufferType, bufferDescription).then().catch();
         }
 
-        //add deletion of applications here
+        //add deletion of applications here.
         window.location.reload();
     };
 
