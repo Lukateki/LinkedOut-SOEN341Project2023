@@ -79,9 +79,9 @@ class Experience(models.Model):
     applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE)
     company = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
-    location = models.CharField(max_length=100)
+    location = models.CharField(max_length=100, blank=True)
     description = models.TextField(default="", blank=True)
-    skills = models.TextField()
+    skills = models.TextField(default="", blank=True)
     start_date = models.DateField()
     end_date = models.DateField(null=True)
 
