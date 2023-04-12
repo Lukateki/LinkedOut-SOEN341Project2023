@@ -9,12 +9,6 @@ const LoginPage = () => {
     
     const { handleLoginBtnClick, handleRegistration, loginUsername, loginPassword, handleUsernameChange, handlePasswordChange, error } = useLogin();
 
-    const navigate = useNavigate();
-
-    const handleAdminClick = () => {
-        navigate("http://127.0.0.1:8000/admin/")
-    };
-
     return (
         <div className='login-page-wrapper'>
             {/* <h2 className='linkedout-banner'>LinkedOut</h2> */}
@@ -50,7 +44,7 @@ const LoginPage = () => {
                 >
                     Create account
                 </Button> 
-                <Button onClick={handleAdminClick}>
+                <Button onClick={() => window.location.href = 'http://127.0.0.1:8000/admin/'}>
                     Admin
                 </Button>
             </div>
