@@ -43,6 +43,9 @@ const LoginPage = () => {
                 >
                     Create account
                 </Button> 
+                <Button onClick={() => window.location.href = 'http://127.0.0.1:8000/admin/'}>
+                    Admin
+                </Button>
             </div>
         </div>
     )
