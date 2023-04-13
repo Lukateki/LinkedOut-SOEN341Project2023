@@ -17,12 +17,9 @@ import os
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-        
+
     def create(self, request, *args, **kwargs):
         username = request.data['email']
         password = request.data['password']
@@ -33,11 +30,11 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
-            user = User.objects.create_user(username=username, password=password, first_name=first_name, last_name=last_name, email=email)        
+            user = User.objects.create_user(username=username, password=password, first_name=first_name, last_name=last_name, email=email)  
             return Response(data={'user_id': user.id}, status=201)
         else:
             return Response(data=serializer.errors, status=400)
-        
+
     @action(detail=True)
     def retrieve_visiting_user(self, request, *args, **kwargs):
         user_id = request.query_params["user_id"]
@@ -59,39 +56,35 @@ class UserViewSet(viewsets.ModelViewSet):
     
     @action(detail=True)
     def retrieve_session_user(request, *args, **kwargs):
-        header_auth_token = request.headers["authorization"];
+        header_auth_token = request.headers["authorization"]
         if header_auth_token != None:
-            response_data = None;
-            token = header_auth_token[7:];
+            response_data = None
+            token = header_auth_token[7:]
             target_token_obj = Token.objects.filter(key=token).first()
             if target_token_obj != None:
-                target_applicant = Applicant.objects.filter(user_id=target_token_obj.user.id).first();
-                target_recruiter = Recruiter.objects.filter(user_id=target_token_obj.user.id).first();
+                target_applicant = Applicant.objects.filter(user_id=target_token_obj.user.id).first()
+                target_recruiter = Recruiter.objects.filter(user_id=target_token_obj.user.id).first()
                 if target_applicant != None:
-                    response_data = target_applicant.as_dict();
-                    response_data["isApplicant"] = True;
-                    response_data["isRecruiter"] = False;
+                    response_data = target_applicant.as_dict()
+                    response_data["isApplicant"] = True
+                    response_data["isRecruiter"] = False
                 elif target_recruiter != None:
-                    response_data = target_recruiter.as_dict();
-                    response_data["isRecruiter"] = True;
-                    response_data["isApplicant"] = False;
-                    response_data["associated_jobs"] = Job.objects.filter(recruiter_id=response_data["recruiter_id"]).values("id");
-                return Response(data=response_data, status=200);
+                    response_data = target_recruiter.as_dict()
+                    response_data["isRecruiter"] = True
+                    response_data["isApplicant"] = False
+                    response_data["associated_jobs"] = Job.objects.filter(recruiter_id=response_data["recruiter_id"]).values("id")
+                return Response(data=response_data, status=200)
         return Response(data={"status":"No Session User found"}, status=404)
 
 class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
-# Create your views here.
 class ApplicantViewSet(viewsets.ModelViewSet):
     queryset = Applicant.objects.all()
     serializer_class = ApplicantSerializer
    
-    @action(detail=True) # Applicant -> Experiences
+    @action(detail=True)
     def get_experiences(self, request, *args, **kwargs):
         target_applicant_id = request.query_params['applicant_id']
         experience_id = Experience.objects.filter(applicant_id=target_applicant_id).values_list('id', flat=True)
@@ -102,7 +95,7 @@ class ApplicantViewSet(viewsets.ModelViewSet):
             json_experiences.append(ExperienceSerializer(experience).data)
         return Response(data=json_experiences, status=200)
     
-    @action(detail=True) # Applicant -> Educations
+    @action(detail=True)
     def get_educations(self, request, *args, **kwargs):
         target_applicant_id = request.query_params['applicant_id']
         education_id = Education.objects.filter(applicant_id=target_applicant_id).values_list('id', flat=True)
@@ -140,7 +133,7 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationSerializer
 
-    @action(detail=True) # Job -> Applicant
+    @action(detail=True)
     def get_applicants(self, request, *args, **kwargs):
         target_job_id = request.query_params['job_id']
         applicants_id = Application.objects.filter(job_id=target_job_id).values_list('applicant_id', flat=True)
@@ -210,11 +203,6 @@ class SendEmailView(APIView):
             email['From'] = sender
             email['To'] = recipient
             email['Subject'] = subject
-
-            #       Allowing frontend to use these keywords to fetch the real value in their message query parameter
-            #       ex:    Hello {firstname} {lastname}, You got a job!
-            #       If the firstname and last name given was Jerry Smith, this would evaluate to:
-            #       Hello Jerry Smith, You got a job!
 
             message = message.replace("{firstname}", first_name)
             message = message.replace("{lastname}", last_name)
