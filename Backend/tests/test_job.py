@@ -1,4 +1,3 @@
-from datetime import datetime
 import pytest
 
 from LinkedOut.JobListings.models import Job

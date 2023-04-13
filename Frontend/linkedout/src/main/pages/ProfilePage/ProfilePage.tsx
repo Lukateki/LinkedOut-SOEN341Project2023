@@ -5,14 +5,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 import NavBar from '../../../components/NavBar/NavBar';
 import { useApplicantProfile } from './hooks';
-import { auth_token_cookie_name, retrieve_session_user, update_applicant_description, update_applicant_summary, update_recruiter_about, update_recruiter_summary, update_user_summary } from "../../../axiosconfig";
+import { auth_token_cookie_name, retrieve_session_user, retrieve_visiting_user, update_applicant_description, update_applicant_summary, update_recruiter_about, update_recruiter_summary, update_user_summary } from "../../../axiosconfig";
 import Cookies from "universal-cookie";
 import "./ProfilePage.css";
 import { isUserLoggedIn } from "../LoginPage/types";
 import Footer from "../../../components/Footer/Footer";
 
 export const ProfilePage = () => {
-  const { userId, setUserId, Id, setId, navigatetBackToHome, setIsCandidate, getJobPostings, jobPostings, getExperience, recentExperience, recentEducation, experience, navigateToExperience, navigateToEducation, getEducation, education, isCandidate } = useApplicantProfile();
+  const { userIdVisit, userId, setUserId, Id, setId, navigatetBackToHome, setIsCandidate, getJobPostings, jobPostings, getExperience, recentExperience, recentEducation, experience, navigateToExperience, navigateToEducation, getEducation, education, isCandidate } = useApplicantProfile();
   const [loaded, setLoaded] = useState<boolean>(false);
 
   const [firstName, setFirstName] = useState<string>("");
@@ -272,38 +272,72 @@ export const ProfilePage = () => {
   });
 
   useEffect(() => {
-    if(!isUserLoggedIn()){
-      navigatetBackToHome();
-    }
-    else if(!loaded){
-      setLoaded(true)
-      const token = new Cookies().get(auth_token_cookie_name);
-      retrieve_session_user(token).then((s) => {
-        setIsCandidate(s.data.isApplicant);
-        console.log(s.data)
-        if(s.data.isApplicant){
-          setUserId(s.data.applicant_id);
-          setId(s.data.user_id);
-
-          getApplicant(s.data);
-          getExperience(s.data);
-          getEducation(s.data);
-          
-        }
-        else{
-          setUserId(s.data.recruiter_id);
-          setCompanyName(s.data.company);
-          setAwards([s.data.award_one, s.data.award_two]);
-          setEstablishedDate(s.data.established);
-          setAboutUs(s.data.about);
+    if (userIdVisit === undefined){
+      if(!isUserLoggedIn()){
+        navigatetBackToHome();
+      }
+      else if(!loaded){
+        setLoaded(true)
+        const token = new Cookies().get(auth_token_cookie_name);
+        retrieve_session_user(token).then((s) => {
+          setIsCandidate(s.data.isApplicant);
           console.log(s.data)
+          if(s.data.isApplicant){
+            setUserId(s.data.applicant_id);
+            setId(s.data.user_id);
 
-          getRecruiter()
-          getJobPostings(s.data)
-        }
-      })
+            getApplicant(s.data);
+            getExperience(s.data);
+            getEducation(s.data);
+            
+          }
+          else{
+            setUserId(s.data.recruiter_id);
+            setCompanyName(s.data.company);
+            setAwards([s.data.award_one, s.data.award_two]);
+            setEstablishedDate(s.data.established);
+            setAboutUs(s.data.about);
+            console.log(s.data)
+
+            getRecruiter()
+            getJobPostings(s.data)
+          }
+        })
+      }
     }
-  }, [loaded, getEducation, getExperience, getJobPostings, navigatetBackToHome, setIsCandidate, setId, setUserId])
+    else{
+      if(!loaded){
+        setLoaded(true)
+        retrieve_visiting_user(Number(userIdVisit)).then((s) => {
+          setIsCandidate(s.data.isApplicant);
+          console.log(s.data)
+          if(s.data.isApplicant){
+            setUserId(s.data.applicant_id);
+            setId(s.data.user_id);
+
+            getApplicant(s.data);
+            getExperience(s.data);
+            getEducation(s.data);
+            
+          }
+          else{
+            setUserId(s.data.recruiter_id);
+            setCompanyName(s.data.company);
+            setAwards([s.data.award_one, s.data.award_two]);
+            setEstablishedDate(s.data.established);
+            setAboutUs(s.data.about);
+            console.log(s.data)
+
+            getRecruiter()
+            getJobPostings(s.data)
+          }
+        }).catch((e) => {
+          console.log(e)
+          navigatetBackToHome();
+        })
+      }
+    }
+  }, [loaded, getEducation, getExperience, getJobPostings, navigatetBackToHome, setIsCandidate, setId, setUserId, userIdVisit])
 
   return (
     <><NavBar/>
@@ -320,10 +354,12 @@ export const ProfilePage = () => {
               </CardMedia>
               <CardContent sx={{ display: 'flex'}}>
                 <div className="profile-upload-wallpaper-btn">
+                  {userIdVisit === undefined ?
                   <IconButton aria-label="upload picture" component="label">
                     <input hidden accept="image/*" type="file" />
                     <FileUploadOutlinedIcon />
                   </IconButton>
+                  : null}
                 </div>
                 <Box sx={{ display: 'flex', paddingLeft: '2em'}}>
                   <Box>
@@ -347,9 +383,11 @@ export const ProfilePage = () => {
                 </Box>
                 <Box className="profile-summary">
                   <Box sx={{float:"right"}}>
+                    {userIdVisit === undefined ? 
                     <IconButton aria-label="edit summary" onClick={handleClickSummaryDialog}>
                       <EditIcon/>
                     </IconButton>
+                    : null}
                     <Dialog open={openSummaryDialog} onClose={handleCloseSummaryDialog}>
                       <Box>
                         <Box sx={{ display:"flex", alignItems:"center", justifyContent:"space-between"}}>
@@ -497,9 +535,11 @@ export const ProfilePage = () => {
                   
                   <Box sx={{display:"flex", justifyContent:"space-between"}}>
                     <ListSubheader>{isCandidate ? 'Skills' : 'Offices'}</ListSubheader>
+                    {userIdVisit === undefined ? 
                     <IconButton aria-label="edit skills" onClick={handleClickSkillsDialog}>
                       <EditIcon/>
                     </IconButton>
+                    :null}         
                   </Box>
                     {(isCandidate ? skills : offices).map((item) => (
                       <ListItem key={`item-"PLang"-${item}`}>
@@ -616,9 +656,11 @@ export const ProfilePage = () => {
           <Card className="profile-description">
             <Box className="profile-description-title">
               <Typography variant="h5" component="div">{isCandidate ? "Description" : "About Us"}</Typography>
+              {userIdVisit === undefined ?
               <IconButton aria-label="edit description" onClick={ handleClickDescriptionDialog }>
                 <EditIcon/>
               </IconButton>
+              :null}
               <Dialog open={openDescriptionDialog} onClose={handleCloseDescriptionDialog} maxWidth='md' fullWidth>
                 <Box>
                   <Box sx={{ display:"flex", alignItems:"center", justifyContent:"space-between"}}>
@@ -668,9 +710,11 @@ export const ProfilePage = () => {
                 <Typography variant="h5">
                   {isCandidate ? "Experience" : "Our Jobs Postings"}
                 </Typography>
+                {userIdVisit === undefined ?
                 <IconButton aria-label="edit experience" onClick={navigateToExperience}>
                   <EditIcon/>
                 </IconButton>
+                :null}
               </Box>
               
               <Box className="profile-jobs-text">
@@ -683,9 +727,11 @@ export const ProfilePage = () => {
             <Typography variant="h5" component="div">
               Education
             </Typography>
+            {userIdVisit === undefined ?
             <IconButton aria-label="edit education" onClick={(navigateToEducation)}>
               <EditIcon/>
             </IconButton>
+            :null}
             </Box>
             <Box className="profile-jobs-text">
               {educationBlock}

@@ -104,6 +104,10 @@ export const retrieve_session_user = async (token: string) => {
     return axios.get(api + "/users/api/retrieve_session_user/", { headers: {"Authorization" : `Bearer ${token}`}})
 }
 
+export const retrieve_visiting_user = async (user_id: number) => {
+    return axios.get(api + "/users/api/retrieve_visiting_user/", { params: { user_id: user_id }})
+}
+
 export const send_email = async (firstName: string, lastName: string, subject: string, company: string, email: string, message: string) => {
     return axios.get(rootAPI + "/send-email", {params: {
         'firstname': firstName,

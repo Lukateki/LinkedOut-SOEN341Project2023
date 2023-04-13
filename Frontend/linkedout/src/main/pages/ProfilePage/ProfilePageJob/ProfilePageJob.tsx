@@ -129,15 +129,17 @@ export const ProfilePageJob = () => {
 
     const handleOpenAddExperienceDialog = () => {
         setBufferTitle("");
-        setBufferCompany("");
+        setBufferCompany(company);
         setBufferStartDate(getCurrentDate());
         setBufferEndDate(getCurrentDate());
         setBufferDescription("");
+        setBufferLocation("");
         setOpenAddDialog(true);
-        setErrorTitle(true);
-        setErrorCompany(true);
-        setErrorDescription(true);
+        setErrorTitle(false);
+        setErrorCompany(false);
+        setErrorDescription(false);
         setErrorExpiry(false);
+        setErrorLocation(false);
     };
 
     const dialogProps = !isCandidate ? {

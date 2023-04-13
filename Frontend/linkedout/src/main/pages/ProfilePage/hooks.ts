@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { retrieve_applicant_education, retrieve_applicant_experience, retrieve_recruiter_jobs } from "../../../axiosconfig";
 
 export const useApplicantProfile = () => {
+    const { id: userIdVisit } = useParams();
+    
     const [isCandidate, setIsCandidate] = useState<boolean>(false);
 
     const [userId, setUserId] = useState<number>(0);
@@ -64,5 +66,5 @@ export const useApplicantProfile = () => {
       const navigatetBackToHome = () => {
         navigate("/");
       }
-      return { Id, setId, userId, setUserId, navigatetBackToHome, setIsCandidate, getJobPostings, jobPostings, setJobPostings, isCandidate, getExperience, experience, setExperience, navigateToExperience, navigateToEducation, navigateBackFromExperience, navigateBackFromEducation, recentExperience, getEducation, education, setEducation, recentEducation };
+      return { userIdVisit, Id, setId, userId, setUserId, navigatetBackToHome, setIsCandidate, getJobPostings, jobPostings, setJobPostings, isCandidate, getExperience, experience, setExperience, navigateToExperience, navigateToEducation, navigateBackFromExperience, navigateBackFromEducation, recentExperience, getEducation, education, setEducation, recentEducation };
 }
