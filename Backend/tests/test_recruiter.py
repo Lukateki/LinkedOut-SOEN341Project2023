@@ -2,9 +2,6 @@ import pytest
 
 from LinkedOut.credentials.models import Recruiter
 
-'''
-Using the code from test_job.py generate test cases for the Recruiter model.
-'''
 class TestRecruiterViewSet:
 
     endpoint = '/api/v1/recruiters/'
