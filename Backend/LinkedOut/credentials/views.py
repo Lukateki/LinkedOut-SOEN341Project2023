@@ -15,6 +15,21 @@ import smtplib
 import re
 import os
 
+def retrieve_all(user_id: int):
+    target_applicant = Applicant.objects.filter(user_id=user_id).first()
+    target_recruiter = Recruiter.objects.filter(user_id=user_id).first()
+    if target_applicant != None:
+        response_data = target_applicant.as_dict()
+        response_data["isApplicant"] = True
+        response_data["isRecruiter"] = False
+    elif target_recruiter != None:
+        response_data = target_recruiter.as_dict()
+        response_data["isRecruiter"] = True
+        response_data["isApplicant"] = False
+        response_data["associated_jobs"] = Job.objects.filter(recruiter_id=response_data["recruiter_id"]).values("id")
+
+    return response_data
+
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
@@ -40,17 +55,7 @@ class UserViewSet(viewsets.ModelViewSet):
         user_id = request.query_params["user_id"]
         response_data = None
         if user_id != None:
-            target_applicant = Applicant.objects.filter(user_id=user_id).first()
-            target_recruiter = Recruiter.objects.filter(user_id=user_id).first()
-            if target_applicant != None:
-                response_data = target_applicant.as_dict()
-                response_data["isApplicant"] = True
-                response_data["isRecruiter"] = False
-            elif target_recruiter != None:
-                response_data = target_recruiter.as_dict()
-                response_data["isRecruiter"] = True
-                response_data["isApplicant"] = False
-                response_data["associated_jobs"] = Job.objects.filter(recruiter_id=response_data["recruiter_id"]).values("id")
+            response_data = retrieve_all(user_id)
             return Response(data=response_data, status=200) if response_data != None else Response(data={"status":"No User found"}, status=404)
         return Response(data={"status":"No Session User found"}, status=404)
     
@@ -61,21 +66,12 @@ class UserViewSet(viewsets.ModelViewSet):
             response_data = None
             token = header_auth_token[7:]
             target_token_obj = Token.objects.filter(key=token).first()
-            if target_token_obj != None:
-                target_applicant = Applicant.objects.filter(user_id=target_token_obj.user.id).first()
-                target_recruiter = Recruiter.objects.filter(user_id=target_token_obj.user.id).first()
-                if target_applicant != None:
-                    response_data = target_applicant.as_dict()
-                    response_data["isApplicant"] = True
-                    response_data["isRecruiter"] = False
-                elif target_recruiter != None:
-                    response_data = target_recruiter.as_dict()
-                    response_data["isRecruiter"] = True
-                    response_data["isApplicant"] = False
-                    response_data["associated_jobs"] = Job.objects.filter(recruiter_id=response_data["recruiter_id"]).values("id")
+            user_id = target_token_obj.user.id
+            if user_id != None:
+                response_data = retrieve_all(user_id)
                 return Response(data=response_data, status=200)
         return Response(data={"status":"No Session User found"}, status=404)
-
+    
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
@@ -142,7 +138,7 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
         applicants_application_ids = Application.objects.filter(job_id=target_job_id).values_list('application_id', flat=True)
         applicants = Applicant.objects.filter(id__in=applicants_id)
         json_applicants = []
-        i = 0;
+        i = 0
         for applicant in applicants:
             applicant_dict = applicant.as_dict();
             applicant_dict['application_date'] = applicants_dates[i]
