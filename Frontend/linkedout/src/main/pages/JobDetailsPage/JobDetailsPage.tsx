@@ -7,6 +7,7 @@ import EventAvailableRoundedIcon from '@mui/icons-material/EventAvailableRounded
 import WorkHistoryRoundedIcon from '@mui/icons-material/WorkHistoryRounded';
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CheckIcon from '@mui/icons-material/Check';
 import { useApplicant, useJobDetails } from './hooks';
@@ -15,7 +16,7 @@ import './JobDetailsPage.css';
 import Footer from '../../../components/Footer/Footer';
 
 const JobDetailsPage = () => {
-    const { isEmployer, isOtherEmployer, applicants, jobDetails, jobRecruiter, handleCandidateAcception } = useJobDetails();
+    const { isEmployer, isOtherEmployer, applicants, jobDetails, jobRecruiter, handleCandidateAcception, handleSeeApplicantProfile } = useJobDetails();
     const {
         showSuccessNotification,
         showFailNotification,
@@ -128,6 +129,15 @@ const JobDetailsPage = () => {
                                                                             </IconButton>
                                                                         </Tooltip>
                                                                     }
+                                                                    <Tooltip 
+                                                                        title={`See ${applicant.first_name} ${applicant.last_name}'s profile`}
+                                                                        placement={"top"}
+                                                                        onClick={() => handleSeeApplicantProfile(applicant.user_id)}
+                                                                    >
+                                                                        <IconButton edge={"end"}>
+                                                                            <VisibilityIcon color='info'/>
+                                                                        </IconButton>
+                                                                    </Tooltip>
                                                                 </div>
                                                             }
                                                         >

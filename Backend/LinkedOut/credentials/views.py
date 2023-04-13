@@ -60,7 +60,7 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(data={"status":"No Session User found"}, status=404)
     
     @action(detail=True)
-    def retrieve_session_user(request, *args, **kwargs):
+    def retrieve_session_user(self, request, *args, **kwargs):
         header_auth_token = request.headers["authorization"]
         if header_auth_token != None:
             response_data = None

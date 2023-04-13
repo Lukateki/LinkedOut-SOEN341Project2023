@@ -42,6 +42,10 @@ export const useJobDetails = () => {
             });
     }
 
+    const handleSeeApplicantProfile = (id: number) => {
+        navigate(`/profile/${id}`);
+    }
+
     useEffect(() => {
         if (!loaded) {
             setLoaded(true);
@@ -83,7 +87,7 @@ export const useJobDetails = () => {
         }
     }, [loaded, jobDetails, applicants, currentUser, job_id, navigate])
 
-    return { isEmployer, isOtherEmployer, jobDetails, applicants, jobRecruiter, handleCandidateAcception };
+    return { isEmployer, isOtherEmployer, jobDetails, applicants, jobRecruiter, handleCandidateAcception, handleSeeApplicantProfile };
 }
 
 export const useApplicant = () => {
