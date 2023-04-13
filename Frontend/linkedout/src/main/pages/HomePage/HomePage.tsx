@@ -51,7 +51,6 @@ const HomePage = () => {
 
   const searchJobs = async (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       const searchTerm = e.currentTarget.value.toString();
-      console.log(searchTerm)
       if (searchTerm.trim().length === 0) {
         setJobPostings(backupOriginalJobPostings);
       } else {
