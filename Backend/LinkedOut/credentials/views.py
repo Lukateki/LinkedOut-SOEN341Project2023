@@ -48,6 +48,25 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response(data=serializer.errors, status=400)
         
     @action(detail=True)
+    def retrieve_visiting_user(self, request, *args, **kwargs):
+        user_id = request.query_params["user_id"]
+        response_data = None
+        if user_id != None:
+            target_applicant = Applicant.objects.filter(user_id=user_id).first()
+            target_recruiter = Recruiter.objects.filter(user_id=user_id).first()
+            if target_applicant != None:
+                response_data = target_applicant.as_dict()
+                response_data["isApplicant"] = True
+                response_data["isRecruiter"] = False
+            elif target_recruiter != None:
+                response_data = target_recruiter.as_dict()
+                response_data["isRecruiter"] = True
+                response_data["isApplicant"] = False
+                response_data["associated_jobs"] = Job.objects.filter(recruiter_id=response_data["recruiter_id"]).values("id")
+            return Response(data=response_data, status=200) if response_data != None else Response(data={"status":"No User found"}, status=404)
+        return Response(data={"status":"No Session User found"}, status=404)
+    
+    @action(detail=True)
     def retrieve_session_user(self, request, *args, **kwargs):
         header_auth_token = request.headers["authorization"];
         if header_auth_token != None:
