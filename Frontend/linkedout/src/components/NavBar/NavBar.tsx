@@ -4,12 +4,11 @@ import { Box, Button, CardMedia, TextField } from '@mui/material';
 import { isUserLoggedIn } from "../../main/pages/LoginPage/types";
 import ToggleDark from '../../components/toggleDark';
 import { ThemeContext, themes } from '../../contexts/ThemeContext';
-
-
-import "./NavBar.css"
 import Cookies from "universal-cookie";
+import { NavBarProps } from './types';
+import "./NavBar.css"
 
-export const NavBar : React.FC  = () => {
+const NavBar = (props?: NavBarProps) => {
     const navigate = useNavigate();
     const [darkMode, setDarkMode] = React.useState(true);
     const location = useLocation();
@@ -17,6 +16,7 @@ export const NavBar : React.FC  = () => {
     const handleLoginClick = () => {
         navigate('/login');
     };
+
     const handleRegisterClick = () => {
       navigate('/register');
     };
@@ -40,7 +40,13 @@ export const NavBar : React.FC  = () => {
                 <img src={"/img/LinkedoutLogo2.png"} alt="LinkedOut" className="home-logo" />
               </a>
               <div className="navbar-search-bar">
-                <TextField size="small" id="outlined-basic" label="Search" placeholder="Search job postings"/>
+                <TextField 
+                  size="small" 
+                  id="outlined-basic" 
+                  label="Search" 
+                  placeholder="Search job postings"
+                  onChange={props.searchFunction}
+                />
             </div>
           </div>
             <div className="navbar-right-header">

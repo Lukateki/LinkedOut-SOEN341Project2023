@@ -162,7 +162,6 @@ class ApplicationsViewSet(viewsets.ModelViewSet):
     def delete_applications(self, request, *args, **kwargs):
         target_job_id = request.query_params['job_id'];
         deletionResults = Application.objects.filter(job_id=target_job_id).delete();
-        print(deletionResults[0]);
         return Response(data={"deletionCount": deletionResults[0]}, status=200);
 
 
