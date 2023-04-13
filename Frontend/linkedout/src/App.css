@@ -44,7 +44,7 @@
 }
 
 .white-content .home-content {
-   background-color: #27303d;
+  background-color: #27303d;
 }
 
 .white-content .welcome-banner, .white-content .available-jobs {
@@ -62,7 +62,8 @@
 }
 
 .white-content .card {
-  color: #27303d; 
+  color: #27303d;
+  
 }
 
 .white-content .login-container{
@@ -82,7 +83,7 @@
 }
 
 .white-content .profile-jobs , .white-content .profile-description, .white-content .profile-name-card .MuiCardContent-root, .white-content .profile-skill-card, .white-content .profile-skill-card .MuiListItem-root, .white-content .profile-skill-card .MuiBox-root  {
-  background-color:  #1a2027;
+  background-color: #1a2027;
   color: white;
   border: white thin solid;
 }
