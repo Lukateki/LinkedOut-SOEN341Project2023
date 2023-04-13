@@ -58,15 +58,17 @@
     padding-left: 0.5em;
   }
 
-  .add-job-btn {
-    margin: 2%;
-    margin-left: 85%;
+  .add-job-btn button {
+    display: block;
+    margin: 1em auto 1em auto;
   }
 
   /* New Rules */
-.home-content {
-  height: 100%;
+.home-container .home-content {
+  height: 1018px;
   background-color: rgba(39, 48, 61, 0.1) !important;
+  max-height: 1018px;
+  overflow: auto;
 }
 
 .home-content .available-jobs {

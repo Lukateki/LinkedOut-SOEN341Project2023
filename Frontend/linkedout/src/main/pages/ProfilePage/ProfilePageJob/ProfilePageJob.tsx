@@ -118,8 +118,6 @@ export const ProfilePageJob = () => {
         else{
             upload_job(bufferTitle, userId, bufferCompany + ".com", bufferStartDate, bufferEndDate, bufferLocation, bufferType, bufferDescription).then().catch();
         }
-
-        //add deletion of applications here.
         window.location.reload();
     };
 

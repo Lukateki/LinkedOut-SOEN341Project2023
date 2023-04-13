@@ -209,3 +209,7 @@ export const update_jobs = async (id: number, jobs) => {
 export const delete_job = async (id: number) => {
     return axios.delete(api + `/jobs/${id}/`);
 }
+
+export const search_jobs = async (searchTerm: string) => {
+    return axios.get(api + `/jobs/`, { params: { search: searchTerm }});
+}
