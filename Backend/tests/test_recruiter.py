@@ -10,13 +10,13 @@ class TestRecruiterViewSet:
     endpoint = '/api/v1/recruiters/'
 
     @pytest.mark.django_db
-    def test_recruiter_create(self, client, recruiter):
+    def test_recruiter_retrieve(self, client, recruiter):
         response = client.get(self.endpoint)
         assert response.status_code == 200
 
         response_json = response.json()
         assert response_json != None
-        
+
         assert len(response_json) == Recruiter.objects.count()
 
     @pytest.mark.django_db
