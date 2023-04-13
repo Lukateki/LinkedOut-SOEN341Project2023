@@ -1,18 +1,10 @@
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets, permissions
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets
 from rest_framework.views import APIView
-from rest_framework.decorators import action, permission_classes
+from rest_framework.decorators import action
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from rest_framework.decorators import action, permission_classes
-from rest_framework.authtoken.models import Token
-from rest_framework.response import Response 
 from rest_framework.request import Request
-from rest_framework.decorators import action, permission_classes
-from rest_framework.authtoken.models import Token
-from LinkedOut.JobListings.models import Job
-
 from LinkedOut.credentials.models import Applicant, Education, Experience, Recruiter
 from LinkedOut.JobListings.models import Application, Job
 from .serializers import ApplicantSerializer, EducationSerializer, ExperienceSerializer, RecruiterSerializer, UserSerializer, GroupSerializer
@@ -21,7 +13,6 @@ from email.message import EmailMessage
 import ssl
 import smtplib
 import re
-import json
 import os
 
 
