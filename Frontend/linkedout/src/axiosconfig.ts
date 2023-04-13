@@ -217,7 +217,3 @@ export const delete_job = async (id: number) => {
 export const search_jobs = async (searchTerm: string) => {
     return axios.get(api + `/jobs/`, { params: { search: searchTerm }});
 }
-
-export const retrieve_applicant =async (id:number) => {
-    return axios.get(api + `/applicants/${id}/`);
-}
