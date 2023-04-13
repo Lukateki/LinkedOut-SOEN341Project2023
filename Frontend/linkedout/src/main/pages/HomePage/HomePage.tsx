@@ -84,6 +84,11 @@ const HomePage = () => {
             />
           </Typography>
           <Typography className={'available-jobs'}>Jobs of the day: </Typography>
+          { isRecruiter && 
+            <div className='add-job-btn'>
+              <Button sx={{ fontFamily: "Quicksand" }} variant="contained" onClick={() => { navigate("/addJob"); }}>Add Job</Button>
+            </div>
+          }
         </Card>
         <CardContent className={"home-jobs-container"}>
           {jobPostings.map(j => {
@@ -99,9 +104,6 @@ const HomePage = () => {
             )
           })}
         </CardContent>
-        { isRecruiter && <div className='add-job-btn'>
-          <Button sx={{ fontFamily: "Quicksand" }} variant="contained" onClick={() => { navigate("/addJob"); }}>Add Job</Button>
-        </div>}
       </Card>
       <Footer/>
     </div>

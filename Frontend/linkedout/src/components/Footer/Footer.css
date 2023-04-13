@@ -1,5 +1,5 @@
-/* .footer-header {
-    background-color: black;
-    display: inline;
-    overflow: hidden;
-} */
+.footer {
+    background-color: rgb(0, 115, 177);
+    display: flex;
+    justify-content: space-between;
+}
