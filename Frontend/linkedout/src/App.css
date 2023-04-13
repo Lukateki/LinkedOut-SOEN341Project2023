@@ -98,7 +98,7 @@
 }
 
 .white-content .application-form {
-  background-color: white !important;
+  background-color: white;
   color: black;
   border: #27303d thin solid;
   border-radius: 2%;
@@ -118,7 +118,7 @@
 }
 
 .white-content .home-content .home-jobs-container .grid-item {
-  background-color: #1a2027 !important;
-  color: white !important;
+  background-color: #1a2027;
+  color: white;
   border: white thin solid;
 }
