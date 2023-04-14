@@ -66,10 +66,11 @@ class UserViewSet(viewsets.ModelViewSet):
             response_data = None
             token = header_auth_token[7:]
             target_token_obj = Token.objects.filter(key=token).first()
-            user_id = target_token_obj.user.id
-            if user_id != None:
-                response_data = retrieve_all(user_id)
-                return Response(data=response_data, status=200)
+            if target_token_obj != None:
+                user_id = target_token_obj.user.id
+                if user_id != None:
+                    response_data = retrieve_all(user_id)
+                    return Response(data=response_data, status=200)
         return Response(data={"status":"No Session User found"}, status=404)
     
 class GroupViewSet(viewsets.ModelViewSet):
